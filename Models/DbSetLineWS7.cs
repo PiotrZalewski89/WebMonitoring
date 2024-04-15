@@ -149,13 +149,34 @@ namespace WebMonitoring.Models
                    .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
                    .Count());
 
-                SprawdzianGeometrii.Add(context.CnhChecks
+                WS7_TT_WELDING_CELL_3_OP330_STN2.Add(context.Ws7TtWeldingCell3Op330Stn2s
                    .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
                    .Count());
 
-                PetlaKJ.Add(context.Ws5CnhPetlaKontrolnaL1s
-                   .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk && x.NrPaleta != Remove)
+               
+
+                WS7_TT_MANUAL_WELDING_OP360.Add(context.Ws7TtManualWeldingOp360s
+               .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
+               .Count());
+
+                WS7_TT_OP380.Add(context.Ws7TtOp380s
+                   .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
                    .Count());
+
+                WS7_TT_WELDING_CELL_3_OP390_STN2.Add(context.Ws7TtWeldingCell3Op390Stn2s
+                    .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
+                    .Count());
+
+
+
+
+
+
+
+
+                WS7_TT_PETLA_KONTROLNA_L4.Add(context.Ws7TtPetlaKontrolnaL4s
+               .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk && x.NrPaleta != Remove)
+               .Count());
 
                 dateTimeFrom = dateTimeFrom.AddHours(1);
                 dateTimeTo = dateTimeTo.AddHours(1);
