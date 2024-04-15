@@ -1,0 +1,290 @@
+﻿@model LineParametersWS
+
+@{
+    Model.ActiveColumn.TrybPracy12h = Model.TrybPracy12h;
+}
+
+
+<link href="~/css/DivMain.css" rel="stylesheet" />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="~/js/refreshDiv.js" type="text/javascript" language="javascript"></script>
+
+<div class="fixed">
+    <div line="@Model.Line" /> @*BreakTimeTaghelperComponent*@
+
+    <div id="jsRefresh" class="text-nowrap text-center text-white text-body">
+        <table>
+            <thead style="height: 100px; width: 100%; ">
+                <tr>
+                    <td>
+                        @if (Model.Line != LineDescription.LineWS3A)
+                        {
+                            <div style="width: 300px;">
+                                <form asp-controller="@Model.Url.ReturnController" asp-action="@Model.Url.ReturnAction" method="post">
+
+                                    <input type="hidden" name="Url.ReturnAction"
+                                           value="@ViewContext.HttpContext.Request.Action()" />
+                                    <input type="hidden" name="Url.ReturnController"
+                                           value="@ViewContext.HttpContext.Request.Controller()" />
+
+                                    <table class="table table-success table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2">
+                                                    <label asp-for="@Model.ActualTotalParts" style="font-size: 18px;"> Plan produkcyjny: </label>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <input id="idPlan" class="form-control" type="number" asp-for="@Model.ActualTotalParts" />@*readonly*@
+                                                </td>
+                                                <td>
+                                                    <button type="submit" class="btn btn-primary mb-2">Wyślij</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        <div style="width: 300px; float: right">
+                            <table class="table table-primary table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <label style="font-size: 18px;"> Produkcja tygodniowa: </label>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>
+                                            <label class="form-control" type="number">@Model.TotalWeeklyProduction</label>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                        <div>
+                            <table class="table table-hover table-striped table-bordered">
+                                <thead class="bg-primary">
+                                    <tr class="text-white">
+                                        @if (!Model.TrybPracy12h)
+                                        {
+                                            <th rowspan="2" class="bg-secondary" style="font-size:35px">Stanowisko</th>
+                                        }
+                                        else
+                                        {
+                                            <th rowspan="2" class="bg-secondary" style="font-size:20px">Stanowisko</th>
+                                        }
+
+                                        @for (int i = 1; i < Model.MaxCells; i++)
+                                        {
+                                            @if (!Model.TrybPracy12h)
+                                            {
+                                                <th colspan="2" style="font-size:25px">Godzina @i</th>
+                                            }
+                                            else
+                                            {
+                                                <th colspan="2" style="font-size:15px">Godzina @i</th>
+                                            }
+                                        }
+
+                                        <th colspan="2" class="bg-success" style="font-size:25px">Wynik</th>
+                                    </tr>
+                                    @if (!Model.TrybPracy12h)
+                                    {
+                                        <tr class="text-white" style="font-size:16px">
+                                            @for (int i = 0; i < Model.MaxCells; i++)
+                                            {
+                                                <th class="bg-warning">Cel</th>
+                                                <th class="bg-info">Realizacja</th>
+                                            }
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr class="text-white" style="font-size:10px">
+                                            @for (int i = 0; i < Model.MaxCells; i++)
+                                            {
+                                                <th class="bg-warning">Cel</th>
+                                                <th class="bg-info">Realizacja</th>
+                                            }
+                                        </tr>
+                                    }
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var row in Model.LineData.Keys)
+                                    {
+                                        if (!Model.TrybPracy12h)
+                                        {
+                                            <tr style="font-size:18px">
+                                                <th>@row</th>
+                                                @{
+                                                    var goal = Model.LineData[row].Goal;
+                                                    var result = Model.LineData[row].Result;
+
+                                                    for (int i = 0; i < Model.MaxCells; i++)
+                                                    {
+                                                        <td class="bg-light">@goal[i]</td>
+
+                                                        @if (i < Model.MaxCells - 1 && Model.ActiveColumn.Get[i])
+                                                        {
+                                                            if (goal[i] > result[i])
+                                                            {
+                                                                <td class="bg-danger text-white">@result[i]</td>
+                                                            }
+                                                            else if (goal[i] <= result[i])
+                                                            {
+                                                                <td class="bg-success text-white">@result[i]</td>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            if (i < Model.MaxCells - 1 && !Model.ActiveColumn.Get[i])
+                                                            {
+                                                                <td class="bg-secondary text-white">@result[i]</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                if (goal[i] > result[i])
+                                                                {
+                                                                    <td class="bg-danger text-white">@result[i]</td>
+                                                                }
+                                                                else if (goal[i] <= result[i])
+                                                                {
+                                                                    <td class="bg-success text-white">@result[i]</td>
+                                                                }
+                                                            }
+
+                                                        }
+                                                    }
+                                                }
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <tr style="font-size:10px">
+                                                <th>@row</th>
+                                                @{
+                                                    var goal = Model.LineData[row].Goal;
+                                                    var result = Model.LineData[row].Result;
+
+                                                    for (int i = 0; i < Model.MaxCells; i++)
+                                                    {
+                                                        <td class="bg-light">@goal[i]</td>
+
+                                                        @if (i < Model.MaxCells - 1 && Model.ActiveColumn.Get[i])
+                                                        {
+                                                            if (goal[i] > result[i])
+                                                            {
+                                                                <td class="bg-danger text-white">@result[i]</td>
+                                                            }
+                                                            else if (goal[i] <= result[i])
+                                                            {
+                                                                <td class="bg-success text-white">@result[i]</td>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            if (i < Model.MaxCells - 1 && !Model.ActiveColumn.Get[i])
+                                                            {
+                                                                <td class="bg-secondary text-white">@result[i]</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                if (goal[i] > result[i])
+                                                                {
+                                                                    <td class="bg-danger text-white">@result[i]</td>
+                                                                }
+                                                                else if (goal[i] <= result[i])
+                                                                {
+                                                                    <td class="bg-success text-white">@result[i]</td>
+                                                                }
+                                                            }
+
+                                                        }
+                                                    }
+                                                }
+                                            </tr>
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        @*<div class="progress">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
+
+                </div>
+                <div class="progress-bar bg-danger" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-warning" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>*@
+
+    </div>
+</div>
+
+@*<script>
+        $(document).ready(function () {
+            var element = $('#imgBreakTime');
+
+            var heightWin = window.innerHeight;
+            var widthWin = window.innerWidth;
+
+            var positionTop = (heightWin / 2 - 300).toString() + "px";
+            var positionLeft = (widthWin / 2 - 300).toString() + "px";
+
+            element.css("top", positionTop);
+            element.css("left", positionLeft);
+
+            breakTime();
+            setInterval("breakTime()", 30000); //30 seconds
+        });
+
+
+        function breakTime() {
+
+            var element = $('#imgBreakTime');
+
+            var time = new Date();
+
+            var
+
+            var startLunchTime = new Date(time.getFullYear(), time.getMonth(), time.getDate(), 9, 30, 0);//09:30
+            var stopLunchTime = new Date(startLunchTime);
+            stopLunchTime.setMinutes(stopLunchTime.getMinutes() + 30);
+
+            var startBreakTime = new Date(time.getFullYear(), time.getMonth(), time.getDate(), 14, 35, 0);
+            var stopBreakTime = new Date(startBreakTime);
+            stopBreakTime.setMinutes(stopBreakTime.getMinutes() + 10);
+
+            var compareTime = new Date(time.getFullYear(), time.getMonth(), time.getDate(), time.getHours(), time.getMinutes(), time.getSeconds());
+
+            if ((compareTime >= startLunchTime && compareTime < stopLunchTime)
+                || (compareTime >= startBreakTime && compareTime < stopBreakTime)) {
+                console.log("open");
+                element.removeAttr("hidden");
+            }
+            else {
+                console.log("close");
+                element.attr("hidden", "hidden");
+            }
+        }
+    </script>*@

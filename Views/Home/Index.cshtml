@@ -1,0 +1,479 @@
+﻿<link href="~/css/DivMain.css" rel="stylesheet" />
+
+<style>
+    td {
+        height: 300px;
+        width: 400px;
+        position: center;
+    }
+
+    table {
+        border-radius: 10px;
+    }
+
+    .horizontalPosition {
+        padding: 10px;
+        margin-left: 30px;
+    }
+</style>
+
+<div class="fixedIndex">
+    <div id="#divCheckBox" class="container-lg" style="height: 120px;">
+        <h4 class="horizontalPosition">Wybór linii</h4>
+
+        <input type="checkbox" id="@("ch_" + LineDescription.LineWS1CNH)" name="ws1_cnh" onclick="showChart('ws1_cnh')" class="horizontalPosition">
+        <label for="ws1_cnh"> Linia WS1 CNH</label>
+
+        <input type="checkbox" id="@("ch_" + LineDescription.LineWS1V50)" name="ws1_v50" onclick="showChart('ws1_v50')" class="horizontalPosition">
+        <label for="ws1_v50"> Linia WS1 V50</label>
+
+        <input type="checkbox" id="@("ch_" + LineDescription.LineWS2)" name="ws2" onclick="showChart('ws2')" class="horizontalPosition">
+        <label for="ws2"> Linia WS2</label>
+
+        <input type="checkbox" id="@("ch_" + LineDescription.LineWS3)" name="ws3" onclick="showChart('ws3')" class="horizontalPosition">
+        <label for="ws3"> Linia WS3</label>
+
+        <input type="checkbox" id="@("ch_" + LineDescription.LineWS2B_BJA.Replace(" ", "_"))" name="ws2b_bja" onclick="showChart('ws2b_bja')" class="horizontalPosition">
+        <label for="ws2b_bja"> Linia WS2B BJA</label>
+
+        <input type="checkbox" id="@("ch_" + LineDescription.LineWS2B_GPF.Replace(" ", "_"))" name="ws2b_gpf" onclick="showChart('ws2b_gpf')" class="horizontalPosition">
+        <label for="ws2b_gpf"> Linia WS2B GPF</label>
+
+        <input type="checkbox" id="@("ch_" + LineDescription.LineWS4M260)" name="ws3_m260" onclick="showChart('ws4_m260')" class="horizontalPosition">
+        <label for="ws4_m260"> Linia WS4 M260A</label><br />
+
+        <input type="checkbox" id="@("ch_" + LineDescription.LineWS5)" name="ws5" onclick="showChart('ws5')" class="horizontalPosition">
+        <label for="ws5"> Linia WS5</label>
+
+        <input type="checkbox" id="@("ch_" + LineDescription.LineWS6)" name="ws6" onclick="showChart('ws6')" class="horizontalPosition">
+        <label for="ws6"> Linia WS6</label>
+
+        <input type="checkbox" id="@("ch_" + LineDescription.LineWS7)" name="ws7" onclick="showChart('ws7')" class="horizontalPosition">
+        <label for="ws7"> Linia WS7</label>
+
+        <input type="checkbox" id="@("ch_" + LineDescription.LineSTF3)" name="stf3" onclick="showChart('stf3')" class="horizontalPosition">
+        <label for="stf3"> Linia STF 3</label>
+
+        <input type="checkbox" id="@("ch_" + LineDescription.LineSTF4)" name="stf4" onclick="showChart('stf4')" class="horizontalPosition">
+        <label for="stf4"> Linia STF 4</label>
+
+        <input type="checkbox" id="@("ch_" + LineDescription.LineSTF5)" name="stf5" onclick="showChart('stf5')" class="horizontalPosition">
+        <label for="stf5"> Linia STF 5</label>
+
+        <input type="checkbox" id="@("ch_" + LineDescription.LineSTF6)" name="stf6" onclick="showChart('stf6')" class="horizontalPosition">
+        <label for="stf6"> Linia STF 6</label><br />
+
+
+    </div>
+
+    @*<div>
+        <input type="file" id="input" />
+
+        <script>
+            import readXlsxFile from 'read-excel-file'
+
+            const input = document.getElementById('input')
+
+            input.addEventListener('change', () => {
+                readXlsxFile(input.files[0]).then((rows) => {
+                    console.log(this);
+                })
+        </script>
+    </div>*@
+
+    <div>
+        <table id="tablearea">
+            <tbody>
+                @*uzyta funkcja shoChart*@
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    var arCharts = new Array();
+    var arNameCharts = new Array();
+    var idleInterval;
+
+    class Dictionary {
+        constructor(key, value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    var existFirstRow;
+    var countFirstCells;
+
+    var existSecondtRow;
+    var countSecondCells;
+
+    var existThirdRow;
+    var countThirdCells;
+
+    var existFourthRow;
+    var countFourthCells;
+
+    var dictHtml = [new Dictionary('@("ch_" + LineDescription.LineWS1CNH)', '<div> <h4 id="@("h4_" + LineDescription.LineWS1CNH)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS1CNH)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS1CNH" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
+        new Dictionary('@("ch_" + LineDescription.LineWS1V50)', '<div> <h4 id="@("h4_" + LineDescription.LineWS1V50)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS1V50)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS1V50" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
+        new Dictionary('@("ch_" + LineDescription.LineWS2)', '<div> <h4 id="@("h4_" + LineDescription.LineWS2)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS2)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS2" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
+        new Dictionary('@("ch_" + LineDescription.LineWS3)', '<div> <h4 id="@("h4_" + LineDescription.LineWS3)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS3)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS3" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
+        new Dictionary('@("ch_" + LineDescription.LineWS2B_BJA.Replace(" ", "_"))', '<div> <h4 id="@("h4_" + LineDescription.LineWS2B_BJA.Replace(" ", "_"))" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS2B_BJA.Replace(" ", "_"))" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS2B_BJA.Replace(" ", "_")" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
+        new Dictionary('@("ch_" + LineDescription.LineWS2B_GPF.Replace(" ", "_"))', '<div> <h4 id="@("h4_" + LineDescription.LineWS2B_GPF.Replace(" ", "_"))" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS2B_GPF.Replace(" ", "_"))" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%""></div> <canvas class="myChart" id="@LineDescription.LineWS2B_GPF.Replace(" ", "_")" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
+        new Dictionary('@("ch_" + LineDescription.LineWS4M260)', '<div> <h4 id="@("h4_" + LineDescription.LineWS4M260)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS4M260)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%""></div> <canvas class="myChart" id="@LineDescription.LineWS4M260" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
+        new Dictionary('@("ch_" + LineDescription.LineWS5)', '<div> <h4 id="@("h4_" + LineDescription.LineWS5)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS5)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS5" style="width: 100%; width:400px; height: 300px; "></canvas></div>'),
+        new Dictionary('@("ch_" + LineDescription.LineWS6)', '<div> <h4 id="@("h4_" + LineDescription.LineWS6)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS6)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS6" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
+        new Dictionary('@("ch_" + LineDescription.LineWS7)', '<div> <h4 id="@("h4_" + LineDescription.LineWS7)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS7)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS7" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
+        new Dictionary('@("ch_" + LineDescription.LineSTF3)', '<div> <h4 id="@("h4_" + LineDescription.LineSTF3)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineSTF3)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineSTF3" style="width: 100%; width:400px; height: 300px; "></canvas></div>'),
+        new Dictionary('@("ch_" + LineDescription.LineSTF4)', '<div> <h4 id="@("h4_" + LineDescription.LineSTF4)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineSTF4)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineSTF4" style="width: 100%; width:400px; height: 300px; "></canvas></div>'),
+        new Dictionary('@("ch_" + LineDescription.LineSTF5)', '<div> <h4 id="@("h4_" + LineDescription.LineSTF5)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineSTF5)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineSTF5" style="width: 100%; width:400px; height: 300px; "></canvas></div>'),
+        new Dictionary('@("ch_" + LineDescription.LineSTF6)', '<div> <h4 id="@("h4_" + LineDescription.LineSTF6)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineSTF6)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineSTF6" style="width: 100%; width:400px; height: 300px; "></canvas></div>')]
+
+    var counterElementTr;
+
+    $(document).ready(function () {
+        //createChart();
+        idleInterval = setInterval('refreshChart()', 80000);
+    });
+
+    function createChart() {
+        var myChart = $('.myChart');
+        myChart.each(function () {
+            var element = $(this);
+            var idName = element.attr('id');
+
+            if (arNameCharts.indexOf(idName) == -1) {
+
+                arNameCharts.push(idName);
+
+                //element.css('visibility', 'hidden');
+
+                $.getJSON('/api/weeklyproduction', { line: idName })
+                    .done(function (data) {
+
+                        var values = new Array();
+                        var target;
+                        var line;
+                        var total;
+
+                        $.each(data, function (key, value) {
+
+                            if (key == 'target') {
+                                target = value;
+                            }
+
+                            if (key == 'line') {
+                                line = value;
+                            }
+
+                            if (key == 'total') {
+                                total = value;
+                            }
+
+                            if (key == 'monday')
+                                values.push(value);
+                            else if (key == 'tuesday')
+                                values.push(value);
+                            else if (key == 'wednesday')
+                                values.push(value);
+                            else if (key == 'thursday')
+                                values.push(value);
+                            else if (key == 'friday')
+                                values.push(value);
+                            else if (key == 'saturday')
+                                values.push(value);
+                            else if (key == 'sunday')
+                                values.push(value);
+                        });
+
+                        var xValues = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'];
+                        var yValues = values;
+                        var barColors = ['yellow', 'green', 'blue', 'orange', 'brown', 'gray', 'red'];
+                        var xTargets = target;
+
+                        var result = new Chart(line, {
+                            data: {
+                                labels: xValues,
+                                datasets: [
+                                    {
+                                        type: 'line',
+                                        data: xTargets,
+                                        fill: false,
+                                        borderColor: 'rgb(54, 162, 235)',
+                                        label: 'Target',
+                                    },
+                                    {
+                                        type: 'bar',
+                                        backgroundColor: barColors,
+                                        data: yValues,
+                                        label: 'Wynik'
+                                    }]
+                            },
+                            options:
+                            {
+                                legend: { display: false },
+                                title:
+                                {
+                                    display: true,
+                                    text: 'Wykaz produkcji w ciągu tygodnia'
+                                }
+                            }
+                        });
+
+                        var h4tag = $('#h4_' + idName);
+                        h4tag.text(idName + ' - Suma: ' + total);
+
+                        arCharts[arNameCharts.indexOf(idName)] = (result);
+
+                        $('#spinner_' + idName).css('visibility', 'hidden');
+                        //element.css('visibility', 'visible');
+                    });
+            }
+        });
+    }
+
+    function refreshChart() {
+        clearInterval(idleInterval);
+
+        if (arCharts.length > 0) {
+
+            var myChart = $('.myChart');
+            myChart.each(function () {
+                var element = $(this);
+                var idName = element.attr('id');
+
+                $.getJSON('/api/weeklyproduction', { line: idName })
+                    .done(function (data) {
+
+                        var values = new Array();
+                        var target;
+                        var line;
+                        var findIndex = -1;
+                        var total;
+
+                        $.each(data, function (key, value) {
+
+                            if (key == 'target') {
+                                target = value;
+                            }
+
+                            if (key == 'line') {
+                                line = value;
+
+                                findIndex = arNameCharts.indexOf(line);
+                            }
+
+                            if (key == 'total') {
+                                total = value;
+                            }
+
+                            if (key == 'monday')
+                                values.push(value);
+                            else if (key == 'tuesday')
+                                values.push(value);
+                            else if (key == 'wednesday')
+                                values.push(value);
+                            else if (key == 'thursday')
+                                values.push(value);
+                            else if (key == 'friday')
+                                values.push(value);
+                            else if (key == 'saturday')
+                                values.push(value);
+                            else if (key == 'sunday')
+                                values.push(value);
+                        });
+
+                        if (findIndex >= 0) {
+
+                            var h4tag = $('#h4_' + idName);
+                            h4tag.text(idName + ' - Suma: ' + total);
+
+                            arCharts[findIndex].config.data.datasets[1].data = values;
+                            arCharts[findIndex].config.data.datasets[0].data = target;
+                            arCharts[findIndex].update();
+                        }
+
+                    });
+
+            });
+        }
+
+        idleInterval = setInterval('refreshChart()', 80000);
+    }
+
+    function showChart(event) {
+
+        var idTag = '';
+
+        if (event == 'ws1_cnh') {
+            idTag = "ch_WS1CNH";
+        }
+        else if (event == 'ws1_v50') {
+            idTag = "ch_WS1V50";
+        }
+        else if (event == 'ws2') {
+            idTag = "ch_WS2";
+        }
+        else if (event == 'ws3') {
+            idTag = "ch_WS3";
+        }
+        else if (event == 'ws2b_bja') {
+            idTag = "ch_WS2B_BJA";
+        }
+        else if (event == 'ws2b_gpf') {
+            idTag = "ch_WS2B_GPF";
+        }
+        else if (event == 'ws4_m260') {
+            idTag = "ch_WS4M260";
+        }
+        else if (event == 'ws5') {
+            idTag = "ch_WS5";
+        }
+        else if (event == 'ws6') {
+            idTag = "ch_WS6";
+        }
+        else if (event == 'stf3') {
+            idTag = "ch_STF3";
+        }
+        else if (event == 'stf4') {
+            idTag = "ch_STF4";
+        }
+        else if (event == 'stf5') {
+            idTag = "ch_STF5";
+        }
+        else if (event == 'stf6') {
+            idTag = "ch_STF6";
+        }
+        else if (event == 'stf7') {
+            idTag = "ch_STF7";
+        }
+
+        statusTag = $('#' + idTag).is(':checked');
+
+        var elementTable = $('#tablearea tbody');
+
+        var html;
+
+        if (statusTag) {
+
+            getData();
+
+            if (!existFirstRow) {
+                html = '<tr id="firstRow" > <td id="td' + idTag + '" > ' + findElement(idTag) + '</td > </tr > ';
+                elementTable.append(html);
+            }
+            else if (existFirstRow && countFirstCells < 3) {
+                html = '<td id="td' + idTag + '" > ' + findElement(idTag) + ' </td>';
+                $(existFirstRow).find('td:last').after(html);
+            }
+            else if (!existSecondtRow) {
+                html = '<tr id="secondRow" > <td id="td' + idTag + '" > ' + findElement(idTag) + '</td> </tr>';
+                elementTable.append(html);
+            }
+            else if (existSecondtRow && countSecondCells < 3) {
+                html = '<td id="td' + idTag + '" > ' + findElement(idTag) + ' </td>';
+                $(existSecondtRow).find('td:last').after(html);
+            }
+            else if (!existThirdRow) {
+                html = '<tr id="thirdRow" > <td id="td' + idTag + '" > ' + findElement(idTag) + '</td> </tr>';
+                elementTable.append(html);
+            }
+            else if (existThirdRow && countThirdCells < 3) {
+                html = '<td id="td' + idTag + '" > ' + findElement(idTag) + ' </td>';
+                $(existThirdRow).find('td:last').after(html);
+            }
+            else if (!existFourthRow) {
+                html = '<tr id="fourthRow" > <td id="td' + idTag + '" > ' + findElement(idTag) + '</td> </tr>';
+                elementTable.append(html);
+            }
+            else if (existFourthRow && countFourthCells < 3) {
+                html = '<td id="td' + idTag + '" > ' + findElement(idTag) + ' </td>';
+                $(existFourthRow).find('td:last').after(html);
+            }
+
+
+            createChart();
+        }
+        else {
+            var searchID = idTag.substr(3);
+            var index = arNameCharts.indexOf(searchID);
+
+            arNameCharts.splice(index, 1);
+
+            arCharts[index].destroy();
+            arCharts.splice(index, 1);
+
+            $('#td' + idTag).remove();
+
+            getData();
+            if (existFirstRow && countFirstCells < 3) {
+                if (existSecondtRow) {
+                    $(existFirstRow).find('td:last').after($(existSecondtRow).find('td:first'));
+                }
+            }
+
+            getData();
+            if (existSecondtRow && countSecondCells < 3) {
+                if (existThirdRow) {
+                    $(existSecondtRow).find('td:last').after($(existThirdRow).find('td:first'));
+                }
+            }
+
+            getData();
+            if (existThirdRow && countThirdCells < 3) {
+                if (existFourthRow) {
+                    $(existThirdRow).find('td:last').after($(existFourthRow).find('td:first'));
+                }
+            }
+
+
+            //sprawdzenie czy tr jest pusty
+            getData();
+
+            if (existFirstRow && countFirstCells === 0) {
+                $(existFirstRow).remove();
+            }
+            if (existSecondtRow && countSecondCells === 0) {
+                $(existSecondtRow).remove();
+            }
+            if (existThirdRow && countThirdCells === 0) {
+                $(existThirdRow).remove();
+            }
+            if (existFourthRow && countFourthCells === 0) {
+                $(existFourthRow).remove();
+            }
+
+        }
+    }
+
+    function findElement(selectChart) {
+        for (var i = 0; i < dictHtml.length; i++) {
+            if (dictHtml[i].key == selectChart)
+                return dictHtml[i].value;
+        }
+
+        return -1;
+    }
+
+    function getData() {
+        existFirstRow = document.getElementById('firstRow');
+        countFirstCells = $(existFirstRow).children().length;
+
+        existSecondtRow = document.getElementById('secondRow');
+        countSecondCells = $(existSecondtRow).children().length;
+
+        existThirdRow = document.getElementById('thirdRow');
+        countThirdCells = $(existThirdRow).children().length;
+
+        existFourthRow = document.getElementById('fourthRow');
+        countFourthCells = $(existFourthRow).children().length;
+    }
+
+
+</script>
+
+
+

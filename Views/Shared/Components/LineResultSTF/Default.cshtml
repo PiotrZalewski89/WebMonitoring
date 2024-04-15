@@ -1,0 +1,290 @@
+﻿@model LineParametersSTF
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="~/js/refreshDiv.js" type="text/javascript" language="javascript"></script>
+
+<link href="~/css/DivMain.css" rel="stylesheet" />
+
+<div id="jsRefresh" class="text-nowrap text-center text-white text-body fixed">
+    <table class="table table-hover table-striped table-bordered">
+        <thead class="bg-primary">
+            <tr class="text-white">
+                <th rowspan="2" class="bg-secondary" style="font-size:30px">Stanowisko</th>
+
+                @for (int i = 1; i < Model.MaxCells; i++)
+                {
+                    <th colspan="2" style="font-size:22px">Godzina @i</th>
+                }
+
+                <th colspan="2" class="bg-success" style="font-size:22px">Wynik</th>
+                <th colspan="2" rowspan="2" class="bg-warning" style="font-size:22px; text-align:justify">Edycja</th>
+            </tr>
+            <tr class="text-white" style="font-size:15px">
+                @for (int i = 0; i < Model.MaxCells; i++)
+                {
+                    <th class="bg-warning">Cel</th>
+                    <th class="bg-info">Realizacja</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <th colspan="19" style="font-size: 22px; text-align:left">STF 3</th>
+            </tr>
+
+            @foreach (var row in Model.LineData.STF3.Keys)
+            {
+
+                <tr style="font-size:16px;">
+                    <th style="text-align:right">@row</th>
+                    @{
+                        var goal = Model.Goals[LineDescription.LineSTF3 + " " + row];
+                        var result = Model.LineData.STF3[row];
+
+                        for (int i = 0; i < Model.MaxCells; i++)
+                        {
+                            <td class="bg-light">@goal[i]</td>
+
+                            @if (i < Model.MaxCells - 1 && Model.ActiveColumn.Get[i])
+                            {
+                                @if (goal[i] > result[i])
+                                {
+                                    <td class="bg-danger text-white">@result[i]</td>
+                                }
+                                else if (goal[i] <= result[i])
+                                {
+                                    <td class="bg-success text-white">@result[i]</td>
+                                }
+                            }
+                            else
+                            {
+                                if (i < Model.MaxCells - 1 && !Model.ActiveColumn.Get[i])
+                                {
+                                    <td class="bg-secondary text-white">@result[i]</td>
+                                }
+                                else
+                                {
+                                    @if (goal[i] > result[i])
+                                    {
+                                        <td class="bg-danger text-white">@result[i]</td>
+                                    }
+                                    else if (goal[i] <= result[i])
+                                    {
+                                        <td class="bg-success text-white">@result[i]</td>
+                                    }
+                                }
+
+                            }
+                        }
+
+                        <td>
+                            <form asp-controller="@Model.Url.ReturnController" asp-action=@(LineDescription.LineSTF3 + row.Trim()) method="post" style="height:20px;">
+
+                                <input type="hidden" name="Url.ReturnAction"
+                                       value="@ViewContext.HttpContext.Request.Action()" />
+                                <input type="hidden" name="Url.ReturnController"
+                                       value="@ViewContext.HttpContext.Request.Controller()" />
+                                <input style="width: 60px" type="number" asp-for="@Model.ActualTotalParts" />
+                                <button type="submit" class="btn btn-primary mb-2">Wyślij</button>
+
+                            </form>
+                        </td>
+                    }
+
+                </tr>
+            }
+
+            <tr>
+                <th colspan="19" style="font-size: 22px; text-align:left">STF 4</th>
+            </tr>
+
+            @foreach (var row in Model.LineData.STF4.Keys)
+            {
+                <tr style="font-size:16px">
+                    <th style="text-align:right">@row</th>
+                    @{
+                        var goal = Model.Goals[LineDescription.LineSTF4 + " " + row];
+                        var result = Model.LineData.STF4[row];
+
+                        for (int i = 0; i < Model.MaxCells; i++)
+                        {
+                            <td class="bg-light">@goal[i]</td>
+
+                            @if (i < Model.MaxCells - 1 && Model.ActiveColumn.Get[i])
+                            {
+                                @if (goal[i] > result[i])
+                                {
+                                    <td class="bg-danger text-white">@result[i]</td>
+                                }
+                                else if (goal[i] <= result[i])
+                                {
+                                    <td class="bg-success text-white">@result[i]</td>
+                                }
+                            }
+                            else
+                            {
+                                if (i < Model.MaxCells - 1 && !Model.ActiveColumn.Get[i])
+                                {
+                                    <td class="bg-secondary text-white">@result[i]</td>
+                                }
+                                else
+                                {
+                                    @if (goal[i] > result[i])
+                                    {
+                                        <td class="bg-danger text-white">@result[i]</td>
+                                    }
+                                    else if (goal[i] <= result[i])
+                                    {
+                                        <td class="bg-success text-white">@result[i]</td>
+                                    }
+                                }
+
+                            }
+                        }
+                        <td>
+                            <form asp-controller="@Model.Url.ReturnController" asp-action=@(LineDescription.LineSTF4 + row.Replace(" ", "")) method="post" style="height:20px;">
+
+                                <input type="hidden" name="Url.ReturnAction"
+                                       value="@ViewContext.HttpContext.Request.Action()" />
+                                <input type="hidden" name="Url.ReturnController"
+                                       value="@ViewContext.HttpContext.Request.Controller()" />
+                                <input type="hidden" value="@Model" />
+                                <input style="width: 60px" type="number" asp-for="@Model.ActualTotalParts" />
+                                <button type="submit" class="btn btn-primary mb-2">Wyślij</button>
+                            </form>
+                        </td>
+                    }
+                </tr>
+            }
+
+            <tr>
+                <th colspan="19" style="font-size: 22px; text-align:left">STF 5</th>
+            </tr>
+
+            @foreach (var row in Model.LineData.STF5.Keys)
+            {
+                <tr style="font-size:16px">
+                    <th style="text-align:right">@row</th>
+                    @{
+                        var goal = Model.Goals[LineDescription.LineSTF5 + " " + row];
+                        var result = Model.LineData.STF5[row];
+
+                        for (int i = 0; i < Model.MaxCells; i++)
+                        {
+                            <td class="bg-light">@goal[i]</td>
+
+                            @if (i < Model.MaxCells - 1 && Model.ActiveColumn.Get[i])
+                            {
+                                @if (goal[i] > result[i])
+                                {
+                                    <td class="bg-danger text-white">@result[i]</td>
+                                }
+                                else if (goal[i] <= result[i])
+                                {
+                                    <td class="bg-success text-white">@result[i]</td>
+                                }
+                            }
+                            else
+                            {
+                                if (i < Model.MaxCells - 1 && !Model.ActiveColumn.Get[i])
+                                {
+                                    <td class="bg-secondary text-white">@result[i]</td>
+                                }
+                                else
+                                {
+                                    @if (goal[i] > result[i])
+                                    {
+                                        <td class="bg-danger text-white">@result[i]</td>
+                                    }
+                                    else if (goal[i] <= result[i])
+                                    {
+                                        <td class="bg-success text-white">@result[i]</td>
+                                    }
+                                }
+
+                            }
+                        }
+                        <td>
+                            <form asp-controller="@Model.Url.ReturnController" asp-action=@(LineDescription.LineSTF5 + row.Trim()) method="post" style="height:20px;">
+
+                                <input type="hidden" name="Url.ReturnAction"
+                                       value="@ViewContext.HttpContext.Request.Action()" />
+                                <input type="hidden" name="Url.ReturnController"
+                                       value="@ViewContext.HttpContext.Request.Controller()" />
+                                <input type="hidden" value="@Model" />
+                                <input style="width: 60px" type="number" asp-for="@Model.ActualTotalParts" />
+                                <button type="submit" class="btn btn-primary mb-2">Wyślij</button>
+                            </form>
+                        </td>
+                    }
+
+                </tr>
+            }
+
+            <tr>
+                <th colspan="19" style="font-size: 22px; text-align: left">STF 6</th>
+            </tr>
+
+            @foreach (var row in Model.LineData.STF6.Keys)
+            {
+                <tr style="font-size:16px">
+                    <th style="text-align:right">@row</th>
+                    @{
+                        var goal = Model.Goals[LineDescription.LineSTF6 + " " + row];
+                        var result = Model.LineData.STF6[row];
+
+                        for (int i = 0; i < Model.MaxCells; i++)
+                        {
+                            <td class="bg-light">@goal[i]</td>
+
+                            @if (i < Model.MaxCells - 1 && Model.ActiveColumn.Get[i])
+                            {
+                                @if (goal[i] > result[i])
+                                {
+                                    <td class="bg-danger text-white">@result[i]</td>
+                                }
+                                else if (goal[i] <= result[i])
+                                {
+                                    <td class="bg-success text-white">@result[i]</td>
+                                }
+                            }
+                            else
+                            {
+                                if (i < Model.MaxCells - 1 && !Model.ActiveColumn.Get[i])
+                                {
+                                    <td class="bg-secondary text-white">@result[i]</td>
+                                }
+                                else
+                                {
+                                    @if (goal[i] > result[i])
+                                    {
+                                        <td class="bg-danger text-white">@result[i]</td>
+                                    }
+                                    else if (goal[i] <= result[i])
+                                    {
+                                        <td class="bg-success text-white">@result[i]</td>
+                                    }
+                                }
+
+                            }
+                        }
+                        <td>
+                            <form asp-controller="@Model.Url.ReturnController" asp-action=@(LineDescription.LineSTF6 + row.Trim()) method="post" style="height:20px;">
+
+                                <input type="hidden" name="Url.ReturnAction"
+                                       value="@ViewContext.HttpContext.Request.Action()" />
+                                <input type="hidden" name="Url.ReturnController"
+                                       value="@ViewContext.HttpContext.Request.Controller()" />
+                                <input type="hidden" value="@Model" />
+                                <input style="width: 60px" type="number" asp-for="@Model.ActualTotalParts" />
+                                <button type="submit" class="btn btn-primary mb-2">Wyślij</button>
+                            </form>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

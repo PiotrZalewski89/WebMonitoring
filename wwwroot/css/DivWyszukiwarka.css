@@ -1,0 +1,23 @@
+﻿.fixed {
+    position: relative;
+    top: 0px;
+    left: 400px;
+    width: 850px;
+    visibility: hidden;
+}
+
+.fixed_2 {
+    position: relative;
+    top: 0px;
+    left: 100px;
+    width: 850px;
+    /*visibility: hidden;*/
+}
+
+.fixed3 {
+    position: relative;
+    top: 0px;
+    left: 400px;
+    width: 550px;
+    visibility: hidden;
+}

@@ -1,0 +1,124 @@
+﻿using System;
+using System.Collections.Generic;
+
+#nullable disable
+
+namespace WebMonitoring.Table.StorageStation
+{
+    public partial class PanelFontijneL1
+    {
+        public string GmpartNumber { get; set; }
+        public string ManufacturingLotTraceCode { get; set; }
+        public decimal? ShellWallThickness { get; set; }
+        public string CwsMatPartNo { get; set; }
+        public string CwsMatCode { get; set; }
+        public string CwsMatArea { get; set; }
+        public decimal? CwsMatActualWeight { get; set; }
+        public decimal? CwsMatNominalWeight { get; set; }
+        public decimal? CwsMatPermissibleMaxWeight { get; set; }
+        public decimal? CwsMatPermissibleMinWeight { get; set; }
+        public string CwsMatOkNok { get; set; }
+        public string CsmSubPartNo { get; set; }
+        public string CsmBrickCode { get; set; }
+        public decimal? CsmZones123BrickAveragePerimeter { get; set; }
+        public string CsmDateofMeasurement { get; set; }
+        public string CsmMeasurementOkNok { get; set; }
+        public decimal? CsmZone1BrickAveragePerimeter { get; set; }
+        public decimal? CsmZone1BrickMaxDiameter { get; set; }
+        public decimal? CsmZone1BrickMinDiameter { get; set; }
+        public decimal? CsmZone2BrickAveragePerimeter { get; set; }
+        public decimal? CsmZone2BrickMaxDiameter { get; set; }
+        public decimal? CsmZone2BrickMinDiameter { get; set; }
+        public decimal? CsmZone3BrickAveragePerimeter { get; set; }
+        public decimal? CsmZone3BrickMaxDiameter { get; set; }
+        public decimal? CsmZone3BrickMinDiameter { get; set; }
+        public decimal? CsmBrickNominalDiameter { get; set; }
+        public decimal? CsmBrickPermissibleMaxDiameter { get; set; }
+        public decimal? CsmBrickPermissibleMinDiameter { get; set; }
+        public string CvmDateofMeasurement { get; set; }
+        public string CvmMeasurementOkNok { get; set; }
+        public decimal? CvmZones123ShellAverageGbd { get; set; }
+        public decimal? CvmZones123ShellAveragePerimeter { get; set; }
+        public decimal? CvmZone1ShellAverageGbd { get; set; }
+        public decimal? CvmZone1ShellAveragePerimeter { get; set; }
+        public decimal? CvmZone1ShellMaxDiameter { get; set; }
+        public decimal? CvmZone1ShellMinDiameter { get; set; }
+        public decimal? CvmZone2ShellAverageGbd { get; set; }
+        public decimal? CvmZone2ShellAveragePerimeter { get; set; }
+        public decimal? CvmZone2ShellMaxDiameter { get; set; }
+        public decimal? CvmZone2ShellMinDiameter { get; set; }
+        public decimal? CvmZone3ShellAverageGbd { get; set; }
+        public decimal? CvmZone3ShellAveragePerimeter { get; set; }
+        public decimal? CvmZone3ShellMaxDiameter { get; set; }
+        public decimal? CvmZone3ShellMinDiameter { get; set; }
+        public decimal? CvmShellNominalGbd { get; set; }
+        public decimal? CvmShellGbdplusTolerance { get; set; }
+        public decimal? CvmShellGbdnegTolerance { get; set; }
+        public string CmsMarkingOkNok { get; set; }
+        public long? FrameTime { get; set; }
+        public int? FrameSeq { get; set; }
+        public string OempartNumber { get; set; }
+        public string CwsMatBoxCode { get; set; }
+        public string CwsMatBachCode { get; set; }
+        public string Cws2MatPartNo { get; set; }
+        public string Cws2MatCode { get; set; }
+        public string Cws2MatBoxCode { get; set; }
+        public string Cws2MatBachCode { get; set; }
+        public string Cws2MatArea { get; set; }
+        public decimal? Cws2MatActualWeight { get; set; }
+        public decimal? Cws2MatNominalWeight { get; set; }
+        public decimal? Cws2MatPermissibleMaxWeight { get; set; }
+        public decimal? Cws2MatPermissibleMinWeight { get; set; }
+        public string Cws2MatOkNok { get; set; }
+        public string Csm2SubPartNo { get; set; }
+        public string Csm2BrickCode { get; set; }
+        public decimal? Csm2Zones123BrickAveragePerimeter { get; set; }
+        public string Csm2DateofMeasurement { get; set; }
+        public string Csm2MeasurementOkNok { get; set; }
+        public decimal? Csm2Zone1BrickAveragePerimeter { get; set; }
+        public decimal? Csm2Zone1BrickMaxDiameter { get; set; }
+        public decimal? Csm2Zone1BrickMinDiameter { get; set; }
+        public decimal? Csm2Zone2BrickAveragePerimeter { get; set; }
+        public decimal? Csm2Zone2BrickMaxDiameter { get; set; }
+        public decimal? Csm2Zone2BrickMinDiameter { get; set; }
+        public decimal? Csm2Zone3BrickAveragePerimeter { get; set; }
+        public decimal? Csm2Zone3BrickMaxDiameter { get; set; }
+        public decimal? Csm2Zone3BrickMinDiameter { get; set; }
+        public decimal? Csm2BrickNominalDiameter { get; set; }
+        public decimal? Csm2BrickPermissibleMaxDiameter { get; set; }
+        public decimal? Csm2BrickPermissibleMinDiameter { get; set; }
+        public decimal? CvmZones456ShellAverageGbd { get; set; }
+        public decimal? CvmZones456ShellAveragePerimeter { get; set; }
+        public decimal? CvmZone4ShellAverageGbd { get; set; }
+        public decimal? CvmZone4ShellAveragePerimeter { get; set; }
+        public decimal? CvmZone4ShellMaxDiameter { get; set; }
+        public decimal? CvmZone4ShellMinDiameter { get; set; }
+        public decimal? CvmZone5ShellAverageGbd { get; set; }
+        public decimal? CvmZone5ShellAveragePerimeter { get; set; }
+        public decimal? CvmZone5ShellMaxDiameter { get; set; }
+        public decimal? CvmZone5ShellMinDiameter { get; set; }
+        public decimal? CvmZone6ShellAverageGbd { get; set; }
+        public decimal? CvmZone6ShellAveragePerimeter { get; set; }
+        public decimal? CvmZone6ShellMaxDiameter { get; set; }
+        public decimal? CvmZone6ShellMinDiameter { get; set; }
+        public long? FrameTime2 { get; set; }
+        public int? FrameSeq2 { get; set; }
+        public string NrLinii { get; set; }
+        public long? FrameTime3 { get; set; }
+        public int? FrameSeq3 { get; set; }
+        public string CvmShellMeasuredHeightOkNok { get; set; }
+        public long? FrameTime4 { get; set; }
+        public int? FrameSeq4 { get; set; }
+        public string CptPushOutOkNok { get; set; }
+        public decimal? CptOutletPushoutForce { get; set; }
+        public decimal? CptInletPushoutForce { get; set; }
+        public string CsiSubstrateMeasurementOkNok { get; set; }
+        public decimal? CsiOutletSubstrateMeasureShell { get; set; }
+        public decimal? CsiInletSubstrateMeasureShell { get; set; }
+        public decimal? CisOutletInsertForce { get; set; }
+        public decimal? CisInletInsertForce { get; set; }
+        public decimal? CisOutletInsertSpeed { get; set; }
+        public decimal? CisInletInsertSpeed { get; set; }
+        public string ManufacturingLotTraceCodeOutlet { get; set; }
+    }
+}
