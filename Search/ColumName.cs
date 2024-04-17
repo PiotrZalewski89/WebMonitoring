@@ -126,6 +126,10 @@ namespace WebMonitoring.Search
         public string NrShellScrucu { get; set; }
         public string Nr_Oslona { get; set; }
     }
+    public class ColumnFGWs7:BasicColumnWs7
+    {
+        public string Nr_Oslona { get; set; }
+    }
 
     public class ColumnCLWs7 : BasicColumnWs7
     {

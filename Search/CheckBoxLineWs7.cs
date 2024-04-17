@@ -40,8 +40,8 @@ namespace WebMonitoring.Search
         public IList<ColumnOP380Ws7> DaneMarker { get; set; }
         public IList<ColumnOP380Ws7> DaneOP380 { get; set; }
         public IList<ColumnOP380Ws7> DaneOP390 { get; set; }
-        public IList<ColumnOP380Ws7> DaneFG { get; set; }
-        public IList<ColumnOP380Ws7> DaneCL { get; set; }
+        public IList<ColumnFGWs7> DaneFG { get; set; }
+        public IList<ColumnCLWs7> DaneCL { get; set; }
 
         public bool Stf2 { get; set; }
         public bool Stf1 { get; set; }
@@ -317,7 +317,7 @@ namespace WebMonitoring.Search
                         NrShellScrof = x.NrShellaScrof,
                         NrShellScrucu = x.NrShellaScrcuc,
                         NrMixer = x.NrMixer,
-                        Nr_Oslona = x.NrOslony,
+                        Nr_Oslona = x.NrOslona,
                         Wynik_operacji = x.WynikOperacji,
                         DateTime = (DateTime)x.DtOperacji,
                         Frame_time = x.FrameTime
@@ -325,16 +325,12 @@ namespace WebMonitoring.Search
 
             return result;
         }
-        private IList<ColumnOP380Ws7> GetDataFromFG(string codeCover)
+        private IList<ColumnFGWs7> GetDataFromFG(string codeCover)
         {
             var result = context.Ws7TtOp380s
                     .Where(x => x.NrOslony == codeCover)
-                    .Select(x => new ColumnOP380Ws7
+                    .Select(x => new ColumnFGWs7
                     {
-                        NrShellDoc = x.NrShellaDoc,
-                        NrShellScrof = x.NrShellaScrof,
-                        NrShellScrucu = x.NrShellaScrcuc,
-                        NrMixer = x.NrMixer,
                         Nr_Oslona = x.NrOslony,
                         Wynik_operacji = x.WynikOperacji,
                         DateTime = (DateTime)x.DtOperacji,
@@ -614,7 +610,7 @@ namespace WebMonitoring.Search
                         NrShellScrof = x.NrShellaScrof,
                         NrShellScrucu = x.NrShellaScrcuc,
                         NrMixer = x.NrMixer,
-                        Nr_Oslona = x.NrOslony,
+                        Nr_Oslona = x.NrOslona,
                         Wynik_operacji = x.WynikOperacji,
                         DateTime = (DateTime)x.DtOperacji,
                         Frame_time = x.FrameTime
@@ -623,19 +619,15 @@ namespace WebMonitoring.Search
             return result;
         }
 
-        private IList<ColumnOP380Ws7> GetDataFromFGByDate(DateTime from, DateTime to)
+        private IList<ColumnFGWs7> GetDataFromFGByDate(DateTime from, DateTime to)
         {
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
             var result = context.Ws7TtOp380s
                     .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                    .Select(x => new ColumnOP380Ws7
+                    .Select(x => new ColumnFGWs7
                     {
-                        NrShellDoc = x.NrShellaDoc,
-                        NrShellScrof = x.NrShellaScrof,
-                        NrShellScrucu = x.NrShellaScrcuc,
-                        NrMixer = x.NrMixer,
                         Nr_Oslona = x.NrOslony,
                         Wynik_operacji = x.WynikOperacji,
                         DateTime = (DateTime)x.DtOperacji,
@@ -681,14 +673,20 @@ namespace WebMonitoring.Search
             DaneStf1 = new List<IQueryable<Table.CNH.CnhWs1MeasuredAssembly>>();
             DaneStf2 = new List<IQueryable<Table.CNH.CnhWs2Shell>>();
 
-            DaneEtap1 = new List<BasicColumnWs7>();
-            DaneEtap2 = new List<BasicColumnWs7>();
-            DaneEtap3 = new List<BasicColumnWs7>();
-            DaneEtap4 = new List<BasicColumnWs7>();
-            DanePLT = new List<ColumnLTWs7>();
-            DaneFLT = new List<ColumnLTWs7>();
-            DaneFG = new List<BasicColumnWs7>();
-            DanePetlaKJ = new List<ColumnCL>();
+            DaneMixer = new List<ColumnPLTWs7>();
+            DaneOP290 = new List<ColumnOP290Ws7>();
+            DaneOP300 = new List<ColumnOP300Ws7>();
+            DaneOP310 = new List<ColumnOP310Ws7> ();
+            DaneOP320 = new List<ColumnOP320Ws7>();
+            DaneOP325 = new List<ColumnOP320Ws7>();
+            DaneOP330 = new List<ColumnOP320Ws7>();
+            DaneOP360 = new List<ColumnOP320Ws7>();
+            DaneFLT = new List<ColumnOP320Ws7>();
+            DaneMarker = new List<ColumnOP380Ws7>();
+            DaneOP390 = new List<ColumnOP380Ws7>();
+            DaneFG = new List<ColumnFGWs7>();
+            DaneCL = new List<ColumnCLWs7>();
+            
             HtmlTable = new List<string>();
 
             Stf1 = Stf2 = Stf;
