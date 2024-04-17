@@ -257,8 +257,11 @@ namespace WebMonitoring.Models
             1,
             1,
             1
-       };    
-
+       };
+        private int[] NumberOfStationsWS7 = new int[]
+        {
+            1,1,1,1,1,1,1,1,1,1,1,1,1,1
+        };
 
         public void SetValues(string selectedLine, IDictionary<string, List<int>> Results, int target)
         {
@@ -344,6 +347,8 @@ namespace WebMonitoring.Models
                 return NumberOfStationsWS5;
             else if (selectedLine == LineDescription.LineWS6)
                 return NumberOfStationsWS6;
+            else if (selectedLine == LineDescription.LineWS7)
+                return NumberOfStationsWS7;
             else if (selectedLine == LineDescription.LineWS1CNH)
                 return NumberOfStationsWS1CNH;
             else if (selectedLine == LineDescription.LineWS1V50)

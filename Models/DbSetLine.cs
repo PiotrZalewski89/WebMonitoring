@@ -305,6 +305,13 @@ namespace WebMonitoring.Models
 
                 dbSet.Target = target;
             }
+            //poniżej chyba nie, bo to jest tam gdzie nie ma skanowania
+            //else if (selectLine == LineDescription.LineWS7)
+            //{
+            //    DbSetLineWS7 dbSet = new DbSetLineWS7(new CnhDbContext());
+
+            //    dbSet.Target = target;
+            //}
             else if (selectLine == LineDescription.LineWeil)
             {
                 DbSetLineShell dbSet = new DbSetLineShell(new ProductionDbContext());
