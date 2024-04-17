@@ -115,6 +115,7 @@ namespace WebMonitoring.Search
             return codeFromPzzw;
         }
 
+        #region Get data from Machines
         private IList<ColumnPLTWs7> GetDataFromMixer(string codeMixer)
         {
             var result = context.Ws7TtPreleakTesters
@@ -177,7 +178,6 @@ namespace WebMonitoring.Search
 
             return result;
         }
-
 
         private IList<ColumnOP320Ws7> GetDataFromOP320(string codeDOC)
         {
@@ -279,7 +279,7 @@ namespace WebMonitoring.Search
                         NrShellScrof = x.NrShellaScrof,
                         NrShellScrucu = x.NrShellaScrcuc,
                         NrMixer = x.NrMixer,
-                        Nr_Oslona=x.NrOslony,
+                        Nr_Oslona = x.NrOslony,
                         Wynik_operacji = x.WynikOperacji,
                         DateTime = (DateTime)x.DtOperacji,
                         Frame_time = x.FrameTime
@@ -307,6 +307,24 @@ namespace WebMonitoring.Search
             return result;
         }
 
+        private IList<ColumnOP380Ws7> GetDataFromOP390(string codeCover)
+        {
+            var result = context.Ws7TtWeldingCell3Op390Stn2s
+                    .Where(x => x.NrOslona == codeCover)
+                    .Select(x => new ColumnOP380Ws7
+                    {
+                        NrShellDoc = x.NrShellaDoc,
+                        NrShellScrof = x.NrShellaScrof,
+                        NrShellScrucu = x.NrShellaScrcuc,
+                        NrMixer = x.NrMixer,
+                        Nr_Oslona = x.NrOslony,
+                        Wynik_operacji = x.WynikOperacji,
+                        DateTime = (DateTime)x.DtOperacji,
+                        Frame_time = x.FrameTime
+                    }).ToArray();
+
+            return result;
+        }
         private IList<ColumnOP380Ws7> GetDataFromFG(string codeCover)
         {
             var result = context.Ws7TtOp380s
@@ -326,7 +344,6 @@ namespace WebMonitoring.Search
             return result;
         }
 
-       
         private IList<ColumnCLWs7> GetDataFromControlLoop(string codeCover)
         {
             var result = context.Ws7TtPetlaKontrolnaL4s
@@ -353,14 +370,38 @@ namespace WebMonitoring.Search
             return result;
         }
 
-        private IList<BasicColumnWs7> GetDataFromEtap1ByDate(DateTime from, DateTime to)
+        #endregion
+
+
+        #region get data from machines by date
+
+        private IList<ColumnPLTWs7> GetDataFromMixerByDate(DateTime from, DateTime to)
         {
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.CnhEtap1s
+            var result = context.Ws7TtPreleakTesters
                           .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                          .Select(x => new BasicColumnWs7
+                          .Select(x => new ColumnPLTWs7
+                          {
+                              NrMixer = x.NrMixer,
+                              Wynik_operacji = x.WynikOperacji,
+                              Frame_time = x.FrameTime,
+                              DateTime = (DateTime)x.DtOperacji
+                          }).ToArray();
+
+            return result;
+        }
+
+        private IList<ColumnOP290Ws7> GetDataFromOP290ByDate(DateTime from, DateTime to)
+        {
+
+            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
+            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
+
+            var result = context.Ws7TtWeldingCell2Op290Stn1s
+                          .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
+                          .Select(x => new ColumnOP290Ws7
                           {
                               NrShellDoc = x.NrShellaDoc,
                               Wynik_operacji = x.WynikOperacji,
@@ -368,19 +409,22 @@ namespace WebMonitoring.Search
                               DateTime = (DateTime)x.DtOperacji
                           }).ToArray();
 
+
             return result;
         }
 
-        private IList<BasicColumnWs7> GetDataFromEtap2ByDate(DateTime from, DateTime to)
+        private IList<ColumnOP300Ws7> GetDataFromOP300ByDate(DateTime from, DateTime to)
         {
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.CnhEtap2s
+            var result = context.Ws7TtWeldingCell2Op300Stn1s
                           .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                          .Select(x => new BasicColumnWs7
+                          .Select(x => new ColumnOP300Ws7
                           {
+                              NrShellDoc = x.NrShellaDoc,
                               NrShellScrof = x.NrShellaScrof,
+                              NrMixer = x.NrMixer,
                               Wynik_operacji = x.WynikOperacji,
                               Frame_time = x.FrameTime,
                               DateTime = (DateTime)x.DtOperacji
@@ -389,14 +433,15 @@ namespace WebMonitoring.Search
             return result;
         }
 
-        private IList<BasicColumnWs7> GetDataFromEtap3ByDate(DateTime from, DateTime to)
+        private IList<ColumnOP310Ws7> GetDataFromOP310ByDate(DateTime from, DateTime to)
         {
+
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.CnhEtap3s
+            var result = context.Ws7TtWeldingCell2Op310Stn2s
                           .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                          .Select(x => new BasicColumnWs7
+                          .Select(x => new ColumnOP310Ws7
                           {
                               NrShellScrucu = x.NrShellaScrcuc,
                               Wynik_operacji = x.WynikOperacji,
@@ -407,36 +452,120 @@ namespace WebMonitoring.Search
             return result;
         }
 
-        private IList<ColumnLTWs7> GetDataFromPLTByDate(DateTime from, DateTime to)
+
+        private IList<ColumnOP320Ws7> GetDataFromOP320ByDate(DateTime from, DateTime to)
         {
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.CnhPreleakTesters
-                        .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                          .Select(x => new ColumnLTWs7
+            var result = context.Ws7TtWeldingCell3Op320Stn1s
+                    .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
+                    .Select(x => new ColumnOP320Ws7
+                    {
+                        NrShellDoc = x.NrShellaDoc,
+                        NrShellScrof = x.NrShellaScrof,
+                        NrShellScrucu = x.NrShellaScrcuc,
+                        NrMixer = x.NrMixer,
+                        Wynik_operacji = x.WynikOperacji,
+                        DateTime = (DateTime)x.DtOperacji,
+                        Frame_time = x.FrameTime
+                    }).ToArray();
+
+            return result;
+        }
+
+        private IList<ColumnOP320Ws7> GetDataFromOP325ByDate(DateTime from, DateTime to)
+        {
+            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
+            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
+
+            var result = context.Ws7TtWeldingCell3Op325Stn1s
+                    .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
+                    .Select(x => new ColumnOP320Ws7
+                    {
+                        NrShellDoc = x.NrShellaDoc,
+                        NrShellScrof = x.NrShellaScrof,
+                        NrShellScrucu = x.NrShellaScrcuc,
+                        NrMixer = x.NrMixer,
+                        Wynik_operacji = x.WynikOperacji,
+                        DateTime = (DateTime)x.DtOperacji,
+                        Frame_time = x.FrameTime
+                    }).ToArray();
+
+            return result;
+        }
+
+        private IList<ColumnOP320Ws7> GetDataFromOP330ByDate(DateTime from, DateTime to)
+        {
+            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
+            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
+
+            var result = context.Ws7TtWeldingCell3Op330Stn2s
+                          .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
+                          .Select(x => new ColumnOP320Ws7
                           {
+                              NrShellDoc = x.NrShellaDoc,
+                              NrShellScrof = x.NrShellaScrof,
+                              NrShellScrucu = x.NrShellaScrcuc,
                               NrMixer = x.NrMixer,
                               Wynik_operacji = x.WynikOperacji,
-                              Wyciek = x.Wyciek,
-                              Wyciek_jedn = x.WyciekJedn,
-                              Cisnienie = x.Cisnienie,
-                              Cisnienie_jedn = x.CisnienieJedn,
-                              DateTime = (DateTime)x.DtOperacji,
-                              Frame_time = x.FrameTime
+                              Frame_time = x.FrameTime,
+                              DateTime = (DateTime)x.DtOperacji
                           }).ToArray();
 
             return result;
         }
 
-        private IList<ColumnLTWs7> GetDataFromFLTByDate(DateTime from, DateTime to)
+        private IList<ColumnOP320Ws7> GetDataFromOP360ByDate(DateTime from, DateTime to)
         {
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.CnhFinalleakTesters
-                     .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                    .Select(x => new ColumnLTWs7
+            var result = context.Ws7TtManualWeldingOp360s
+                    .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
+                    .Select(x => new ColumnOP320Ws7
+                    {
+                        NrShellDoc = x.NrShellaDoc,
+                        NrShellScrof = x.NrShellaScrof,
+                        NrShellScrucu = x.NrShellaScrcuc,
+                        NrMixer = x.NrMixer,
+                        Wynik_operacji = x.WynikOperacji,
+                        DateTime = (DateTime)x.DtOperacji,
+                        Frame_time = x.FrameTime
+                    }).ToArray();
+
+            return result;
+        }
+
+        private IList<ColumnOP320Ws7> GetDataFromFLTByDate(DateTime from, DateTime to)
+        {
+            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
+            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
+
+            var result = context.Ws7TtFinalLeakTesters
+                    .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
+                    .Select(x => new ColumnOP320Ws7
+                    {
+                        NrShellDoc = x.NrShellaDoc,
+                        NrShellScrof = x.NrShellaScrof,
+                        NrShellScrucu = x.NrShellaScrcuc,
+                        NrMixer = x.NrMixer,
+                        Wynik_operacji = x.WynikOperacji,
+                        DateTime = (DateTime)x.DtOperacji,
+                        Frame_time = x.FrameTime
+                    }).ToArray();
+
+            return result;
+        }
+
+        private IList<ColumnOP380Ws7> GetDataFromMarkingByDate(DateTime from, DateTime to)
+        {
+            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
+            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
+
+            var result = context.Ws7TtMarkings
+                    .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
+                    .Select(x => new ColumnOP380Ws7
                     {
                         NrShellDoc = x.NrShellaDoc,
                         NrShellScrof = x.NrShellaScrof,
@@ -444,10 +573,6 @@ namespace WebMonitoring.Search
                         NrMixer = x.NrMixer,
                         Nr_Oslona = x.NrOslony,
                         Wynik_operacji = x.WynikOperacji,
-                        Wyciek = x.Wyciek,
-                        Wyciek_jedn = x.WyciekJedn,
-                        Cisnienie = x.Cisnienie,
-                        Cisnienie_jedn = x.CisnienieJedn,
                         DateTime = (DateTime)x.DtOperacji,
                         Frame_time = x.FrameTime
                     }).ToArray();
@@ -455,37 +580,40 @@ namespace WebMonitoring.Search
             return result;
         }
 
-        private IList<BasicColumnWs7> GetDataFromEtap4ByDate(DateTime from, DateTime to)
+        private IList<ColumnOP380Ws7> GetDataFromOP380ByDate(DateTime from, DateTime to)
         {
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.CnhEtap4s
-                         .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                          .Select(x => new BasicColumnWs7
-                          {
-                              NrShellDoc = x.NrShellaDoc,
-                              NrShellScrof = x.NrShellaScrof,
-                              NrShellScrucu = x.NrShellaScrcuc,
-                              NrMixer = x.NrMixer,
-                              Nr_Oslona = x.NrOslony,
-                              Wynik_operacji = x.WynikOperacji,
-                              Frame_time = x.FrameTime,
-                              DateTime = (DateTime)x.DtOperacji
-                          }).ToArray();
+            var result = context.Ws7TtOp380s
+                    .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
+                    .Select(x => new ColumnOP380Ws7
+                    {
+                        NrShellDoc = x.NrShellaDoc,
+                        NrShellScrof = x.NrShellaScrof,
+                        NrShellScrucu = x.NrShellaScrcuc,
+                        NrMixer = x.NrMixer,
+                        Nr_Oslona = x.NrOslony,
+                        Wynik_operacji = x.WynikOperacji,
+                        DateTime = (DateTime)x.DtOperacji,
+                        Frame_time = x.FrameTime
+                    }).ToArray();
 
             return result;
         }
-
-        private IList<BasicColumnWs7> GetDataFromFinalGaugeByDate(DateTime from, DateTime to)
+        private IList<ColumnOP380Ws7> GetDataFromOP390ByDate(DateTime from, DateTime to)
         {
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.CnhChecks
+            var result = context.Ws7TtWeldingCell3Op390Stn2s
                     .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                    .Select(x => new BasicColumnWs7
+                    .Select(x => new ColumnOP380Ws7
                     {
+                        NrShellDoc = x.NrShellaDoc,
+                        NrShellScrof = x.NrShellaScrof,
+                        NrShellScrucu = x.NrShellaScrcuc,
+                        NrMixer = x.NrMixer,
                         Nr_Oslona = x.NrOslony,
                         Wynik_operacji = x.WynikOperacji,
                         DateTime = (DateTime)x.DtOperacji,
@@ -495,7 +623,29 @@ namespace WebMonitoring.Search
             return result;
         }
 
-        private IList<ColumnCL> GetDataFromControlLoopByDate(DateTime from, DateTime to)
+        private IList<ColumnOP380Ws7> GetDataFromFGByDate(DateTime from, DateTime to)
+        {
+            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
+            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
+
+            var result = context.Ws7TtOp380s
+                    .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
+                    .Select(x => new ColumnOP380Ws7
+                    {
+                        NrShellDoc = x.NrShellaDoc,
+                        NrShellScrof = x.NrShellaScrof,
+                        NrShellScrucu = x.NrShellaScrcuc,
+                        NrMixer = x.NrMixer,
+                        Nr_Oslona = x.NrOslony,
+                        Wynik_operacji = x.WynikOperacji,
+                        DateTime = (DateTime)x.DtOperacji,
+                        Frame_time = x.FrameTime
+                    }).ToArray();
+
+            return result;
+        }
+
+        private IList<ColumnCLWs7> GetDataFromControlLoopByDate(DateTime from, DateTime to)
         {
             var frameTimeFrom = from.ConvertDateTimeToFrameTime();
             var frameTimeTo = to.ConvertDateTimeToFrameTime();
@@ -503,9 +653,9 @@ namespace WebMonitoring.Search
             var result = context.Ws5CnhPetlaKontrolnaL1s
                      .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                     .OrderByDescending(x => x.Id)
-                     .Select(x => new ColumnCL
+                     .Select(x => new ColumnCLWs7
                      {
-                         Nr_Grawerka = x.NrKatalizatora,
+                         NrKatalizatora = x.NrKatalizatora,
                          PZZW = x.NrPaleta,
                          Wynik_operacji = x.WynikOperacji,
                          Uwagi = x.Quality,
@@ -523,6 +673,8 @@ namespace WebMonitoring.Search
 
             return result;
         }
+
+        #endregion
 
         public void GetDataCode(bool download = false)
         {
