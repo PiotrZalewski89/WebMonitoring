@@ -127,7 +127,13 @@ namespace WebMonitoring.Search
         public string Nr_Oslona { get; set; }
     }
 
-
+    public class ColumnCLWs7 : BasicColumnWs7
+    {
+        public string PZZW { get; set; }
+        public string NrKatalizatora { get; set; }
+        public string OperatorID { get; set; }
+        public string Uwagi { get; set; }
+    }
 
 
     public class ColumnLTWs5 : BasicColumnWs5

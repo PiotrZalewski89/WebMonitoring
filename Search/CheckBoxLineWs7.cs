@@ -215,17 +215,16 @@ namespace WebMonitoring.Search
             return result;
         }
 
-        private IList<BasicColumnWs7> GetDataFromEtap4(string code)
+        private IList<ColumnOP320Ws7> GetDataFromOP330(string codeDOC)
         {
-            var result = context.CnhEtap4s
-                          .Where(x => x.NrOslony == code)
-                          .Select(x => new BasicColumnWs7
+            var result = context.Ws7TtWeldingCell3Op330Stn2s
+                          .Where(x => x.NrShellaDoc == codeDOC)
+                          .Select(x => new ColumnOP320Ws7
                           {
                               NrShellDoc = x.NrShellaDoc,
                               NrShellScrof = x.NrShellaScrof,
                               NrShellScrucu = x.NrShellaScrcuc,
                               NrMixer = x.NrMixer,
-                              Nr_Oslona = x.NrOslony,
                               Wynik_operacji = x.WynikOperacji,
                               Frame_time = x.FrameTime,
                               DateTime = (DateTime)x.DtOperacji
@@ -234,12 +233,71 @@ namespace WebMonitoring.Search
             return result;
         }
 
-        private IList<BasicColumnWs7> GetDataFromFinalGauge(string code)
+        private IList<ColumnOP320Ws7> GetDataFromOP360(string codeDOC)
         {
-            var result = context.CnhChecks
-                    .Where(x => x.NrOslony == code)
-                    .Select(x => new BasicColumnWs7
+            var result = context.Ws7TtManualWeldingOp360s
+                    .Where(x => x.NrShellaDoc == codeDOC)
+                    .Select(x => new ColumnOP320Ws7
                     {
+                        NrShellDoc = x.NrShellaDoc,
+                        NrShellScrof = x.NrShellaScrof,
+                        NrShellScrucu = x.NrShellaScrcuc,
+                        NrMixer = x.NrMixer,
+                        Wynik_operacji = x.WynikOperacji,
+                        DateTime = (DateTime)x.DtOperacji,
+                        Frame_time = x.FrameTime
+                    }).ToArray();
+
+            return result;
+        }
+
+        private IList<ColumnOP320Ws7> GetDataFromFLT(string codeDOC)
+        {
+            var result = context.Ws7TtFinalLeakTesters
+                    .Where(x => x.NrShellaDoc == codeDOC)
+                    .Select(x => new ColumnOP320Ws7
+                    {
+                        NrShellDoc = x.NrShellaDoc,
+                        NrShellScrof = x.NrShellaScrof,
+                        NrShellScrucu = x.NrShellaScrcuc,
+                        NrMixer = x.NrMixer,
+                        Wynik_operacji = x.WynikOperacji,
+                        DateTime = (DateTime)x.DtOperacji,
+                        Frame_time = x.FrameTime
+                    }).ToArray();
+
+            return result;
+        }
+
+        private IList<ColumnOP380Ws7> GetDataFromMarking(string codeDOC)
+        {
+            var result = context.Ws7TtMarkings
+                    .Where(x => x.NrShellaDoc == codeDOC)
+                    .Select(x => new ColumnOP380Ws7
+                    {
+                        NrShellDoc = x.NrShellaDoc,
+                        NrShellScrof = x.NrShellaScrof,
+                        NrShellScrucu = x.NrShellaScrcuc,
+                        NrMixer = x.NrMixer,
+                        Nr_Oslona=x.NrOslony,
+                        Wynik_operacji = x.WynikOperacji,
+                        DateTime = (DateTime)x.DtOperacji,
+                        Frame_time = x.FrameTime
+                    }).ToArray();
+
+            return result;
+        }
+
+        private IList<ColumnOP380Ws7> GetDataFromOP380(string codeCover)
+        {
+            var result = context.Ws7TtOp380s
+                    .Where(x => x.NrOslony == codeCover)
+                    .Select(x => new ColumnOP380Ws7
+                    {
+                        NrShellDoc = x.NrShellaDoc,
+                        NrShellScrof = x.NrShellaScrof,
+                        NrShellScrucu = x.NrShellaScrcuc,
+                        NrMixer = x.NrMixer,
                         Nr_Oslona = x.NrOslony,
                         Wynik_operacji = x.WynikOperacji,
                         DateTime = (DateTime)x.DtOperacji,
@@ -249,14 +307,34 @@ namespace WebMonitoring.Search
             return result;
         }
 
-        private IList<ColumnCL> GetDataFromControlLoop(string code)
+        private IList<ColumnOP380Ws7> GetDataFromFG(string codeCover)
         {
-            var result = context.Ws5CnhPetlaKontrolnaL1s
-                     .Where(x => x.NrKatalizatora == code)
+            var result = context.Ws7TtOp380s
+                    .Where(x => x.NrOslony == codeCover)
+                    .Select(x => new ColumnOP380Ws7
+                    {
+                        NrShellDoc = x.NrShellaDoc,
+                        NrShellScrof = x.NrShellaScrof,
+                        NrShellScrucu = x.NrShellaScrcuc,
+                        NrMixer = x.NrMixer,
+                        Nr_Oslona = x.NrOslony,
+                        Wynik_operacji = x.WynikOperacji,
+                        DateTime = (DateTime)x.DtOperacji,
+                        Frame_time = x.FrameTime
+                    }).ToArray();
+
+            return result;
+        }
+
+       
+        private IList<ColumnCLWs7> GetDataFromControlLoop(string codeCover)
+        {
+            var result = context.Ws7TtPetlaKontrolnaL4s
+                     .Where(x => x.NrKatalizatora == codeCover)
                      .OrderByDescending(x => x.Id)
-                     .Select(x => new ColumnCL
+                     .Select(x => new ColumnCLWs7
                      {
-                         Nr_Grawerka = x.NrKatalizatora,
+                         NrKatalizatora = x.NrKatalizatora,
                          PZZW = x.NrPaleta,
                          Wynik_operacji = x.WynikOperacji,
                          Uwagi = x.Quality,
