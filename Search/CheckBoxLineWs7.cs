@@ -15,7 +15,9 @@ namespace WebMonitoring.Search
         public bool All { get; set; }
         public bool WS7_TT_PRELEAK_TESTER { get; set; }
         public bool WS7_TT_WELDING_CELL_2_OP290_STN1 { get; set; }
+        public bool WS7_TT_WELDING_CELL_2_OP300_STN1 { get; set; }
         public bool WS7_TT_WELDING_CELL_2_OP310_STN2 { get; set; }
+        public bool WS7_TT_WELDING_CELL_3_OP320_STN1 { get; set; }
         public bool WS7_TT_WELDING_CELL_3_OP325_STN1 { get; set; }
         public bool WS7_TT_WELDING_CELL_3_OP330_STN2 { get; set; }
         public bool WS7_TT_MANUAL_WELDING_OP360 { get; set; }
@@ -712,47 +714,88 @@ namespace WebMonitoring.Search
                 DateTime from = (DateTime)DateTime;
                 DateTime to = (DateTime)DateTime.Value.AddDays(1);
 
-                if (Etap1)
+                if (WS7_TT_PRELEAK_TESTER)
                 {
-                    var result = GetDataFromEtap1ByDate(from, to);
+                    var result = GetDataFromMixerByDate(from, to);
 
                     foreach (var r in result)
                     {
-                        DaneEtap1.Add(r);
+                        DaneMixer.Add(r);
                     }
                 }
 
-                if (Etap2)
+                if (WS7_TT_WELDING_CELL_2_OP290_STN1)
                 {
-                    var result = GetDataFromEtap2ByDate(from, to);
+                    var result = GetDataFromOP290ByDate(from, to);
 
                     foreach (var r in result)
                     {
-                        DaneEtap2.Add(r);
+                        DaneOP290.Add(r);
                     }
                 }
 
-                if (Etap3)
+                if (WS7_TT_WELDING_CELL_2_OP300_STN1)
                 {
-                    var result = GetDataFromEtap3ByDate(from, to);
+                    var result = GetDataFromOP300ByDate(from, to);
 
                     foreach (var r in result)
                     {
-                        DaneEtap3.Add(r);
+                        DaneOP300.Add(r);
                     }
                 }
 
-                if (PLT)
+                if (WS7_TT_WELDING_CELL_2_OP310_STN2)
                 {
-                    var result = GetDataFromPLTByDate(from, to);
+                    var result = GetDataFromOP310ByDate(from, to);
 
                     foreach (var r in result)
                     {
-                        DanePLT.Add(r);
+                        DaneOP310.Add(r);
+                    }
+                }
+                if (WS7_TT_WELDING_CELL_3_OP320_STN1)
+                {
+                    var result = GetDataFromOP320ByDate(from, to);
+
+                    foreach (var r in result)
+                    {
+                        DaneOP320.Add(r);
                     }
                 }
 
-                if (FLT)
+                if (WS7_TT_WELDING_CELL_3_OP325_STN1)
+                {
+                    var result = GetDataFromOP325ByDate(from, to);
+
+                    foreach (var r in result)
+                    {
+                        DaneOP325.Add(r);
+                    }
+                }
+
+
+
+                if (WS7_TT_WELDING_CELL_3_OP330_STN2)
+                {
+                    var result = GetDataFromOP330ByDate(from, to);
+
+                    foreach (var r in result)
+                    {
+                        DaneOP330.Add(r);
+                    }
+                }
+
+                if (WS7_TT_MANUAL_WELDING_OP360)
+                {
+                    var result = GetDataFromOP360ByDate(from, to);
+
+                    foreach (var r in result)
+                    {
+                        DaneOP360.Add(r);
+                    }
+                }
+
+                if (WS7_TT_FINAL_LEAK_TESTER)
                 {
                     var result = GetDataFromFLTByDate(from, to);
 
@@ -762,33 +805,41 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (Etap4)
+                if (WS7_TT_MARKING)
                 {
-                    var result = GetDataFromEtap4ByDate(from, to);
+                    var result = GetDataFromMarkingByDate(from, to);
 
                     foreach (var r in result)
                     {
-                        DaneEtap4.Add(r);
+                        DaneMarker.Add(r);
                     }
                 }
 
-                if (FG)
+                if (WS7_TT_WELDING_CELL_3_OP390_STN2)
                 {
-                    var result = GetDataFromFinalGaugeByDate(from, to);
+                    var result = GetDataFromOP390ByDate(from, to);
+
+                    foreach (var r in result)
+                    {
+                        DaneOP390.Add(r);
+                    }
+                }
+                if (WS7_TT_FINAL_GAUGE)
+                {
+                    var result = GetDataFromFGByDate(from, to);
 
                     foreach (var r in result)
                     {
                         DaneFG.Add(r);
                     }
                 }
-
-                if (PetlaKJ)
+                if (WS7_TT_PETLA_KONTROLNA_L4)
                 {
                     var result = GetDataFromControlLoopByDate(from, to);
 
                     foreach (var r in result)
                     {
-                        DanePetlaKJ.Add(r);
+                        DaneCL.Add(r);
                     }
                 }
             }
