@@ -1097,51 +1097,81 @@ namespace WebMonitoring.Search
                 FileName.Add("Stf2");
             }
 
-            if (DaneEtap1?.Count > 0)
+            if (DaneMixer?.Count > 0)
             {
-                Table.Add(dataTable.WriteTextToFile(DaneEtap1.ToArray()));
-                FileName.Add("Etap1");
+                Table.Add(dataTable.WriteTextToFile(DaneMixer.ToArray()));
+                FileName.Add("Mixer");
             }
 
-            if (DaneEtap2?.Count > 0)
+            if (DaneOP290?.Count > 0)
             {
-                Table.Add(dataTable.WriteTextToFile(DaneEtap2.ToArray()));
-                FileName.Add("Etap2");
+                Table.Add(dataTable.WriteTextToFile(DaneOP390.ToArray()));
+                FileName.Add("OP290");
             }
 
-            if (DaneEtap3?.Count > 0)
+            if (DaneOP300?.Count > 0)
             {
-                Table.Add(dataTable.WriteTextToFile(DaneEtap3.ToArray()));
-                FileName.Add("Etap3");
+                Table.Add(dataTable.WriteTextToFile(DaneOP300.ToArray()));
+                FileName.Add("OP300");
             }
 
-            if (DaneEtap4?.Count > 0)
+            if (DaneOP310?.Count > 0)
             {
-                Table.Add(dataTable.WriteTextToFile(DaneEtap4.ToArray()));
-                FileName.Add("Etap4");
+                Table.Add(dataTable.WriteTextToFile(DaneOP310.ToArray()));
+                FileName.Add("OP310");
             }
 
-            if (DanePLT?.Count > 0)
+            if (DaneOP320?.Count > 0)
             {
-                Table.Add(dataTable.WriteTextToFile(DanePLT.ToArray()));
-                FileName.Add("Preleaktester");
+                Table.Add(dataTable.WriteTextToFile(DaneOP320.ToArray()));
+                FileName.Add("OP320");
+            }
+
+            if (DaneOP325?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DaneOP325.ToArray()));
+                FileName.Add("OP325");
+            }
+
+            if (DaneOP330?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DaneOP330.ToArray()));
+                FileName.Add("OP330");
+            }
+
+            if (DaneOP360?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DaneOP360.ToArray()));
+                FileName.Add("OP360");
             }
 
             if (DaneFLT?.Count > 0)
             {
                 Table.Add(dataTable.WriteTextToFile(DaneFLT.ToArray()));
-                FileName.Add("Final leak tetser");
+                FileName.Add("Final leak tester");
+            }
+
+            if (DaneMarker?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DaneMarker.ToArray()));
+                FileName.Add("FLT Marker");
+            }
+
+            if (DaneOP390?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DaneOP390.ToArray()));
+                FileName.Add("OP390");
             }
 
             if (DaneFG?.Count > 0)
             {
                 Table.Add(dataTable.WriteTextToFile(DaneFG.ToArray()));
-                FileName.Add("Sprawdzian geometrii");
+                FileName.Add("Final Gauge");
             }
 
-            if (DanePetlaKJ?.Count > 0)
+            if (DaneCL?.Count > 0)
             {
-                Table.Add(dataTable.WriteTextToFile(DanePetlaKJ.ToArray()));
+                Table.Add(dataTable.WriteTextToFile(DaneCL.ToArray()));
                 FileName.Add("Petla KJ");
             }
         }
