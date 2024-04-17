@@ -216,7 +216,7 @@ namespace WebMonitoring.Models
             _LineData.Add(WS7[13], WS7_TT_PETLA_KONTROLNA_L4);
         }
 
-        public int GetCountFromDayWS5(DateTime dateTime)
+        public int GetCountFromDayWS7(DateTime dateTime)
         {
             var dateTimeFrom = dateTime;
             var dateTimeTo = dateTime.AddDays(1);

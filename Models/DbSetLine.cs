@@ -97,9 +97,21 @@ namespace WebMonitoring.Models
 
             Target = dbSet.Target;
         }
+
         virtual public void GetProductionCountPerHourWS6(DateTime dateTime, string line)
         {
             DbSetLineWS6 dbSet = new DbSetLineWS6(new CnhDbContext());
+
+            dbSet.GetProductionCountPerHour(dateTime);
+
+            _LineData = dbSet.LineData;
+
+            Target = dbSet.Target;
+        }
+
+        virtual public void GetProductionCountPerHourWS7(DateTime dateTime, string line)
+        {
+            DbSetLineWS7 dbSet = new DbSetLineWS7(new CnhDbContext());
 
             dbSet.GetProductionCountPerHour(dateTime);
 
@@ -175,6 +187,12 @@ namespace WebMonitoring.Models
                 DbSetLineWS6 dbSet = new DbSetLineWS6(new CnhDbContext());
 
                 return dbSet.GetCountFromDayWS6(dateTime);
+            }
+            else if (selectLine == LineDescription.LineWS7)
+            {
+                DbSetLineWS7 dbSet = new DbSetLineWS7(new CnhDbContext());
+
+                return dbSet.GetCountFromDayWS7(dateTime);
             }
             else if (selectLine == LineDescription.LineSTF3)
             {
