@@ -17,15 +17,22 @@ namespace WebMonitoring.Models
 
         private string[] WS7 = new string[]
        {
-            "Etap 1",
-            "Etap 2",
-            "Etap 3",
-            "Preleak tester",
+            "Mixer",
+            "Cela 2 OP290",
+            "Cela 2 OP300",
+            "Cela 2 OP310",
+            "Cela 3 OP320",
+            "Cela 3 OP325",
+            "Cela 3 OP330",
+            "Man Weld OP360",
             "Final leak tester",
-            "Etap 4",
-            "Sprawdzian geometrii",
-            "Pętla KJ"
+            "Marking",
+            "OP380",
+            "Cela 3 OP390",
+            "Final gauge",
+            "Pętla kontrolna"
        };
+
 
         private Dictionary<string, List<int>> _LineData { get; set; }
 
@@ -116,7 +123,7 @@ namespace WebMonitoring.Models
             WS7_TT_WELDING_CELL_3_OP390_STN2 = new List<int>();
             WS7_TT_FINAL_GAUGE = new List<int>();
             WS7_TT_PETLA_KONTROLNA_L4 = new List<int>();
-           
+
             for (int i = 0; i < 8; i++)
             {
                 var frameTimeUtcFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc();
@@ -153,8 +160,6 @@ namespace WebMonitoring.Models
                    .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
                    .Count());
 
-               
-
                 WS7_TT_MANUAL_WELDING_OP360.Add(context.Ws7TtManualWeldingOp360s
                .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
                .Count());
@@ -167,12 +172,9 @@ namespace WebMonitoring.Models
                     .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
                     .Count());
 
-
-
-
-
-
-
+                WS7_TT_FINAL_GAUGE.Add(context.Ws7TtFinalGauges
+                   .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
+                   .Count());
 
                 WS7_TT_PETLA_KONTROLNA_L4.Add(context.Ws7TtPetlaKontrolnaL4s
                .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk && x.NrPaleta != Remove)
@@ -182,23 +184,36 @@ namespace WebMonitoring.Models
                 dateTimeTo = dateTimeTo.AddHours(1);
             }
 
-            Etap1.Add(Etap1.Sum());
-            Etap2.Add(Etap2.Sum());
-            Etap3.Add(Etap3.Sum());
-            PLT.Add(PLT.Sum());
-            Etap4.Add(Etap4.Sum());
-            FLT.Add(FLT.Sum());
-            SprawdzianGeometrii.Add(SprawdzianGeometrii.Sum());
-            PetlaKJ.Add(PetlaKJ.Sum());
+            WS7_TT_PRELEAK_TESTER.Add(WS7_TT_PRELEAK_TESTER.Sum());
+            WS7_TT_WELDING_CELL_2_OP290_STN1.Add(WS7_TT_WELDING_CELL_2_OP290_STN1.Sum());
+            WS7_TT_WELDING_CELL_2_OP300_STN1.Add(WS7_TT_WELDING_CELL_2_OP300_STN1.Sum());
+            WS7_TT_WELDING_CELL_2_OP310_STN2.Add(WS7_TT_WELDING_CELL_2_OP310_STN2.Sum());
+            WS7_TT_WELDING_CELL_3_OP320_STN1.Add(WS7_TT_WELDING_CELL_3_OP320_STN1.Sum());
+            WS7_TT_WELDING_CELL_3_OP325_STN1.Add(WS7_TT_WELDING_CELL_3_OP325_STN1.Sum());
+            WS7_TT_WELDING_CELL_3_OP330_STN2.Add(WS7_TT_WELDING_CELL_3_OP330_STN2.Sum());
+            WS7_TT_MANUAL_WELDING_OP360.Add(WS7_TT_MANUAL_WELDING_OP360.Sum());
+            WS7_TT_FINAL_LEAK_TESTER.Add(WS7_TT_FINAL_LEAK_TESTER.Sum());
+            WS7_TT_MARKING_TESTER.Add(WS7_TT_MARKING_TESTER.Sum());
+            WS7_TT_OP380.Add(WS7_TT_OP380.Sum());
+            WS7_TT_WELDING_CELL_3_OP390_STN2.Add(WS7_TT_WELDING_CELL_3_OP390_STN2.Sum());
+            WS7_TT_FINAL_GAUGE.Add(WS7_TT_FINAL_GAUGE.Sum());
+            WS7_TT_PETLA_KONTROLNA_L4.Add(WS7_TT_PETLA_KONTROLNA_L4.Sum());
 
-            _LineData.Add(WS5[0], Etap1);
-            _LineData.Add(WS5[1], Etap2);
-            _LineData.Add(WS5[2], Etap3);
-            _LineData.Add(WS5[3], PLT);
-            _LineData.Add(WS5[4], FLT);
-            _LineData.Add(WS5[5], Etap4);
-            _LineData.Add(WS5[6], SprawdzianGeometrii);
-            _LineData.Add(WS5[7], PetlaKJ);
+
+            _LineData.Add(WS7[0], WS7_TT_PRELEAK_TESTER);
+            _LineData.Add(WS7[1], WS7_TT_WELDING_CELL_2_OP290_STN1);
+            _LineData.Add(WS7[2], WS7_TT_WELDING_CELL_2_OP300_STN1);
+            _LineData.Add(WS7[3], WS7_TT_WELDING_CELL_2_OP310_STN2);
+            _LineData.Add(WS7[4], WS7_TT_WELDING_CELL_3_OP320_STN1);
+            _LineData.Add(WS7[5], WS7_TT_WELDING_CELL_3_OP325_STN1);
+            _LineData.Add(WS7[6], WS7_TT_WELDING_CELL_3_OP330_STN2);
+            _LineData.Add(WS7[7], WS7_TT_MANUAL_WELDING_OP360);
+            _LineData.Add(WS7[8], WS7_TT_FINAL_LEAK_TESTER);
+            _LineData.Add(WS7[9], WS7_TT_MARKING_TESTER);
+            _LineData.Add(WS7[10], WS7_TT_OP380);
+            _LineData.Add(WS7[11], WS7_TT_WELDING_CELL_3_OP390_STN2);
+            _LineData.Add(WS7[12], WS7_TT_FINAL_GAUGE);
+            _LineData.Add(WS7[13], WS7_TT_PETLA_KONTROLNA_L4);
         }
 
         public int GetCountFromDayWS5(DateTime dateTime)
