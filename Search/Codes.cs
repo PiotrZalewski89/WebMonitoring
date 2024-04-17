@@ -20,6 +20,14 @@ namespace WebMonitoring.Search
         public string CodeCatalyst { get; set; }
     }
 
+    public class CodesWs7
+    {
+        public string CodeBasicDoc { get; set; }
+        public string CodeBasicScrof { get; set; }
+        public string CodeBasicScrcuc { get; set; }
+        public string CodeMixer { get; set; }
+        public string CodeCatalyst { get; set; }
+    }
     public class CodesWs6
     {
         public string CodeBasicStf1 { get; set; }

@@ -23,7 +23,8 @@ namespace WebMonitoring.Controllers
              "Wyszukiwanie - Linia WS6 CNH 529",//7
              "Wyszukiwanie - Linia STF 3,4,5,6",//8
              "Wyszukiwanie - Linia STF 1",//9
-             "Wyszukiwanie - Linia STF 2"//10
+             "Wyszukiwanie - Linia STF 2",//10
+                "Wyszukiwanie - Linia WS7"//11
       };
 
 
@@ -378,6 +379,66 @@ namespace WebMonitoring.Controllers
 
                         if (ws.Table?.Count > 0)
                             return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs6.zip");
+                    }
+                }
+            }
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult LineWs7()
+        {
+
+            ViewBag.TitleNavBar = Desctription[11];
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult LineWs7(CheckBoxLineWs7 ws)
+        {
+            ViewBag.TitleNavBar = Desctription[11];
+            bool checkboxChecked = ws.Etap1 || ws.Etap2 || ws.Etap3 || ws.Etap4 || ws.PLT || ws.FLT || ws.FG || ws.PetlaKJ;
+
+            if (!string.IsNullOrEmpty(ws.TextArea))
+                ws.FindData = new List<string>(
+                                     ws.TextArea.Split(new string[] { "\r\n" },
+                                     StringSplitOptions.RemoveEmptyEntries));
+
+
+            if (!string.IsNullOrEmpty(Request.Form["wyszukiwanie"]))
+            {
+                if ((ws.FindData?.Count > 0 && (ws.SelectCode || ws.SelectPzzw)) && checkboxChecked)
+                {
+                    ws.GetDataCode();
+                    return View(ws);
+                }
+                else if (ws.SelectDate && checkboxChecked && ws.DateTime != null)
+                {
+                    if (ws.DateTime != null)
+                    {
+                        ws.GetDataCode();
+                        return View(ws);
+                    }
+                }
+            }
+            else if (!string.IsNullOrEmpty(Request.Form["pobierz"]))
+            {
+                if ((ws.FindData?.Count > 0 && (ws.SelectCode || ws.SelectPzzw)) && checkboxChecked)
+                {
+                    ws.GetDataCode(true);
+
+                    if (ws.Table?.Count > 0)
+                        return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs5.zip");
+                }
+                else if (ws.SelectDate && checkboxChecked && ws.DateTime != null)
+                {
+                    if (ws.DateTime != null)
+                    {
+                        ws.GetDataCode(true);
+
+                        if (ws.Table?.Count > 0)
+                            return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs5.zip");
                     }
                 }
             }

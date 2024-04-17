@@ -67,7 +67,7 @@ namespace WebMonitoring.Components
             }
             else if (selectLine == LineDescription.LineWS7)
             {
-                _DbSetLine.GetProductionCountPerHourWS6(dateTime, LineDescription.LineWS7);
+                _DbSetLine.GetProductionCountPerHourWS7(dateTime, LineDescription.LineWS7);
             }
             else if (selectLine == LineDescription.LineWeil)
             {

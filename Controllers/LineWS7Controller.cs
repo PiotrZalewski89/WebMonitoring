@@ -36,7 +36,7 @@ namespace WebMonitoring.Controllers
         }
 
         [HttpPost]
-        public IActionResult LineWS5(LineParametersWS line)
+        public IActionResult LineWS7(LineParametersWS line)
         {
             if (ModelState.IsValid)
             {
