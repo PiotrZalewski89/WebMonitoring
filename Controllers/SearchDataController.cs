@@ -398,7 +398,7 @@ namespace WebMonitoring.Controllers
         public IActionResult LineWs7(CheckBoxLineWs7 ws)
         {
             ViewBag.TitleNavBar = Desctription[11];
-            bool checkboxChecked = ws.Etap1 || ws.Etap2 || ws.Etap3 || ws.Etap4 || ws.PLT || ws.FLT || ws.FG || ws.PetlaKJ;
+            bool checkboxChecked = ws.Mixer || ws.OP290 || ws.OP300 || ws.OP310 || ws.OP320 || ws.OP330 || ws.OP325 || ws.OP360||ws.FLT||ws.Marking||ws.OP380||ws.OP390||ws.FG||ws.CL;
 
             if (!string.IsNullOrEmpty(ws.TextArea))
                 ws.FindData = new List<string>(
@@ -429,7 +429,7 @@ namespace WebMonitoring.Controllers
                     ws.GetDataCode(true);
 
                     if (ws.Table?.Count > 0)
-                        return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs5.zip");
+                        return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs7.zip");
                 }
                 else if (ws.SelectDate && checkboxChecked && ws.DateTime != null)
                 {
@@ -438,7 +438,7 @@ namespace WebMonitoring.Controllers
                         ws.GetDataCode(true);
 
                         if (ws.Table?.Count > 0)
-                            return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs5.zip");
+                            return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs7.zip");
                     }
                 }
             }

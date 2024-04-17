@@ -13,20 +13,20 @@ namespace WebMonitoring.Search
         private CodesWs7 Codes { get; set; }
 
         public bool All { get; set; }
-        public bool WS7_TT_PRELEAK_TESTER { get; set; }
-        public bool WS7_TT_WELDING_CELL_2_OP290_STN1 { get; set; }
-        public bool WS7_TT_WELDING_CELL_2_OP300_STN1 { get; set; }
-        public bool WS7_TT_WELDING_CELL_2_OP310_STN2 { get; set; }
-        public bool WS7_TT_WELDING_CELL_3_OP320_STN1 { get; set; }
-        public bool WS7_TT_WELDING_CELL_3_OP325_STN1 { get; set; }
-        public bool WS7_TT_WELDING_CELL_3_OP330_STN2 { get; set; }
-        public bool WS7_TT_MANUAL_WELDING_OP360 { get; set; }
-        public bool WS7_TT_FINAL_GAUGE { get; set; }
-        public bool WS7_TT_FINAL_LEAK_TESTER { get; set; }
-        public bool WS7_TT_MARKING { get; set; }
-        public bool WS7_TT_OP380 { get; set; }
-        public bool WS7_TT_WELDING_CELL_3_OP390_STN2 { get; set; }
-        public bool WS7_TT_PETLA_KONTROLNA_L4 { get; set; }
+        public bool Mixer { get; set; }
+        public bool OP290 { get; set; }
+        public bool OP300 { get; set; }
+        public bool OP310 { get; set; }
+        public bool OP320 { get; set; }
+        public bool OP325 { get; set; }
+        public bool OP330 { get; set; }
+        public bool OP360 { get; set; }
+        public bool FG { get; set; }
+        public bool FLT { get; set; }
+        public bool Marking { get; set; }
+        public bool OP380 { get; set; }
+        public bool OP390 { get; set; }
+        public bool CL { get; set; }
 
         public IList<IQueryable<Table.CNH.CnhWs1MeasuredAssembly>> DaneStf1 { get; set; }
         public IList<IQueryable<Table.CNH.CnhWs2Shell>> DaneStf2 { get; set; }
@@ -714,7 +714,7 @@ namespace WebMonitoring.Search
                 DateTime from = (DateTime)DateTime;
                 DateTime to = (DateTime)DateTime.Value.AddDays(1);
 
-                if (WS7_TT_PRELEAK_TESTER)
+                if (Mixer)
                 {
                     var result = GetDataFromMixerByDate(from, to);
 
@@ -724,7 +724,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_WELDING_CELL_2_OP290_STN1)
+                if (OP290)
                 {
                     var result = GetDataFromOP290ByDate(from, to);
 
@@ -734,7 +734,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_WELDING_CELL_2_OP300_STN1)
+                if (OP300)
                 {
                     var result = GetDataFromOP300ByDate(from, to);
 
@@ -744,7 +744,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_WELDING_CELL_2_OP310_STN2)
+                if (OP310)
                 {
                     var result = GetDataFromOP310ByDate(from, to);
 
@@ -753,7 +753,7 @@ namespace WebMonitoring.Search
                         DaneOP310.Add(r);
                     }
                 }
-                if (WS7_TT_WELDING_CELL_3_OP320_STN1)
+                if (OP320)
                 {
                     var result = GetDataFromOP320ByDate(from, to);
 
@@ -763,7 +763,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_WELDING_CELL_3_OP325_STN1)
+                if (OP325)
                 {
                     var result = GetDataFromOP325ByDate(from, to);
 
@@ -775,7 +775,7 @@ namespace WebMonitoring.Search
 
 
 
-                if (WS7_TT_WELDING_CELL_3_OP330_STN2)
+                if (OP330)
                 {
                     var result = GetDataFromOP330ByDate(from, to);
 
@@ -785,7 +785,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_MANUAL_WELDING_OP360)
+                if (OP360)
                 {
                     var result = GetDataFromOP360ByDate(from, to);
 
@@ -795,7 +795,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_FINAL_LEAK_TESTER)
+                if (FLT)
                 {
                     var result = GetDataFromFLTByDate(from, to);
 
@@ -805,7 +805,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_MARKING)
+                if (Marking)
                 {
                     var result = GetDataFromMarkingByDate(from, to);
 
@@ -815,7 +815,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_WELDING_CELL_3_OP390_STN2)
+                if (OP390)
                 {
                     var result = GetDataFromOP390ByDate(from, to);
 
@@ -824,7 +824,7 @@ namespace WebMonitoring.Search
                         DaneOP390.Add(r);
                     }
                 }
-                if (WS7_TT_FINAL_GAUGE)
+                if (FG)
                 {
                     var result = GetDataFromFGByDate(from, to);
 
@@ -833,7 +833,7 @@ namespace WebMonitoring.Search
                         DaneFG.Add(r);
                     }
                 }
-                if (WS7_TT_PETLA_KONTROLNA_L4)
+                if (CL)
                 {
                     var result = GetDataFromControlLoopByDate(from, to);
 
@@ -906,7 +906,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_PRELEAK_TESTER && Codes.CodeMixer != Brak)
+                if (Mixer && Codes.CodeMixer != Brak)
                 {
                     var result = GetDataFromMixer(Codes.CodeMixer);
 
@@ -916,7 +916,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_WELDING_CELL_2_OP290_STN1 && Codes.CodeBasicDoc != Brak)
+                if (OP290 && Codes.CodeBasicDoc != Brak)
                 {
                     var result = GetDataFromOP290(Codes.CodeBasicDoc);
 
@@ -926,7 +926,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_WELDING_CELL_2_OP300_STN1 && Codes.CodeBasicDoc != Brak)
+                if (OP300 && Codes.CodeBasicDoc != Brak)
                 {
                     var result = GetDataFromOP300(Codes.CodeBasicDoc);
 
@@ -936,7 +936,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_WELDING_CELL_2_OP310_STN2 && Codes.CodeBasicScrcuc != Brak)
+                if (OP310 && Codes.CodeBasicScrcuc != Brak)
                 {
                     var result = GetDataFromOP310(Codes.CodeBasicScrcuc);
 
@@ -946,7 +946,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_WELDING_CELL_3_OP320_STN1 && Codes.CodeBasicDoc != Brak)
+                if (OP320 && Codes.CodeBasicDoc != Brak)
                 {
                     var result = GetDataFromOP320(Codes.CodeBasicDoc);
 
@@ -956,7 +956,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_WELDING_CELL_3_OP325_STN1 && Codes.CodeBasicDoc != Brak)
+                if (OP325 && Codes.CodeBasicDoc != Brak)
                 {
                     var result = GetDataFromOP325(Codes.CodeBasicDoc);
 
@@ -966,7 +966,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_WELDING_CELL_3_OP330_STN2 && Codes.CodeBasicDoc != Brak)
+                if (OP330 && Codes.CodeBasicDoc != Brak)
                 {
                     var result = GetDataFromOP330(Codes.CodeBasicDoc);
 
@@ -976,7 +976,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_MANUAL_WELDING_OP360 && Codes.CodeBasicDoc != Brak)
+                if (OP360 && Codes.CodeBasicDoc != Brak)
                 {
                     var result = GetDataFromOP360(Codes.CodeBasicDoc);
 
@@ -986,7 +986,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_FINAL_LEAK_TESTER && Codes.CodeBasicDoc != Brak)
+                if (FLT && Codes.CodeBasicDoc != Brak)
                 {
                     var result = GetDataFromFLT(Codes.CodeBasicDoc);
 
@@ -996,7 +996,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_MARKING && Codes.CodeBasicDoc != Brak)
+                if (Marking && Codes.CodeBasicDoc != Brak)
                 {
                     var result = GetDataFromMarking(Codes.CodeBasicDoc);
 
@@ -1006,7 +1006,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_OP380 && Codes.CodeCatalyst != Brak)
+                if (OP380 && Codes.CodeCatalyst != Brak)
                 {
                     var result = GetDataFromOP380(Codes.CodeCatalyst);
 
@@ -1016,7 +1016,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_WELDING_CELL_3_OP390_STN2 && Codes.CodeCatalyst != Brak)
+                if (OP390 && Codes.CodeCatalyst != Brak)
                 {
                     var result = GetDataFromOP390(Codes.CodeCatalyst);
 
@@ -1026,7 +1026,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_FINAL_GAUGE && Codes.CodeCatalyst != Brak)
+                if (FG && Codes.CodeCatalyst != Brak)
                 {
                     var result = GetDataFromFG(Codes.CodeCatalyst);
 
@@ -1036,7 +1036,7 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (WS7_TT_PETLA_KONTROLNA_L4 && Codes.CodeCatalyst != Brak)
+                if (CL && Codes.CodeCatalyst != Brak)
                 {
                     var result = GetDataFromControlLoop(Codes.CodeCatalyst);
 
