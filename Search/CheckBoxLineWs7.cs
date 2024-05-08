@@ -38,7 +38,7 @@ namespace WebMonitoring.Search
         public IList<ColumnOP320Ws7> DaneOP325 { get; set; }
         public IList<ColumnOP320Ws7> DaneOP330 { get; set; }
         public IList<ColumnOP320Ws7> DaneOP360 { get; set; }
-        public IList<ColumnOP320Ws7> DaneFLT { get; set; }
+        public IList<ColumnFLTWS7> DaneFLT { get; set; }
         public IList<ColumnOP380Ws7> DaneMarker { get; set; }
         public IList<ColumnOP380Ws7> DaneOP380 { get; set; }
         public IList<ColumnOP380Ws7> DaneOP390 { get; set; }
@@ -72,7 +72,7 @@ namespace WebMonitoring.Search
             if (result.Length == 0)
             {
                 result = context.Ws7TtFinalLeakTesters
-                       .Where(x => x.NrOslony.Contains(code) || x.NrShellaDoc.Contains(code) || x.NrShellaScrcuc.Contains(code) || x.NrShellaScrof.Contains(code))
+                       .Where(x => x.NrOslony.Contains(code) || x.NrShellaDoc.Contains(code) || x.NrShellaScrcuc.Contains(code) || x.NrShellaScrof.Contains(code)||x.NrMixer.Contains(code))
                       .Select(x => new CodesWs7
                       {
                           CodeBasicDoc = x.NrShellaDoc,
@@ -253,11 +253,11 @@ namespace WebMonitoring.Search
             return result;
         }
 
-        private IList<ColumnOP320Ws7> GetDataFromFLT(string codeDOC)
+        private IList<ColumnFLTWS7> GetDataFromFLT(string codeDOC)
         {
             var result = context.Ws7TtFinalLeakTesters
                     .Where(x => x.NrShellaDoc == codeDOC)
-                    .Select(x => new ColumnOP320Ws7
+                    .Select(x => new ColumnFLTWS7
                     {
                         NrShellDoc = x.NrShellaDoc,
                         NrShellScrof = x.NrShellaScrof,
@@ -402,6 +402,7 @@ namespace WebMonitoring.Search
                           .Select(x => new ColumnOP290Ws7
                           {
                               NrShellDoc = x.NrShellaDoc,
+                              NrMixer=x.NrMixer,
                               Wynik_operacji = x.WynikOperacji,
                               Frame_time = x.FrameTime,
                               DateTime = (DateTime)x.DtOperacji
@@ -535,14 +536,14 @@ namespace WebMonitoring.Search
             return result;
         }
 
-        private IList<ColumnOP320Ws7> GetDataFromFLTByDate(DateTime from, DateTime to)
+        private IList<ColumnFLTWS7> GetDataFromFLTByDate(DateTime from, DateTime to)
         {
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
             var result = context.Ws7TtFinalLeakTesters
                     .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                    .Select(x => new ColumnOP320Ws7
+                    .Select(x => new ColumnFLTWS7
                     {
                         NrShellDoc = x.NrShellaDoc,
                         NrShellScrof = x.NrShellaScrof,
@@ -626,7 +627,7 @@ namespace WebMonitoring.Search
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.Ws7TtOp380s
+            var result = context.Ws7TtFinalGauges
                     .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                     .Select(x => new ColumnFGWs7
                     {
@@ -644,7 +645,7 @@ namespace WebMonitoring.Search
             var frameTimeFrom = from.ConvertDateTimeToFrameTime();
             var frameTimeTo = to.ConvertDateTimeToFrameTime();
 
-            var result = context.Ws5CnhPetlaKontrolnaL1s
+            var result = context.Ws7TtPetlaKontrolnaL4s
                      .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                     .OrderByDescending(x => x.Id)
                      .Select(x => new ColumnCLWs7
@@ -683,7 +684,7 @@ namespace WebMonitoring.Search
             DaneOP325 = new List<ColumnOP320Ws7>();
             DaneOP330 = new List<ColumnOP320Ws7>();
             DaneOP360 = new List<ColumnOP320Ws7>();
-            DaneFLT = new List<ColumnOP320Ws7>();
+            DaneFLT = new List<ColumnFLTWS7>();
             DaneMarker = new List<ColumnOP380Ws7>();
             DaneOP390 = new List<ColumnOP380Ws7>();
             DaneFG = new List<ColumnFGWs7>();

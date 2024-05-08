@@ -136,6 +136,18 @@ namespace WebMonitoring.Models
             50
         };
 
+        private int[] WorkTimeLineWS7 = new int[]
+        {
+            60,
+            60,
+            60,
+            30,
+            60,
+            50,
+            60,
+            50
+        };
+
         private int[] NumberOfStationsWS1CNH = new int[]
         {
             1,
@@ -260,7 +272,20 @@ namespace WebMonitoring.Models
        };
         private int[] NumberOfStationsWS7 = new int[]
         {
-            1,1,1,1,1,1,1,1,1,1,1,1,1,1
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
         };
 
         public void SetValues(string selectedLine, IDictionary<string, List<int>> Results, int target)
@@ -361,9 +386,9 @@ namespace WebMonitoring.Models
 
         private int[] GetWorkTime(string selectedLine, bool tryb12h = false)
         {
-            if (selectedLine == LineDescription.LineWS3A 
-                || selectedLine == LineDescription.LineWS3BLP1 
-                || selectedLine == LineDescription.LineWS3BLP2 
+            if (selectedLine == LineDescription.LineWS3A
+                || selectedLine == LineDescription.LineWS3BLP1
+                || selectedLine == LineDescription.LineWS3BLP2
                 || selectedLine == LineDescription.LineWS3BLP3)
                 return WorkTimeLineWS3;
             else if (selectedLine == LineDescription.LineWS2B_GPF)
@@ -397,6 +422,8 @@ namespace WebMonitoring.Models
                 return WorkTimeLineWS1CNH;
             else if (selectedLine == LineDescription.LineWS1V50)
                 return WorkTimeLineWS1V50;
+            else if (selectedLine == LineDescription.LineWS7)
+                return WorkTimeLineWS7;
             //else if (selectedLine == LineDescription.LineWeil)
             //    return WorkTimeLineWeil;
             else

@@ -137,35 +137,43 @@ namespace WebMonitoring.Models
                    .Count());
 
                 WS7_TT_WELDING_CELL_2_OP290_STN1.Add(context.Ws7TtWeldingCell2Op290Stn1s
-                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
+                   .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
                    .Count());
 
                 WS7_TT_WELDING_CELL_2_OP300_STN1.Add(context.Ws7TtWeldingCell2Op300Stn1s
-                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
+                   .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
                    .Count());
 
                 WS7_TT_WELDING_CELL_2_OP310_STN2.Add(context.Ws7TtWeldingCell2Op310Stn2s
-                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
+                   .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
                    .Count());
 
                 WS7_TT_WELDING_CELL_3_OP320_STN1.Add(context.Ws7TtWeldingCell3Op320Stn1s
-                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
+                   .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
                    .Count());
 
                 WS7_TT_WELDING_CELL_3_OP325_STN1.Add(context.Ws7TtWeldingCell3Op325Stn1s
-                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
+                   .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
                    .Count());
 
                 WS7_TT_WELDING_CELL_3_OP330_STN2.Add(context.Ws7TtWeldingCell3Op330Stn2s
-                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
+                   .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
                    .Count());
 
                 WS7_TT_MANUAL_WELDING_OP360.Add(context.Ws7TtManualWeldingOp360s
-               .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
+               .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
                .Count());
 
+                WS7_TT_FINAL_LEAK_TESTER.Add(context.Ws7TtFinalLeakTesters
+              .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
+              .Count());
+
+                WS7_TT_MARKING_TESTER.Add(context.Ws7TtMarkings
+             .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
+             .Count());
+
                 WS7_TT_OP380.Add(context.Ws7TtOp380s
-                   .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
+                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
                    .Count());
 
                 WS7_TT_WELDING_CELL_3_OP390_STN2.Add(context.Ws7TtWeldingCell3Op390Stn2s
@@ -173,7 +181,7 @@ namespace WebMonitoring.Models
                     .Count());
 
                 WS7_TT_FINAL_GAUGE.Add(context.Ws7TtFinalGauges
-                   .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
+                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
                    .Count());
 
                 WS7_TT_PETLA_KONTROLNA_L4.Add(context.Ws7TtPetlaKontrolnaL4s
@@ -221,7 +229,7 @@ namespace WebMonitoring.Models
             var dateTimeFrom = dateTime;
             var dateTimeTo = dateTime.AddDays(1);
 
-            return context.CnhChecks
+            return context.Ws7TtFinalGauges
                .Where(x => (x.DtOperacji >= dateTimeFrom && x.DtOperacji < dateTimeTo) && x.WynikOperacji == ResultOk)
                .Count();
         }
@@ -236,7 +244,7 @@ namespace WebMonitoring.Models
             for (int i = 0; i < 3; i++)
             {
 
-                partsShift[i] = context.CnhChecks
+                partsShift[i] = context.Ws7TtFinalGauges
                    .Where(x => (x.DtOperacji >= dateTimeFrom && x.DtOperacji < dateTimeTo) && x.WynikOperacji == ResultOk)
                    .Count();
 
@@ -261,7 +269,7 @@ namespace WebMonitoring.Models
 
             for (int i = 0; i < 3; i++)
             {
-                var result = context.CnhChecks
+                var result = context.Ws7TtFinalGauges
                .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
                .Count();
 

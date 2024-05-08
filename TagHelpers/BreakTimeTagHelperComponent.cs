@@ -27,6 +27,11 @@ namespace WebMonitoring.TagHelpers
             new BreakTime(LineDescription.LineWS5, 1, 10, 30, 11, 50),
             new BreakTime(LineDescription.LineWS5, 2, 10, 0, 19, 50),
             new BreakTime(LineDescription.LineWS5, 3, 2, 0, 3, 50),
+
+            new BreakTime(LineDescription.LineWS7, 1, 10, 30, 11, 50),
+            new BreakTime(LineDescription.LineWS7, 2, 10, 0, 19, 50),
+            new BreakTime(LineDescription.LineWS7, 3, 2, 0, 3, 50),
+
             new BreakTime(LineDescription.LineWS6, 1, 10, 30, 11, 50),
             new BreakTime(LineDescription.LineWS6, 2, 10, 0, 19, 50),
             new BreakTime(LineDescription.LineWS6, 3, 2, 0, 3, 50),

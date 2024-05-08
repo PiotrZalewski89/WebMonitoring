@@ -24,6 +24,7 @@ namespace WebMonitoring.Models
             8, //6 - cnh 529 ws6
             661, //7 - stf 3-6
             800, //8 - weil
+            80,//ws7
         };
 
         public DbProduction(ProductionDbContext ctx)
@@ -92,7 +93,7 @@ namespace WebMonitoring.Models
 
         private int DefaultTargetForLine(string line)
         {
-            if(LineDescription.LineSTF3 == line || LineDescription.LineSTF4 == line || LineDescription.LineSTF5 == line || LineDescription.LineSTF6 == line)
+            if(LineDescription.LineSTF3 == line || LineDescription.LineSTF4 == line || LineDescription.LineSTF5 == line || LineDescription.LineSTF6 == line ||LineDescription.LineWS7==line)
             {
                 return DefaultTarget[7];
             }
@@ -127,6 +128,10 @@ namespace WebMonitoring.Models
             else if (LineDescription.LineWS6 == line)
             {
                 return DefaultTarget[6];
+            }
+            else if (LineDescription.LineWS7 == line)
+            {
+                return DefaultTarget[9];
             }
             else if (LineDescription.LineWeil == line)
             {

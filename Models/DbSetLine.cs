@@ -318,6 +318,13 @@ namespace WebMonitoring.Models
 
                 dbSet.Target = target;
             }
+
+            else if (selectLine == LineDescription.LineWS7)
+            {
+                DbSetLineWS7 dbSet = new DbSetLineWS7(new CnhDbContext());
+
+                dbSet.Target = target;
+            }
         }
 
         private void ProductionWeek()
@@ -433,6 +440,12 @@ namespace WebMonitoring.Models
 
                 return dbSet.ActiveShift(dateTime);
             }
+            else if (selectLine == LineDescription.LineWS7)
+            {
+                DbSetLineWS7 dbSet = new DbSetLineWS7(new CnhDbContext());
+
+                return dbSet.ActiveShift(dateTime);
+            }
             else if (selectLine == LineDescription.LineSTF3)
             {
                 DbSetLineSTF dbSet = new DbSetLineSTF(new StorageStationDbContext());
@@ -517,6 +530,12 @@ namespace WebMonitoring.Models
             else if (selectLine == LineDescription.LineWS6)
             {
                 DbSetLineWS6 dbSet = new DbSetLineWS6(new CnhDbContext());
+
+                partsPerShift = dbSet.GetDailyRaport(dateTime);
+            }
+            else if (selectLine == LineDescription.LineWS7)
+            {
+                DbSetLineWS7 dbSet = new DbSetLineWS7(new CnhDbContext());
 
                 partsPerShift = dbSet.GetDailyRaport(dateTime);
             }
