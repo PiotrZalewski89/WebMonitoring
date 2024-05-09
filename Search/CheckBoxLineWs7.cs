@@ -686,6 +686,7 @@ namespace WebMonitoring.Search
             DaneOP360 = new List<ColumnOP320Ws7>();
             DaneFLT = new List<ColumnFLTWS7>();
             DaneMarker = new List<ColumnOP380Ws7>();
+            DaneOP380 = new List<ColumnOP380Ws7>();
             DaneOP390 = new List<ColumnOP380Ws7>();
             DaneFG = new List<ColumnFGWs7>();
             DaneCL = new List<ColumnCLWs7>();
@@ -813,6 +814,17 @@ namespace WebMonitoring.Search
                     foreach (var r in result)
                     {
                         DaneMarker.Add(r);
+                    }
+                }
+
+
+                if (OP380)
+                {
+                    var result = GetDataFromOP380ByDate(from, to);
+
+                    foreach (var r in result)
+                    {
+                        DaneOP380.Add(r);
                     }
                 }
 

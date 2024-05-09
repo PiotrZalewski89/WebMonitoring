@@ -132,7 +132,7 @@
             @if (Model?.DaneMixer?.Count > 0)
             {
                 <h4>Mixer</h4>
-                <table class="table table-hover table-striped table-bordered" id="idE1" style="width:850px;">
+                <table class="table table-hover table-striped table-bordered" id="idM" style="width:850px;">
                     <thead class="btn-dark">
                         <tr class="text-white">
                             <th style="font-size:14px">Nr Mixera</th>
@@ -167,7 +167,7 @@
             @if (Model?.DaneOP290?.Count > 0)
             {
                 <h4>OP 290</h4>
-                <table class="table table-hover table-striped table-bordered" id="idE2" style="width:850px;">
+                <table class="table table-hover table-striped table-bordered" id="idOP290" style="width:850px;">
                     <thead class="btn-dark">
                         <tr class="text-white">
                             <th style="font-size:14px">Nr shell DOC</th>
@@ -196,7 +196,7 @@
             @if (Model?.DaneOP300?.Count > 0)
             {
                 <h4>OP 300</h4>
-                <table class="table table-hover table-striped table-bordered" id="idE3" style="width:850px;">
+                <table class="table table-hover table-striped table-bordered" id="idOP300" style="width:850px;">
                     <thead class="btn-dark">
                         <tr class="text-white">
                             <th style="font-size:14px">Nr shell DOC</th>
@@ -227,7 +227,7 @@
             @if (Model?.DaneOP310?.Count > 0)
             {
                 <h4>OP 310</h4>
-                <table class="table table-hover table-striped table-bordered" id="idPLT" style="width:1200px;">
+                <table class="table table-hover table-striped table-bordered" id="idOP310" style="width:1200px;">
                     <thead class="btn-dark">
                         <tr class="text-white">
                             <th style="font-size:14px">Nr SCRCUC</th>
@@ -254,7 +254,7 @@
             @if (Model?.DaneOP320?.Count > 0)
             {
                 <h4>OP 320</h4>
-                <table class="table table-hover table-striped table-bordered" id="idFLT" style="width:1700px;">
+                <table class="table table-hover table-striped table-bordered" id="idOP320" style="width:1700px;">
                     <thead class="btn-dark">
                         <tr class="text-white">
                             <th style="font-size:14px">Nr shell Doc</th>
@@ -287,7 +287,7 @@
             @if (Model?.DaneOP325?.Count > 0)
             {
                 <h4>OP 325</h4>
-                <table class="table table-hover table-striped table-bordered" id="idE4" style="width:1000px;">
+                <table class="table table-hover table-striped table-bordered" id="idOP325" style="width:1000px;">
                     <thead class="btn-dark">
                         <tr class="text-white">
                             <th style="font-size:14px">Nr shell Doc</th>
@@ -320,7 +320,7 @@
             @if (Model?.DaneOP330?.Count > 0)
             {
                 <h4>OP 330</h4>
-                <table class="table table-hover table-striped table-bordered" id="idFG" style="width:850px;">
+                <table class="table table-hover table-striped table-bordered" id="idOP330" style="width:850px;">
                     <thead class="btn-dark">
                         <tr class="text-white">
                             <th style="font-size:14px">Nr shell Doc</th>
@@ -355,7 +355,7 @@
             @if (Model?.DaneOP360?.Count > 0)
             {
                 <h4>OP 360</h4>
-                <table class="table table-hover table-striped table-bordered" id="idCL" style="width:1500px;">
+                <table class="table table-hover table-striped table-bordered" id="idOP360" style="width:1500px;">
                     <thead class="btn-dark">
                         <tr class="text-white">
                             <th style="font-size:14px">Nr shell Doc</th>
@@ -389,7 +389,7 @@
             @if (Model?.DaneFLT?.Count > 0)
             {
                 <h4>Final Leak Tester</h4>
-                <table class="table table-hover table-striped table-bordered" id="idCL" style="width:1500px;">
+                <table class="table table-hover table-striped table-bordered" id="idFLT" style="width:1500px;">
                     <thead class="btn-dark">
                         <tr class="text-white">
                             <th style="font-size:14px">Nr shell Doc</th>
@@ -432,7 +432,7 @@
             @if (Model?.DaneMarker?.Count > 0)
             {
                 <h4>Marker</h4>
-                <table class="table table-hover table-striped table-bordered" id="idCL" style="width:1500px;">
+                <table class="table table-hover table-striped table-bordered" id="idM2" style="width:1500px;">
                     <thead class="btn-dark">
                         <tr class="text-white">
                             <th style="font-size:14px">Nr shell Doc</th>
@@ -467,7 +467,7 @@
             @if (Model?.DaneOP380?.Count > 0)
             {
                 <h4>OP 380</h4>
-                <table class="table table-hover table-striped table-bordered" id="idCL" style="width:1500px;">
+                <table class="table table-hover table-striped table-bordered" id="idOP380" style="width:1500px;">
                     <thead class="btn-dark">
                         <tr class="text-white">
                             <th style="font-size:14px">Nr shell Doc</th>
@@ -502,7 +502,7 @@
             @if (Model?.DaneOP390?.Count > 0)
             {
                 <h4>OP 390</h4>
-                <table class="table table-hover table-striped table-bordered" id="idCL" style="width:1500px;">
+                <table class="table table-hover table-striped table-bordered" id="idOP390" style="width:1500px;">
                     <thead class="btn-dark">
                         <tr class="text-white">
                             <th style="font-size:14px">Nr shell Doc</th>
@@ -603,51 +603,87 @@
 
         var fileName = 'LiniaWS7_';
 
-        if ($('#Etap1').is(':checked') && $('#idE1').find('tr').length > 0)
-            $('#idE1').table2csv({
-                filename: fileName + 'Etap1.csv',
+        if ($('#Mixer').is(':checked') && $('#idM').find('tr').length > 0)
+            $('#idM').table2csv({
+                filename: fileName + 'Mixer.csv',
                 separator: ';'
             });
 
-        if ($('#Etap2').is(':checked') && $('#idE2').find('tr').length > 0)
-            $('#idE2').table2csv({
-                filename: fileName + 'Etap2.csv',
+        if ($('#OP290').is(':checked') && $('#idOP290').find('tr').length > 0)
+            $('#idOP290').table2csv({
+                filename: fileName + 'OP290.csv',
                 separator: ';'
             });
 
-        if ($('#Etap3').is(':checked') && $('#idE3').find('tr').length > 0)
-            $('#idE3').table2csv({
-                filename: fileName + 'Etap3.csv',
+        if ($('#OP300').is(':checked') && $('#idOP300').find('tr').length > 0)
+            $('#idOP300').table2csv({
+                filename: fileName + 'OP300.csv',
                 separator: ';'
             });
 
-        if ($('#PLT').is(':checked') && $('#idPLT').find('tr').length > 0)
-            $('#idPLT').table2csv({
-                filename: fileName + 'PreLeakTester.csv',
+        if ($('#OP310').is(':checked') && $('#idOP310').find('tr').length > 0)
+            $('#idOP310').table2csv({
+                filename: fileName + 'OP310.csv',
+                separator: ';'
+            });
+
+        if ($('#OP320').is(':checked') && $('#idOP320').find('tr').length > 0)
+            $('#idOP320').table2csv({
+                filename: fileName + 'OP320.csv',
+                separator: ';'
+            });
+
+        if ($('#OP325').is(':checked') && $('#idOP325').find('tr').length > 0)
+            $('#idOP325').table2csv({
+                filename: fileName + 'OP325.csv',
+                separator: ';'
+            });
+
+        if ($('#OP330').is(':checked') && $('#idOP330').find('tr').length > 0)
+            $('#idOP330').table2csv({
+                filename: fileName + 'OP330.csv',
+                separator: ';'
+            });
+
+        if ($('#OP360').is(':checked') && $('#idOP360').find('tr').length > 0)
+            $('#idOP360').table2csv({
+                filename: fileName + 'OP360.csv',
                 separator: ';'
             });
 
         if ($('#FLT').is(':checked') && $('#idFLT').find('tr').length > 0)
             $('#idFLT').table2csv({
-                filename: fileName + 'FinalLeakTester.csv',
+                filename: fileName + 'FLT.csv',
                 separator: ';'
             });
 
-        if ($('#Etap4').is(':checked') && $('#idE4').find('tr').length > 0)
-            $('#idE4').table2csv({
-                filename: fileName + 'Etap4.csv',
+        if ($('#Marking').is(':checked') && $('#idM2').find('tr').length > 0)
+            $('#idM2').table2csv({
+                filename: fileName + 'Marking.csv',
+                separator: ';'
+            });
+
+        if ($('#OP380').is(':checked') && $('#idOP380').find('tr').length > 0)
+            $('#idOP380').table2csv({
+                filename: fileName + 'OP380.csv',
+                separator: ';'
+            });
+
+        if ($('#OP390').is(':checked') && $('#idOP390').find('tr').length > 0)
+            $('#idOP390').table2csv({
+                filename: fileName + 'OP390.csv',
                 separator: ';'
             });
 
         if ($('#FG').is(':checked') && $('#idFG').find('tr').length > 0)
             $('#idFG').table2csv({
-                filename: fileName + 'SprawdzianGeometrii.csv',
+                filename: fileName + 'FG.csv',
                 separator: ';'
             });
 
-        if ($('#PetlaKJ').is(':checked') && $('#idCL').find('tr').length > 0)
+        if ($('#CL').is(':checked') && $('#idCL').find('tr').length > 0)
             $('#idCL').table2csv({
-                filename: fileName + 'PetlaKJ.csv',
+                filename: fileName + 'CL.csv',
                 separator: ';'
             });
     }
