@@ -17,8 +17,8 @@ namespace WebMonitoring.Models
         public static string LineWS3BLP2 => "WS3BLP2";
         public static string LineWS3BLP3 => "WS3BLP3";
         public static string LineWS4 => "WS4";
-        public static string LineWS2B_BJA => "WS2B BJA";
-        public static string LineWS2B_GPF => "WS2B GPF";
+        public static string LineWS8_BJA => "WS8 BJA";
+        public static string LineWS8_GPF => "WS8 GPF";
         public static string LineWS4M260 => "WS4M260";
         public static string LineSTF3 => "STF3";
         public static string LineSTF3M260 => "STF3 M260";
@@ -32,5 +32,6 @@ namespace WebMonitoring.Models
         public static string LineShell => "Shell line";
         public static string LineWeil => "Weil";
         public static string LineWS7 => "WS7";
+        public static string LineSDF => "SDF";
     }
 }

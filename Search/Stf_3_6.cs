@@ -16,6 +16,7 @@ namespace WebMonitoring.Search
         public new string Table { get; set; }
         public bool All { get; set; }
         public bool Stf3 { get; set; }
+        public bool Stf3Cpt { get; set; }
         public bool Stf4 { get; set; }
         public bool Stf5 { get; set; }
         public bool Stf6 { get; set; }
@@ -109,6 +110,84 @@ namespace WebMonitoring.Search
                     else
                     {
                         HtmlTable = dataTable.WriteToTable(resultArray);
+                    }
+                }
+            }
+            catch { }
+        }
+
+        public void GetDataFromSqlStf3Cpt(DateTime dateTime, bool download = false)
+        {
+            try
+            {
+                DateTime from = dateTime;
+                DateTime to = dateTime.AddDays(1);
+
+                DataTable dataTable = new DataTable();
+
+                var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
+                var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
+
+                var result = context.PanelFontijneL1s
+                          .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
+                          .Select(a => new
+                          {
+                              ManufacturingLotTraceCode = a.ManufacturingLotTraceCode,
+                              CptOutletPushoutForce = a.CptOutletPushoutForce,
+                              CptInletPushoutForce = a.CptInletPushoutForce,
+                              CsiOutletSubstrateMeasureShell = a.CsiOutletSubstrateMeasureShell,
+                              CsiInletSubstrateMeasureShell = a.CsiInletSubstrateMeasureShell
+                          });
+
+                var resultArray = result.ToArray();
+                if (resultArray.Length > 0)
+                {
+                    if (download)
+                    {
+                        Table = dataTable.WriteTextToFile(result);
+                    }
+                    else
+                    {
+                        HtmlTable = dataTable.WriteToTable(resultArray);
+                    }
+                }
+            }
+            catch { }
+        }
+
+        public void GetDataFromSqlStf3Cpt(IList<string> list, bool download = false)
+        {
+            try
+            {
+                DataTable dataTable = new DataTable();
+
+                foreach (string byCode in list)
+                {
+                    if (!string.IsNullOrWhiteSpace(byCode))
+                    {
+                        var result = context.PanelFontijneL1s
+                          .Where(x => x.ManufacturingLotTraceCode == byCode)
+                          .Select(a => new
+                          {
+                              ManufacturingLotTraceCode = a.ManufacturingLotTraceCode,
+                              CptOutletPushoutForce = a.CptOutletPushoutForce,
+                              CptInletPushoutForce = a.CptInletPushoutForce,
+                              CsiOutletSubstrateMeasureShell = a.CsiOutletSubstrateMeasureShell,
+                              CsiInletSubstrateMeasureShell = a.CsiInletSubstrateMeasureShell
+                          });
+
+                        var resultArray = result.ToArray();
+                        if (resultArray.Length > 0)
+                        {
+                            if (download)
+                            {
+                                Table = dataTable.WriteTextToFile(result);
+                            }
+                            else
+                            {
+                                HtmlTable = dataTable.WriteToTable(resultArray);
+                            }
+                        }
                     }
                 }
             }

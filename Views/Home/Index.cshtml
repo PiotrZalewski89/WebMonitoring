@@ -33,12 +33,6 @@
         <input type="checkbox" id="@("ch_" + LineDescription.LineWS3)" name="ws3" onclick="showChart('ws3')" class="horizontalPosition">
         <label for="ws3"> Linia WS3</label>
 
-        <input type="checkbox" id="@("ch_" + LineDescription.LineWS2B_BJA.Replace(" ", "_"))" name="ws2b_bja" onclick="showChart('ws2b_bja')" class="horizontalPosition">
-        <label for="ws2b_bja"> Linia WS2B BJA</label>
-
-        <input type="checkbox" id="@("ch_" + LineDescription.LineWS2B_GPF.Replace(" ", "_"))" name="ws2b_gpf" onclick="showChart('ws2b_gpf')" class="horizontalPosition">
-        <label for="ws2b_gpf"> Linia WS2B GPF</label>
-
         <input type="checkbox" id="@("ch_" + LineDescription.LineWS4M260)" name="ws3_m260" onclick="showChart('ws4_m260')" class="horizontalPosition">
         <label for="ws4_m260"> Linia WS4 M260A</label><br />
 
@@ -50,6 +44,12 @@
 
         <input type="checkbox" id="@("ch_" + LineDescription.LineWS7)" name="ws7" onclick="showChart('ws7')" class="horizontalPosition">
         <label for="ws7"> Linia WS7</label>
+
+        <input type="checkbox" id="@("ch_" + LineDescription.LineWS8_BJA.Replace(" ", "_"))" name="ws8_bja" onclick="showChart('ws8_bja')" class="horizontalPosition">
+        <label for="ws8_bja"> Linia WS8 BJA</label>
+
+        <input type="checkbox" id="@("ch_" + LineDescription.LineWS8_GPF.Replace(" ", "_"))" name="ws8_gpf" onclick="showChart('ws8_gpf')" class="horizontalPosition">
+        <label for="ws8_gpf"> Linia WS8 GPF</label>
 
         <input type="checkbox" id="@("ch_" + LineDescription.LineSTF3)" name="stf3" onclick="showChart('stf3')" class="horizontalPosition">
         <label for="stf3"> Linia STF 3</label>
@@ -121,8 +121,8 @@
         new Dictionary('@("ch_" + LineDescription.LineWS1V50)', '<div> <h4 id="@("h4_" + LineDescription.LineWS1V50)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS1V50)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS1V50" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
         new Dictionary('@("ch_" + LineDescription.LineWS2)', '<div> <h4 id="@("h4_" + LineDescription.LineWS2)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS2)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS2" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
         new Dictionary('@("ch_" + LineDescription.LineWS3)', '<div> <h4 id="@("h4_" + LineDescription.LineWS3)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS3)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS3" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
-        new Dictionary('@("ch_" + LineDescription.LineWS2B_BJA.Replace(" ", "_"))', '<div> <h4 id="@("h4_" + LineDescription.LineWS2B_BJA.Replace(" ", "_"))" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS2B_BJA.Replace(" ", "_"))" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS2B_BJA.Replace(" ", "_")" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
-        new Dictionary('@("ch_" + LineDescription.LineWS2B_GPF.Replace(" ", "_"))', '<div> <h4 id="@("h4_" + LineDescription.LineWS2B_GPF.Replace(" ", "_"))" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS2B_GPF.Replace(" ", "_"))" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%""></div> <canvas class="myChart" id="@LineDescription.LineWS2B_GPF.Replace(" ", "_")" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
+        new Dictionary('@("ch_" + LineDescription.LineWS8_BJA.Replace(" ", "_"))', '<div> <h4 id="@("h4_" + LineDescription.LineWS8_BJA.Replace(" ", "_"))" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS8_BJA.Replace(" ", "_"))" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS8_BJA.Replace(" ", "_")" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
+        new Dictionary('@("ch_" + LineDescription.LineWS8_GPF.Replace(" ", "_"))', '<div> <h4 id="@("h4_" + LineDescription.LineWS8_GPF.Replace(" ", "_"))" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS8_GPF.Replace(" ", "_"))" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%""></div> <canvas class="myChart" id="@LineDescription.LineWS8_GPF.Replace(" ", "_")" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
         new Dictionary('@("ch_" + LineDescription.LineWS4M260)', '<div> <h4 id="@("h4_" + LineDescription.LineWS4M260)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS4M260)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%""></div> <canvas class="myChart" id="@LineDescription.LineWS4M260" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
         new Dictionary('@("ch_" + LineDescription.LineWS5)', '<div> <h4 id="@("h4_" + LineDescription.LineWS5)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS5)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS5" style="width: 100%; width:400px; height: 300px; "></canvas></div>'),
         new Dictionary('@("ch_" + LineDescription.LineWS6)', '<div> <h4 id="@("h4_" + LineDescription.LineWS6)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS6)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS6" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
@@ -320,11 +320,11 @@
         else if (event == 'ws3') {
             idTag = "ch_WS3";
         }
-        else if (event == 'ws2b_bja') {
-            idTag = "ch_WS2B_BJA";
+        else if (event == 'ws8_bja') {
+            idTag = "ch_WS8_BJA";
         }
-        else if (event == 'ws2b_gpf') {
-            idTag = "ch_WS2B_GPF";
+        else if (event == 'ws8_gpf') {
+            idTag = "ch_WS8_GPF";
         }
         else if (event == 'ws4_m260') {
             idTag = "ch_WS4M260";

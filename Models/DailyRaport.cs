@@ -13,16 +13,17 @@ namespace WebMonitoring.Models
         private string Shift2 => "2";
         private string Shift3 => "3";
         public DataRaport LineWs1Cnh { get; set; } = new DataRaport();
-        public DataRaport LineWs1V50 { get; set; } = new DataRaport();
+        //public DataRaport LineWs1V50 { get; set; } = new DataRaport();
         public DataRaport LineWs2 { get; set; } = new DataRaport();
         public DataRaport LineWs3 { get; set; } = new DataRaport();
-        public DataRaport LineWs2B_Bja { get; set; } = new DataRaport();
-        public DataRaport LineWs2B_Gpf { get; set; } = new DataRaport();
+        public DataRaport LineWs8_Bja { get; set; } = new DataRaport();
+        public DataRaport LineWs8_Gpf { get; set; } = new DataRaport();
         public DataRaport LineWs4M260 { get; set; } = new DataRaport();
         public DataRaport LineWs5 { get; set; } = new DataRaport();
         public DataRaport LineWs6 { get; set; } = new DataRaport();
         public DataRaport LineWeil { get; set; } = new DataRaport();
         public DataRaport LineWs7 { get; set; } = new DataRaport();
+        public DataRaport LineSdf { get; set; } = new DataRaport();
         public DateTime DateTime { get; set; }
 
         public void GetDailyRaport (DateTime dateTime)
@@ -47,19 +48,19 @@ namespace WebMonitoring.Models
             LineWs1Cnh.TargetShift2 = LineWs1Cnh.Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineDescription.LineWS1CNH, Shift2) : 0;
             LineWs1Cnh.TargetShift3 = LineWs1Cnh.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineDescription.LineWS1CNH, Shift3) : 0;
 
-            //ws1 v50
-            LineWs1V50.Line = LineDescription.LineWS1;
-            LineWs1V50.Model = "V50";
+            ////ws1 v50
+            //LineWs1V50.Line = LineDescription.LineWS1;
+            //LineWs1V50.Model = "V50";
 
-            shifts = Context.GetDailyReport(LineDescription.LineWS1V50, dateTime);
+            //shifts = Context.GetDailyReport(LineDescription.LineWS1V50, dateTime);
 
-            LineWs1V50.Shift1 = shifts[0];
-            LineWs1V50.Shift2 = shifts[1];
-            LineWs1V50.Shift3 = shifts[2];
-            //target
-            LineWs1V50.TargetShift1 = LineWs1V50.Shift1 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineDescription.LineWS1V50, Shift1) : 0;
-            LineWs1V50.TargetShift2 = LineWs1V50.Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineDescription.LineWS1V50, Shift2) : 0;
-            LineWs1V50.TargetShift3 = LineWs1V50.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineDescription.LineWS1V50, Shift3) : 0;
+            //LineWs1V50.Shift1 = shifts[0];
+            //LineWs1V50.Shift2 = shifts[1];
+            //LineWs1V50.Shift3 = shifts[2];
+            ////target
+            //LineWs1V50.TargetShift1 = LineWs1V50.Shift1 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineDescription.LineWS1V50, Shift1) : 0;
+            //LineWs1V50.TargetShift2 = LineWs1V50.Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineDescription.LineWS1V50, Shift2) : 0;
+            //LineWs1V50.TargetShift3 = LineWs1V50.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineDescription.LineWS1V50, Shift3) : 0;
 
             //ws2 hr16
             LineWs2.Line = LineDescription.LineWS2;
@@ -90,33 +91,33 @@ namespace WebMonitoring.Models
             LineWs3.TargetShift3 = LineWs3.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs3.Line, Shift3) : 0;
 
             //ws2B bja
-            LineWs2B_Bja.Line = LineDescription.LineWS2B_BJA;
-            LineWs2B_Bja.Model = "BR10 BJA";
+            LineWs8_Bja.Line = LineDescription.LineWS8_BJA;
+            LineWs8_Bja.Model = "BR10 BJA";
 
 
-            shifts = Context.GetDailyReport(LineDescription.LineWS2B_BJA, dateTime);
+            shifts = Context.GetDailyReport(LineDescription.LineWS8_BJA, dateTime);
 
-            LineWs2B_Bja.Shift1 = shifts[0];
-            LineWs2B_Bja.Shift2 = shifts[1];
-            LineWs2B_Bja.Shift3 = shifts[2];
+            LineWs8_Bja.Shift1 = shifts[0];
+            LineWs8_Bja.Shift2 = shifts[1];
+            LineWs8_Bja.Shift3 = shifts[2];
             //target
-            LineWs2B_Bja.TargetShift1 = LineWs2B_Bja.Shift1 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs2B_Bja.Line, Shift1) : 0;
-            LineWs2B_Bja.TargetShift2 = LineWs2B_Bja.Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs2B_Bja.Line, Shift2) : 0;
-            LineWs2B_Bja.TargetShift3 = LineWs2B_Bja.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs2B_Bja.Line, Shift3) : 0;
+            LineWs8_Bja.TargetShift1 = LineWs8_Bja.Shift1 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs8_Bja.Line, Shift1) : 0;
+            LineWs8_Bja.TargetShift2 = LineWs8_Bja.Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs8_Bja.Line, Shift2) : 0;
+            LineWs8_Bja.TargetShift3 = LineWs8_Bja.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs8_Bja.Line, Shift3) : 0;
 
-            //ws2B gpf
-            LineWs2B_Gpf.Line = LineDescription.LineWS2B_GPF;
-            LineWs2B_Gpf.Model = "BR10 GPF";
+            //ws8 gpf
+            LineWs8_Gpf.Line = LineDescription.LineWS8_GPF;
+            LineWs8_Gpf.Model = "BR10 GPF";
 
-            shifts = Context.GetDailyReport(LineDescription.LineWS2B_GPF, dateTime);
+            shifts = Context.GetDailyReport(LineDescription.LineWS8_GPF, dateTime);
 
-            LineWs2B_Gpf.Shift1 = shifts[0];
-            LineWs2B_Gpf.Shift2 = shifts[1];
-            LineWs2B_Gpf.Shift3 = shifts[2];
+            LineWs8_Gpf.Shift1 = shifts[0];
+            LineWs8_Gpf.Shift2 = shifts[1];
+            LineWs8_Gpf.Shift3 = shifts[2];
             //target
-            LineWs2B_Gpf.TargetShift1 = LineWs2B_Gpf.Shift1 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs2B_Gpf.Line, Shift1) : 0;
-            LineWs2B_Gpf.TargetShift2 = LineWs2B_Gpf.Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs2B_Gpf.Line, Shift2) : 0;
-            LineWs2B_Gpf.TargetShift3 = LineWs2B_Gpf.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs2B_Gpf.Line, Shift3) : 0;
+            LineWs8_Gpf.TargetShift1 = LineWs8_Gpf.Shift1 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs8_Gpf.Line, Shift1) : 0;
+            LineWs8_Gpf.TargetShift2 = LineWs8_Gpf.Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs8_Gpf.Line, Shift2) : 0;
+            LineWs8_Gpf.TargetShift3 = LineWs8_Gpf.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs8_Gpf.Line, Shift3) : 0;
 
             //ws4 m260
             LineWs4M260.Line = LineDescription.LineWS4M260;
@@ -186,6 +187,20 @@ namespace WebMonitoring.Models
             LineWs7.TargetShift2 = LineWs7.Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs7.Line, Shift2) : 0;
             LineWs7.TargetShift1 = LineWs7.Shift1 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs7.Line, Shift1) : 0;
             LineWs7.TargetShift3 = LineWs7.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs7.Line, Shift3) : 0;
+
+            //sdf
+            LineSdf.Line = LineDescription.LineWS6;
+            LineSdf.Model = "SDF";
+
+            shifts = Context.GetDailyReport(LineDescription.LineSDF, dateTime);
+
+            LineSdf.Shift1 = shifts[0];
+            LineSdf.Shift2 = shifts[1];
+            LineSdf.Shift3 = shifts[2];
+            //target
+            LineSdf.TargetShift2 = LineSdf.Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineSdf.Model, Shift2) : 0;
+            LineSdf.TargetShift1 = LineSdf.Shift1 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineSdf.Model, Shift1) : 0;
+            LineSdf.TargetShift3 = LineSdf.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineSdf.Model, Shift3) : 0;
         }
     }
 

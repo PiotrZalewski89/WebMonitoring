@@ -136,6 +136,18 @@ namespace WebMonitoring.Models
             50
         };
 
+        private int[] WorkTimeLineSdf = new int[]
+        {
+            60,
+            60,
+            60,
+            30,
+            60,
+            50,
+            60,
+            50
+        };
+
         private int[] WorkTimeLineWS7 = new int[]
         {
             60,
@@ -172,10 +184,11 @@ namespace WebMonitoring.Models
 
         private int[] NumberOfStationsWS2 = new int[]
         {
-            1,//cela 1
-            1,//cela 2
-            1,//PLT nr 1
-            1,//PLT nr 2
+            3,//cela 1
+            3,//cela 2
+            3,//cela 2 lp1
+            1,//PLT 
+            1,//marking
             1,//cela 3
             1,//flt
             1,//fg
@@ -209,7 +222,7 @@ namespace WebMonitoring.Models
             2
         };
 
-        private int[] NumberOfStationsWS4Br10GPF = new int[]
+        private int[] NumberOfStationsWS8Br10GPF = new int[]
         {
             //1,
             1,
@@ -235,7 +248,7 @@ namespace WebMonitoring.Models
             1
         };
 
-        private int[] NumberOfStationsWS4Br10BJA = new int[]
+        private int[] NumberOfStationsWS8Br10BJA = new int[]
         {
             1,
             1,
@@ -270,6 +283,14 @@ namespace WebMonitoring.Models
             1,
             1
        };
+
+        private int[] NumberOfStationsSdf = new int[]
+        {
+            1,
+            1,
+            1,
+            1
+        };
         private int[] NumberOfStationsWS7 = new int[]
         {
             1,
@@ -362,10 +383,10 @@ namespace WebMonitoring.Models
                 return NumberOfStationsWS3A;
             else if (selectedLine == LineDescription.LineWS2)
                 return NumberOfStationsWS2;
-            else if (selectedLine == LineDescription.LineWS2B_GPF)
-                return NumberOfStationsWS4Br10GPF;
-            else if (selectedLine == LineDescription.LineWS2B_BJA)
-                return NumberOfStationsWS4Br10BJA;
+            else if (selectedLine == LineDescription.LineWS8_GPF)
+                return NumberOfStationsWS8Br10GPF;
+            else if (selectedLine == LineDescription.LineWS8_BJA)
+                return NumberOfStationsWS8Br10BJA;
             else if (selectedLine == LineDescription.LineWS4M260)
                 return NumberOfStationsWS4M260;
             else if (selectedLine == LineDescription.LineWS5)
@@ -378,6 +399,8 @@ namespace WebMonitoring.Models
                 return NumberOfStationsWS1CNH;
             else if (selectedLine == LineDescription.LineWS1V50)
                 return NumberOfStationsWS1V50;
+            else if (selectedLine == LineDescription.LineSDF)
+                return NumberOfStationsSdf;
             //else if (selectedLine == LineDescription.LineWeil)
             //    return NumberOfStationsWeil;
             else
@@ -391,14 +414,14 @@ namespace WebMonitoring.Models
                 || selectedLine == LineDescription.LineWS3BLP2
                 || selectedLine == LineDescription.LineWS3BLP3)
                 return WorkTimeLineWS3;
-            else if (selectedLine == LineDescription.LineWS2B_GPF)
+            else if (selectedLine == LineDescription.LineWS8_GPF)
             {
                 if (tryb12h)
                     return WorkTimeLine12h;
                 else
                     return WorkTimeLineWS4GPF;
             }
-            else if (selectedLine == LineDescription.LineWS2B_BJA)
+            else if (selectedLine == LineDescription.LineWS8_BJA)
             {
                 if (tryb12h)
                     return WorkTimeLine12h;
@@ -424,6 +447,8 @@ namespace WebMonitoring.Models
                 return WorkTimeLineWS1V50;
             else if (selectedLine == LineDescription.LineWS7)
                 return WorkTimeLineWS7;
+            else if (selectedLine == LineDescription.LineSDF)
+                return WorkTimeLineSdf;
             //else if (selectedLine == LineDescription.LineWeil)
             //    return WorkTimeLineWeil;
             else
@@ -466,10 +491,14 @@ namespace WebMonitoring.Models
             else if(line == LineDescription.LineWS2)
             {
                 numberOfStations = GetNumberOfStations(line);
-               //ustawienie targettu dla celi 1, 2, plt 1 i 2
-               if(positionIndex >= 0 && positionIndex < 4)
+                //ustawienie targettu dla celi 1, 2, 2lp1
+                if (positionIndex >= 0 && positionIndex < 2)
                 {
-                    return Convert.ToInt32(Math.Ceiling(target / 2.0));
+                    return Convert.ToInt32(Math.Ceiling(target / 1.0));
+                }
+                else if (positionIndex == 2)
+                {
+                    return Convert.ToInt32(Math.Ceiling(target / 0.9));
                 }
             }
 

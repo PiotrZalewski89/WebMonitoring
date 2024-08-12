@@ -13,7 +13,7 @@ namespace WebMonitoring.Models
         private string[] WS4M260 = new string[]
         {
             "Siezer GBD I/O",
-            "Cela 5",
+            "Cela 3",
             "Leak tester",
             "Enkapsulacja 1",
             "Enkapsulacja 2",
@@ -64,7 +64,7 @@ namespace WebMonitoring.Models
 
         public List<int> SizerGBDio { get; set; }
 
-        public List<int> Cela5 { get; set; }
+        public List<int> Cela3 { get; set; }
 
         public List<int> LT { get; set; }
 
@@ -102,7 +102,7 @@ namespace WebMonitoring.Models
             int hour = tryb12h ? 12 : 8;
 
             SizerGBDio = new List<int>();
-            Cela5 = new List<int>();
+            Cela3 = new List<int>();
             LT = new List<int>();
             Enkapsulacja1 = new List<int>();
             Enkapsulacja2 = new List<int>();
@@ -125,11 +125,11 @@ namespace WebMonitoring.Models
                 var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
                 var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
 
-                parts = dpContext.Ws4Cela5s
+                parts = dpContext.Ws4Cela3s
                      .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.Model == m260a)
                      .Select(x => x.IloscSztuk);
 
-                Cela5.Add((int)parts.Sum());
+                Cela3.Add((int)parts.Sum());
 
                 SizerGBDio.Add(context.M260GbdIoCalibrationL4s
                         .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
@@ -176,7 +176,7 @@ namespace WebMonitoring.Models
             }
 
             SizerGBDio.Add(SizerGBDio.Sum());
-            Cela5.Add(Cela5.Sum());
+            Cela3.Add(Cela3.Sum());
             LT.Add(LT.Sum());
             Enkapsulacja1.Add(Enkapsulacja1.Sum());
             Enkapsulacja2.Add(Enkapsulacja2.Sum());
@@ -188,7 +188,7 @@ namespace WebMonitoring.Models
             PetlaKJ.Add(PetlaKJ.Sum());
 
             _LineData.Add(WS4M260[0], SizerGBDio);
-            _LineData.Add(WS4M260[1], Cela5);
+            _LineData.Add(WS4M260[1], Cela3);
             _LineData.Add(WS4M260[2], LT);
             _LineData.Add(WS4M260[3], Enkapsulacja1);
             _LineData.Add(WS4M260[4], Enkapsulacja2);
@@ -206,11 +206,11 @@ namespace WebMonitoring.Models
             var dateTimeFrom = dateTime;
             var dateTimeTo = dateTime.AddDays(1);
 
-            var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime_AllDay();
-            var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime_AllDay();
+            var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc_AllDay();
+            var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTimeUtc_AllDay();
 
-            return context.M260ControlLoopL4s
-               .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk && x.NrPzzw != Remove)
+            return context.M260GeometryGaugeL4s
+               .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
                .Count();
         }
 
@@ -223,11 +223,11 @@ namespace WebMonitoring.Models
 
             for (int i = 0; i < 3; i++)
             {
-                var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
-                var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
+                var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc();
+                var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTimeUtc();
 
-                partsShift[i] += context.M260ControlLoopL4s
-                   .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo) && x.WynikOperacji == ResultOk && x.NrPzzw != Remove)
+                partsShift[i] += context.M260GeometryGaugeL4s
+                   .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo) && x.WynikOperacji == ResultOk)
                    .Count();
 
                 dateTimeFrom = dateTimeFrom.AddHours(8);
@@ -246,13 +246,13 @@ namespace WebMonitoring.Models
             var dateTimeTo = dateTime.Date;
             dateTimeTo = dateTimeTo.AddHours(14);
 
-            var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
-            var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
+            var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc();
+            var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTimeUtc();
 
             for (int i = 0; i < 3; i++)
             {
-                var result = context.M260ControlLoopL4s
-                   .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.NrPzzw != Remove && x.WynikOperacji == ResultOk)
+                var result = context.M260GeometryGaugeL4s
+                   .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
                    .Count();
 
                 if (result > 10)
@@ -263,8 +263,8 @@ namespace WebMonitoring.Models
                 dateTimeFrom = dateTimeFrom.AddHours(8);
                 dateTimeTo = dateTimeTo.AddHours(8);
 
-                frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
-                frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
+                frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc();
+                frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTimeUtc();
 
             }
 

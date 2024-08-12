@@ -5,12 +5,12 @@ using WebMonitoring.DataBase;
 
 namespace WebMonitoring.Models
 {
-    public class DbSetLineWS2B
+    public class DbSetLineWS8
     {
         private StorageStationDbContext context;
         private ProductionDbContext dpContext;
 
-        private string[] WS2B_BJA = new string[]
+        private string[] WS8_BJA = new string[]
         {
             "Cela 1",
             "Cela 2",
@@ -24,7 +24,7 @@ namespace WebMonitoring.Models
             "Pętla KJ"
         };
 
-        private string[] WS2B_GPF = new string[]
+        private string[] WS8_GPF = new string[]
         {
             "Cela 1",
             "Cela 2",
@@ -109,12 +109,12 @@ namespace WebMonitoring.Models
 
         public List<int> PetlaKJ { get; set; }
 
-        public DbSetLineWS2B(StorageStationDbContext ctx, ProductionDbContext dpCtx)
+        public DbSetLineWS8(StorageStationDbContext ctx, ProductionDbContext dpCtx)
         {
             context = ctx;
             dpContext = dpCtx;
         }
-        public DbSetLineWS2B(StorageStationDbContext ctx)
+        public DbSetLineWS8(StorageStationDbContext ctx)
         {
             context = ctx;
         }
@@ -124,17 +124,17 @@ namespace WebMonitoring.Models
             _LineData = new Dictionary<string, List<int>>();
                      
 
-            if (line == LineDescription.LineWS2B_BJA)
+            if (line == LineDescription.LineWS8_BJA)
             {
-                GetProductionCountPerHourWS4_BR10_BJA(dateTime, tryb12h);
+                GetProductionCountPerHourWS8_BR10_BJA(dateTime, tryb12h);
             }
-            else if (line == LineDescription.LineWS2B_GPF)
+            else if (line == LineDescription.LineWS8_GPF)
             {
-                 GetProductionCountPerHourWS4_BR10_ED_GPF(dateTime, tryb12h);              
+                 GetProductionCountPerHourWS8_BR10_ED_GPF(dateTime, tryb12h);              
             }
         }
 
-        public void GetProductionCountPerHourWS4_BR10_ED_GPF(DateTime dateTime, bool tryb12h)
+        public void GetProductionCountPerHourWS8_BR10_ED_GPF(DateTime dateTime, bool tryb12h)
         {
             var dateTimeFrom = dateTime;
             var dateTimeTo = dateTimeFrom.AddHours(1);
@@ -316,15 +316,15 @@ namespace WebMonitoring.Models
             //_LineData.Add(WS2B_GPF[2], Cela3);
             //_LineData.Add(WS2B_GPF[3], Cela4);
             //_LineData.Add(WS2B_GPF[4], Cela5);
-            _LineData.Add(WS2B_GPF[5], LT);
-            _LineData.Add(WS2B_GPF[6], Wkretak);
-            _LineData.Add(WS2B_GPF[7], Enkapsulacja);
-            _LineData.Add(WS2B_GPF[8], SprawdzianGeometrii);
-            _LineData.Add(WS2B_GPF[9], Odkurzacz);
-            _LineData.Add(WS2B_GPF[10], PetlaKJ);
+            _LineData.Add(WS8_GPF[5], LT);
+            _LineData.Add(WS8_GPF[6], Wkretak);
+            _LineData.Add(WS8_GPF[7], Enkapsulacja);
+            _LineData.Add(WS8_GPF[8], SprawdzianGeometrii);
+            _LineData.Add(WS8_GPF[9], Odkurzacz);
+            _LineData.Add(WS8_GPF[10], PetlaKJ);
         }
 
-        public void GetProductionCountPerHourWS4_BR10_BJA(DateTime dateTime, bool tryb12h)
+        public void GetProductionCountPerHourWS8_BR10_BJA(DateTime dateTime, bool tryb12h)
         {
             var dateTimeFrom = dateTime;
             var dateTimeTo = dateTimeFrom.AddHours(1);
@@ -501,15 +501,15 @@ namespace WebMonitoring.Models
             PetlaKJ.Add(PetlaKJ.Sum());
 
             //_LineData.Add(WS2B_BJA[0], Cela1);
-            _LineData.Add(WS2B_BJA[1], Cela2);
+            _LineData.Add(WS8_BJA[1], Cela2);
             //_LineData.Add(WS2B_BJA[2], Cela3);
             //_LineData.Add(WS2B_BJA[3], Cela4);
             //_LineData.Add(WS2B_BJA[4], Cela5);
-            _LineData.Add(WS2B_BJA[5], LT);
-            _LineData.Add(WS2B_BJA[6], Enkapsulacja);
-            _LineData.Add(WS2B_BJA[7], SprawdzianGeometrii);
-            _LineData.Add(WS2B_BJA[8], Odkurzacz);
-            _LineData.Add(WS2B_BJA[9], PetlaKJ);
+            _LineData.Add(WS8_BJA[5], LT);
+            _LineData.Add(WS8_BJA[6], Enkapsulacja);
+            _LineData.Add(WS8_BJA[7], SprawdzianGeometrii);
+            _LineData.Add(WS8_BJA[8], Odkurzacz);
+            _LineData.Add(WS8_BJA[9], PetlaKJ);
         }
 
         public int GetCountFromDayWS4(string line, DateTime dateTime)
@@ -517,23 +517,23 @@ namespace WebMonitoring.Models
             var dateTimeFrom = dateTime;
             var dateTimeTo = dateTime.AddDays(1);
 
-            var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime_AllDay();
-            var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime_AllDay();
+            var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc_AllDay();
+            var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTimeUtc_AllDay();
 
             string model = string.Empty;
             int count = 0;
 
-            if (line == LineDescription.LineWS2B_BJA)
+            if (line == LineDescription.LineWS8_BJA)
                 model = "BR10 BJA";
-            else if (line == LineDescription.LineWS2B_GPF)
+            else if (line == LineDescription.LineWS8_GPF)
                 model = "BR10 GPF";
 
             var partNumber = Production.GetPartNumber(model);
 
             foreach(var pn in partNumber)
             {
-                count += context.VPetlaKontrolnaBr10L2Monitorings
-               .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.NrGrawerka.Contains(pn) && x.WynikOperacji == ResultOk && x.NrPaleta != Remove)
+                count += context.VFinalGaugeBr10L2Monitorings
+               .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.NrGrawerka.Contains(pn) && x.WynikOperacji == ResultOk)
                .Count();
             }
 
@@ -553,11 +553,11 @@ namespace WebMonitoring.Models
 
                 for (int i = 0; i < 3; i++)
                 {
-                    var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
-                    var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
+                    var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc();
+                    var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTimeUtc();
 
-                    partsShift[i] += context.VPetlaKontrolnaBr10L2Monitorings
-                       .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo) && x.WynikOperacji == ResultOk && x.NrPaleta != Remove && x.NrGrawerka.Contains(pn))
+                    partsShift[i] += context.VFinalGaugeBr10L2Monitorings
+                       .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo) && x.WynikOperacji == ResultOk && x.NrGrawerka.Contains(pn))
                        .Count();
 
                     dateTimeFrom = dateTimeFrom.AddHours(8);
@@ -577,14 +577,14 @@ namespace WebMonitoring.Models
             var dateTimeTo = dateTime.Date;
             dateTimeTo = dateTimeTo.AddHours(14);
 
-            var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
-            var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
+            var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc();
+            var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTimeUtc();
 
             string model = string.Empty;
 
-            if (line == LineDescription.LineWS2B_BJA)
+            if (line == LineDescription.LineWS8_BJA)
                 model = "BR10 BJA";
-            else if (line == LineDescription.LineWS2B_GPF)
+            else if (line == LineDescription.LineWS8_GPF)
                 model = "BR10 GPF";
 
             var partNumber = Production.GetPartNumber(model);
@@ -594,8 +594,8 @@ namespace WebMonitoring.Models
             {
                 foreach (var pn in partNumber)
                 {
-                    var result = context.VPetlaKontrolnaBr10L2Monitorings
-                   .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.NrGrawerka.Contains(pn) && x.NrPaleta != Remove && x.WynikOperacji == ResultOk)
+                    var result = context.VFinalGaugeBr10L2Monitorings
+                   .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.NrGrawerka.Contains(pn) && x.WynikOperacji == ResultOk)
                    .Count();
 
                     if (result > 10)
@@ -606,8 +606,8 @@ namespace WebMonitoring.Models
                 dateTimeFrom = dateTimeFrom.AddHours(8);
                 dateTimeTo = dateTimeTo.AddHours(8);
 
-                frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
-                frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
+                frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc();
+                frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTimeUtc();
 
             }
 

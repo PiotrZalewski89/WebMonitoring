@@ -45,13 +45,13 @@ namespace WebMonitoring.Components
             {
                 _DbSetLine.GetProductionCountPerHourWS3(dateTime, LineDescription.LineWS3BLP3);
             }
-            else if (selectLine == LineDescription.LineWS2B_GPF)
+            else if (selectLine == LineDescription.LineWS8_GPF)
             {
-                _DbSetLine.GetProductionCountPerHourWS4(dateTime, LineDescription.LineWS2B_GPF, tryb12h);
+                _DbSetLine.GetProductionCountPerHourWS4(dateTime, LineDescription.LineWS8_GPF, tryb12h);
             }
-            else if (selectLine == LineDescription.LineWS2B_BJA)
+            else if (selectLine == LineDescription.LineWS8_BJA)
             {
-                _DbSetLine.GetProductionCountPerHourWS4(dateTime, LineDescription.LineWS2B_BJA, tryb12h);
+                _DbSetLine.GetProductionCountPerHourWS4(dateTime, LineDescription.LineWS8_BJA, tryb12h);
             }
             else if (selectLine == LineDescription.LineWS4M260)
             {
@@ -72,6 +72,10 @@ namespace WebMonitoring.Components
             else if (selectLine == LineDescription.LineWeil)
             {
                 _DbSetLine.GetProductionCountPerHourWeil(dateTime, LineDescription.LineWeil);
+            }
+            else if (selectLine == LineDescription.LineSDF)
+            {
+                _DbSetLine.GetProductionCountPerHourSdf(dateTime, LineDescription.LineSDF);
             }
 
             //zapis do bazy odnosnie targetu

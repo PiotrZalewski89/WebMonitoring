@@ -119,7 +119,7 @@ namespace WebMonitoring.Models
         public WeeklyProduction Production(string line)
         {
             WeeklyProduction weeklyProduction = new WeeklyProduction();
-            var tempLine = line != LineDescription.LineWS2B_BJA.Replace(" ", "_") && line != LineDescription.LineWS2B_GPF.Replace(" ", "_") ? line : line == LineDescription.LineWS2B_BJA.Replace(" ", "_") ? LineDescription.LineWS2B_BJA : LineDescription.LineWS2B_GPF;
+            var tempLine = line != LineDescription.LineWS8_BJA.Replace(" ", "_") && line != LineDescription.LineWS8_GPF.Replace(" ", "_") ? line : line == LineDescription.LineWS8_BJA.Replace(" ", "_") ? LineDescription.LineWS8_BJA : LineDescription.LineWS8_GPF;
             weeklyProduction.Line = line;
             weeklyProduction.Description = line;
             weeklyProduction.ActiveShifts = _DbSetLine.GetSumWeeklyActiveShifts(tempLine);

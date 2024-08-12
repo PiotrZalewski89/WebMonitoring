@@ -25,6 +25,7 @@ namespace WebMonitoring.Models
             661, //7 - stf 3-6
             800, //8 - weil
             80,//ws7
+            20, //sdf
         };
 
         public DbProduction(ProductionDbContext ctx)
@@ -113,11 +114,11 @@ namespace WebMonitoring.Models
             {
                 return DefaultTarget[3];
             }
-            else if (LineDescription.LineWS2B_GPF == line)
+            else if (LineDescription.LineWS8_GPF == line)
             {
                 return DefaultTarget[4];
             }
-            else if (LineDescription.LineWS2B_BJA == line)
+            else if (LineDescription.LineWS8_BJA == line)
             {
                 return DefaultTarget[4];
             }

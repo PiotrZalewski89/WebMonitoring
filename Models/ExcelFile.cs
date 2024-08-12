@@ -171,27 +171,27 @@ namespace WebMonitoring.Models
                             //BR10 BJA
                             for (int rowShift = 1; rowShift <= 3; rowShift++)
                             {
-                                xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 6].Value = dailyRaport.LineWs2B_Bja.Model;
+                                xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 6].Value = dailyRaport.LineWs8_Bja.Model;
 
                                 if (rowShift == 1)
-                                    xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 7].Value = dailyRaport.LineWs2B_Bja.Shift1;
+                                    xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 7].Value = dailyRaport.LineWs8_Bja.Shift1;
                                 else if (rowShift == 2)
-                                    xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 7].Value = dailyRaport.LineWs2B_Bja.Shift2;
+                                    xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 7].Value = dailyRaport.LineWs8_Bja.Shift2;
                                 else if (rowShift == 3)
-                                    xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 7].Value = dailyRaport.LineWs2B_Bja.Shift3;
+                                    xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 7].Value = dailyRaport.LineWs8_Bja.Shift3;
                             }
 
                             //BR10 GPF
                             for (int rowShift = 1; rowShift <= 3; rowShift++)
                             {
-                                xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 9].Value = dailyRaport.LineWs2B_Bja.Model;
+                                xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 9].Value = dailyRaport.LineWs8_Bja.Model;
 
                                 if (rowShift == 1)
-                                    xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 10].Value = dailyRaport.LineWs2B_Bja.Shift1;
+                                    xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 10].Value = dailyRaport.LineWs8_Bja.Shift1;
                                 else if (rowShift == 2)
-                                    xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 10].Value = dailyRaport.LineWs2B_Bja.Shift2;
+                                    xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 10].Value = dailyRaport.LineWs8_Bja.Shift2;
                                 else if (rowShift == 3)
-                                    xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 10].Value = dailyRaport.LineWs2B_Bja.Shift3;
+                                    xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 10].Value = dailyRaport.LineWs8_Bja.Shift3;
                             }
 
                             //insert to Outpu Details STF3

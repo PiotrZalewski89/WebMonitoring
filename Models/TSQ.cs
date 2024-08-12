@@ -19,8 +19,8 @@ namespace WebMonitoring.Models
         public DataRaport LineWs3A_1LP1Gpf { get; set; } = new DataRaport();
         public DataRaport LineWs3A_2LP1Gpf { get; set; } = new DataRaport();
         public DataRaport LineWs3 { get; set; } = new DataRaport();
-        public DataRaport LineWs2B_Bja { get; set; } = new DataRaport();
-        public DataRaport LineWs2B_Gpf { get; set; } = new DataRaport();
+        public DataRaport LineWs8_Bja { get; set; } = new DataRaport();
+        public DataRaport LineWs8_Gpf { get; set; } = new DataRaport();
         public DataRaport LineWs4M260A { get; set; } = new DataRaport();
         public DataRaport LineWs5 { get; set; } = new DataRaport();
         public DataRaport LineWs6 { get; set; } = new DataRaport();
@@ -146,24 +146,24 @@ namespace WebMonitoring.Models
             LineWs3.Shift3 = shifts[2];
 
             //ws4 bja
-            LineWs2B_Bja.Line = LineDescription.LineWS2B_BJA;
-            LineWs2B_Bja.Model = "BR10 BJA";
+            LineWs8_Bja.Line = LineDescription.LineWS8_BJA;
+            LineWs8_Bja.Model = "BR10 BJA";
 
-            shifts = context.GetDailyReport(LineDescription.LineWS2B_BJA, dateTime);
+            shifts = context.GetDailyReport(LineDescription.LineWS8_BJA, dateTime);
 
-            LineWs2B_Bja.Shift1 = shifts[0];
-            LineWs2B_Bja.Shift2 = shifts[1];
-            LineWs2B_Bja.Shift3 = shifts[2];
+            LineWs8_Bja.Shift1 = shifts[0];
+            LineWs8_Bja.Shift2 = shifts[1];
+            LineWs8_Bja.Shift3 = shifts[2];
 
             //ws4 gpf
-            LineWs2B_Gpf.Line = LineDescription.LineWS2B_GPF;
-            LineWs2B_Gpf.Model = "BR10 GPF";
+            LineWs8_Gpf.Line = LineDescription.LineWS8_GPF;
+            LineWs8_Gpf.Model = "BR10 GPF";
 
-            shifts = context.GetDailyReport(LineDescription.LineWS2B_GPF, dateTime);
+            shifts = context.GetDailyReport(LineDescription.LineWS8_GPF, dateTime);
 
-            LineWs2B_Gpf.Shift1 = shifts[0];
-            LineWs2B_Gpf.Shift2 = shifts[1];
-            LineWs2B_Gpf.Shift3 = shifts[2];
+            LineWs8_Gpf.Shift1 = shifts[0];
+            LineWs8_Gpf.Shift2 = shifts[1];
+            LineWs8_Gpf.Shift3 = shifts[2];
 
             //ws4 m260a
             LineWs4M260A.Line = LineDescription.LineWS4;

@@ -520,8 +520,8 @@ namespace WebMonitoring.Models
             var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime_AllDay();
             var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime_AllDay();
 
-            return context.VPetlaKontrolnaHr10L1Monitorings
-               .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk && x.NrPaleta != Remove && x.NrLinii == L1)
+            return context.VCheckFixtureL1Monitorings
+               .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk && x.NrLinii == L1)
                .Count();
         }
 
@@ -530,11 +530,11 @@ namespace WebMonitoring.Models
             var dateTimeFrom = dateTime;
             var dateTimeTo = dateTime.AddDays(1);
 
-            var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime_AllDay();
-            var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime_AllDay();
+            var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc_AllDay();
+            var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTimeUtc_AllDay();
 
-            return context.VPetlaKontrolnaHr10L1Monitorings
-               .Where(x => x.FrameTime2 >= frameTimeFrom && x.FrameTime2 < frameTimeTo && x.WynikOperacji == ResultOk && x.NrPaleta != Remove && x.NrLinii == L2)
+            return context.VCheckFixtureL1Monitorings
+               .Where(x => x.FrameTime2 >= frameTimeFrom && x.FrameTime2 < frameTimeTo && x.WynikOperacji == ResultOk && x.NrLinii == L2)
                .Count();
         }
 
@@ -547,15 +547,15 @@ namespace WebMonitoring.Models
 
             for (int i = 0; i < 3; i++)
             {
-                var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
-                var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
+                var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc();
+                var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTimeUtc();
 
-                partsShift[i] = context.VPetlaKontrolnaHr10L1Monitorings
-                   .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo) && x.WynikOperacji == ResultOk && x.NrPaleta != Remove && x.NrLinii == L1)
+                partsShift[i] = context.VCheckFixtureL1Monitorings
+                   .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo) && x.WynikOperacji == ResultOk && x.NrLinii == L1)
                    .Count();
 
-                partsShift[i] += context.VPetlaKontrolnaHr10L1Monitorings
-                    .Where(x => (x.FrameTime2 >= frameTimeFrom && x.FrameTime2 < frameTimeTo) && x.WynikOperacji == ResultOk && x.NrPaleta != Remove && x.NrLinii == L2)
+                partsShift[i] += context.VCheckFixtureL1Monitorings
+                    .Where(x => (x.FrameTime2 >= frameTimeFrom && x.FrameTime2 < frameTimeTo) && x.WynikOperacji == ResultOk && x.NrLinii == L2)
                     .Count();
 
                 dateTimeFrom = dateTimeFrom.AddHours(8);
@@ -576,8 +576,8 @@ namespace WebMonitoring.Models
 
             for (int i = 0; i < 3; i++)
             {
-                var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
-                var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
+                var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc();
+                var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTimeUtc();
 
                 if (station == "CelaGpf1Lp1")
                 {
@@ -661,17 +661,17 @@ namespace WebMonitoring.Models
             var dateTimeTo = dateTime.Date;
             dateTimeTo = dateTimeTo.AddHours(14);
 
-            var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
-            var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
+            var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc();
+            var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTimeUtc();
 
             for(int i = 0; i < 3; i++)
             {
-                var result = context.VPetlaKontrolnaHr10L1Monitorings
-                   .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo) && x.NrPaleta != Remove && x.WynikOperacji == ResultOk)
+                var result = context.VCheckFixtureL1Monitorings
+                   .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo) && x.WynikOperacji == ResultOk)
                    .Count();
 
-                result += context.VPetlaKontrolnaHr10L1Monitorings
-                   .Where(x => (x.FrameTime2 >= frameTimeFrom && x.FrameTime2 < frameTimeTo) && x.NrPaleta != Remove && x.WynikOperacji == ResultOk)
+                result += context.VCheckFixtureL1Monitorings
+                   .Where(x => (x.FrameTime2 >= frameTimeFrom && x.FrameTime2 < frameTimeTo) && x.WynikOperacji == ResultOk)
                    .Count();
 
                 //DateTime dt1;
@@ -692,8 +692,8 @@ namespace WebMonitoring.Models
                 dateTimeFrom = dateTimeFrom.AddHours(8);
                 dateTimeTo = dateTimeTo.AddHours(8);
 
-                frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
-                frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
+                frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc();
+                frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTimeUtc();
 
             }
 

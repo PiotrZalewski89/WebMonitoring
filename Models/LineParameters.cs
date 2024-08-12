@@ -96,6 +96,10 @@ namespace WebMonitoring.Models
                         break;
                 }
             }
+            else if(restHourlyGoal < 0)
+            {
+                goals[goals.Count - 1] += restHourlyGoal;
+            }
 
             //target - kolumna 9
             goals.Add(target / numberOfStation);

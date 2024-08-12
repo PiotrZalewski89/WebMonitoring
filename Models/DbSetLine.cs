@@ -65,7 +65,7 @@ namespace WebMonitoring.Models
 
         virtual public void GetProductionCountPerHourWS4(DateTime dateTime, string line, bool tryb12h)
         {
-            DbSetLineWS2B dbSet = new DbSetLineWS2B(new StorageStationDbContext(), new ProductionDbContext());
+            DbSetLineWS8 dbSet = new DbSetLineWS8(new StorageStationDbContext(), new ProductionDbContext());
 
             dbSet.GetProductionCountPerHour(dateTime, line, tryb12h);
 
@@ -131,6 +131,17 @@ namespace WebMonitoring.Models
             Target = dbSet.Target;
         }
 
+        virtual public void GetProductionCountPerHourSdf(DateTime dateTime, string line)
+        {
+            DbSetPipeSDF dbSet = new DbSetPipeSDF(new PipeDbContext());
+
+            dbSet.GetProductionCountPerHour(dateTime);
+
+            _LineData = dbSet.LineData;
+
+            Target = dbSet.Target;
+        }
+
         virtual public int GetWeeklyProduction(string selectLine, DateTime dateTime)
         {
             if (selectLine == LineDescription.LineWS1CNH)
@@ -164,9 +175,9 @@ namespace WebMonitoring.Models
                     return dbSet.GetCountFromDayWS3BLP2(dateTime);
                 }
             }
-            else if (selectLine == LineDescription.LineWS2B_BJA || selectLine == LineDescription.LineWS2B_GPF || selectLine == LineDescription.LineWS4)
+            else if (selectLine == LineDescription.LineWS8_BJA || selectLine == LineDescription.LineWS8_GPF || selectLine == LineDescription.LineWS4)
             {
-                DbSetLineWS2B dbSet = new DbSetLineWS2B(new StorageStationDbContext());
+                DbSetLineWS8 dbSet = new DbSetLineWS8(new StorageStationDbContext());
 
                 return dbSet.GetCountFromDayWS4(selectLine, dateTime);
             }
@@ -224,6 +235,12 @@ namespace WebMonitoring.Models
 
                 return dbSet.GetCountFromDay(dateTime);
             }
+            else if (selectLine == LineDescription.LineSDF)
+            {
+                DbSetPipeSDF dbSet = new DbSetPipeSDF(new PipeDbContext());
+
+                return dbSet.GetCountFromDayPipeSdf(dateTime);
+            }
 
             return 0;
         }
@@ -267,9 +284,9 @@ namespace WebMonitoring.Models
 
                 dbSet.Target = target;
             }
-            else if (selectLine == LineDescription.LineWS2B_BJA || selectLine == LineDescription.LineWS2B_GPF)
+            else if (selectLine == LineDescription.LineWS8_BJA || selectLine == LineDescription.LineWS8_GPF)
             {
-                DbSetLineWS2B dbSet = new DbSetLineWS2B(new StorageStationDbContext());
+                DbSetLineWS8 dbSet = new DbSetLineWS8(new StorageStationDbContext());
 
                 dbSet.TrybPracy12h = trybPracy12h;
                 dbSet.Target = target;
@@ -318,10 +335,15 @@ namespace WebMonitoring.Models
 
                 dbSet.Target = target;
             }
-
             else if (selectLine == LineDescription.LineWS7)
             {
                 DbSetLineWS7 dbSet = new DbSetLineWS7(new CnhDbContext());
+
+                dbSet.Target = target;
+            }
+            else if (selectLine == LineDescription.LineSDF)
+            {
+                DbSetPipeSDF dbSet = new DbSetPipeSDF(new PipeDbContext());
 
                 dbSet.Target = target;
             }
@@ -422,9 +444,9 @@ namespace WebMonitoring.Models
 
                 return dbSet.ActiveShift(dateTime);
             }
-            else if (selectLine == LineDescription.LineWS2B_BJA || selectLine == LineDescription.LineWS2B_GPF || selectLine == LineDescription.LineWS4)
+            else if (selectLine == LineDescription.LineWS8_BJA || selectLine == LineDescription.LineWS8_GPF || selectLine == LineDescription.LineWS4)
             {
-                DbSetLineWS2B dbSet = new DbSetLineWS2B(new StorageStationDbContext());
+                DbSetLineWS8 dbSet = new DbSetLineWS8(new StorageStationDbContext());
 
                 return dbSet.ActiveShift(selectLine, dateTime);
             }
@@ -476,6 +498,12 @@ namespace WebMonitoring.Models
 
                 return dbSet.ActiveShift(dateTime);
             }
+            else if (selectLine == LineDescription.LineSDF)
+            {
+                DbSetPipeSDF dbSet = new DbSetPipeSDF(new PipeDbContext());
+
+                return dbSet.ActiveShift(dateTime);
+            }
 
             return 1;
         }
@@ -509,11 +537,11 @@ namespace WebMonitoring.Models
 
                 partsPerShift = dbSet.GetDailyRaport(dateTime);
             }
-            else if (selectLine == LineDescription.LineWS2B_BJA || selectLine == LineDescription.LineWS2B_GPF || selectLine == LineDescription.LineWS4)
+            else if (selectLine == LineDescription.LineWS8_BJA || selectLine == LineDescription.LineWS8_GPF || selectLine == LineDescription.LineWS4)
             {
-                DbSetLineWS2B dbSet = new DbSetLineWS2B(new StorageStationDbContext());
+                DbSetLineWS8 dbSet = new DbSetLineWS8(new StorageStationDbContext());
 
-                partsPerShift = dbSet.GetDailyRaport(dateTime, selectLine == LineDescription.LineWS2B_BJA ? "BR10 BJA" : "BR10 GPF");
+                partsPerShift = dbSet.GetDailyRaport(dateTime, selectLine == LineDescription.LineWS8_BJA ? "BR10 BJA" : "BR10 GPF");
             }
             else if (selectLine == LineDescription.LineWS4M260)
             {
@@ -569,10 +597,15 @@ namespace WebMonitoring.Models
 
                 partsPerShift = dbSet.GetDailyRaport(dateTime, selectLine);
             }
-
             else if (selectLine == LineDescription.LineWeil)
             {
                 DbSetLineShell dbSet = new DbSetLineShell(new ProductionDbContext());
+
+                partsPerShift = dbSet.GetDailyRaport(dateTime);
+            }
+            else if (selectLine == LineDescription.LineSDF)
+            {
+                DbSetPipeSDF dbSet = new DbSetPipeSDF(new PipeDbContext());
 
                 partsPerShift = dbSet.GetDailyRaport(dateTime);
             }

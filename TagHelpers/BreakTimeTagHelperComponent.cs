@@ -41,12 +41,15 @@ namespace WebMonitoring.TagHelpers
             new BreakTime(LineDescription.LineWeil, 1, 10, 30, 12, 0),
             new BreakTime(LineDescription.LineWeil, 2, 10, 0, 20, 0),
             new BreakTime(LineDescription.LineWeil, 3, 2, 0, 4, 0),
-            new BreakTime(LineDescription.LineWS2B_BJA, 1, 10, 30, 12, 0),
-            new BreakTime(LineDescription.LineWS2B_BJA, 2, 10, 0, 20, 0),
-            new BreakTime(LineDescription.LineWS2B_BJA, 3, 2, 0, 4, 0),
-            new BreakTime(LineDescription.LineWS2B_GPF, 1, 10, 30, 12, 0),
-            new BreakTime(LineDescription.LineWS2B_GPF, 2, 10, 0, 20, 0),
-            new BreakTime(LineDescription.LineWS2B_GPF, 3, 2, 0, 4, 0)
+            new BreakTime(LineDescription.LineWS8_BJA, 1, 10, 30, 12, 0),
+            new BreakTime(LineDescription.LineWS8_BJA, 2, 10, 0, 20, 0),
+            new BreakTime(LineDescription.LineWS8_BJA, 3, 2, 0, 4, 0),
+            new BreakTime(LineDescription.LineWS8_GPF, 1, 10, 30, 12, 0),
+            new BreakTime(LineDescription.LineWS8_GPF, 2, 10, 0, 20, 0),
+            new BreakTime(LineDescription.LineWS8_GPF, 3, 2, 0, 4, 0),
+             new BreakTime(LineDescription.LineSDF, 1, 10, 30, 11, 50),
+            new BreakTime(LineDescription.LineSDF, 2, 10, 0, 19, 50),
+            new BreakTime(LineDescription.LineSDF, 3, 2, 0, 3, 50)
         };
 
         private BreakTime BreakTime { get; set; }
@@ -68,10 +71,10 @@ namespace WebMonitoring.TagHelpers
                 else if (Line == LineDescription.LineWS4 
                    || Line == LineDescription.LineWS4M260)
                     Line = LineDescription.LineWS4;
-                else if (Line == LineDescription.LineWS2B_BJA)
-                    Line = LineDescription.LineWS2B_BJA;
-                else if (Line == LineDescription.LineWS2B_GPF)
-                    Line = LineDescription.LineWS2B_GPF;
+                else if (Line == LineDescription.LineWS8_BJA)
+                    Line = LineDescription.LineWS8_BJA;
+                else if (Line == LineDescription.LineWS8_GPF)
+                    Line = LineDescription.LineWS8_GPF;
                 else if (Line == LineDescription.LineWeil)
                     Line = LineDescription.LineWeil;
 

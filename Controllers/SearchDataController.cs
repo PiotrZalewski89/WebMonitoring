@@ -467,7 +467,15 @@ namespace WebMonitoring.Controllers
             {
                 if (stf.FindData?.Count > 0 && stf.SelectCode)
                 {
-                    stf.GetDataFromSql(stf.FindData);
+                    if (stf.Stf3Cpt)
+                    {
+                        stf.GetDataFromSqlStf3Cpt(stf.FindData);
+                    }
+                    else
+                    {
+                        stf.GetDataFromSql(stf.FindData);
+                    }
+                        
                     return View(stf);
                 }
                 else if (stf.SelectDate && stf.DateTime != null)
@@ -482,6 +490,11 @@ namespace WebMonitoring.Controllers
                         else if (stf.Stf3)
                         {
                             stf.GetDataFromSqlStf3((DateTime)stf.DateTime);
+                            return View(stf);
+                        }
+                        else if (stf.Stf3Cpt)
+                        {
+                            stf.GetDataFromSqlStf3Cpt((DateTime)stf.DateTime);
                             return View(stf);
                         }
                         else if (stf.Stf4)
@@ -522,6 +535,11 @@ namespace WebMonitoring.Controllers
                         {
                             stf.GetDataFromSqlStf3((DateTime)stf.DateTime, true);
                             return File(ConvertStringToByte(stf.Table), "text/csv", "LineSTF3.csv");
+                        }
+                        else if (stf.Stf3Cpt)
+                        {
+                            stf.GetDataFromSqlStf3Cpt((DateTime)stf.DateTime, true);
+                            return File(ConvertStringToByte(stf.Table), "text/csv", "LineSTF3_CPT.csv");
                         }
                         else if (stf.Stf4)
                         {
