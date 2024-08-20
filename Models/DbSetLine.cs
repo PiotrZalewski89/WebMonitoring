@@ -52,6 +52,17 @@ namespace WebMonitoring.Models
             Target = dbSet.Target;
         }
 
+        virtual public void GetProductionCountPerHourWS2_HR18(DateTime dateTime)
+        {
+            DbSetLineWS2HR18 dbSet = new DbSetLineWS2HR18(new StorageStationDbContext());
+
+            dbSet.GetProductionCountPerHour(dateTime);
+
+            _LineData = dbSet.LineData;
+
+            Target = dbSet.Target;
+        }
+
         virtual public void GetProductionCountPerHourWS3(DateTime dateTime, string line)
         {
             DbSetLineWS3 dbSet = new DbSetLineWS3(new StorageStationDbContext(), new ProductionDbContext());
@@ -161,6 +172,12 @@ namespace WebMonitoring.Models
                 DbSetLineWS2 dbSet = new DbSetLineWS2(new StorageStationDbContext());
 
                 return dbSet.GetCountFromDayWS2(dateTime);
+            }
+            else if (selectLine == LineDescription.LineWS2HR18)
+            {
+                DbSetLineWS2HR18 dbSet = new DbSetLineWS2HR18(new StorageStationDbContext());
+
+                return dbSet.GetCountFromDayWS2HR18(dateTime);
             }
             else if (selectLine == LineDescription.LineWS3BLP1 || selectLine == LineDescription.LineWS3BLP2)
             {
@@ -275,6 +292,12 @@ namespace WebMonitoring.Models
             if (selectLine == LineDescription.LineWS2)
             {
                 DbSetLineWS2 dbSet = new DbSetLineWS2(new StorageStationDbContext());
+
+                dbSet.Target = target;
+            }
+            else if (selectLine == LineDescription.LineWS2HR18 || selectLine == LineDescription.LineWS2HR18)
+            {
+                DbSetLineWS2HR18 dbSet = new DbSetLineWS2HR18(new StorageStationDbContext());
 
                 dbSet.Target = target;
             }
@@ -438,6 +461,12 @@ namespace WebMonitoring.Models
 
                 return dbSet.ActiveShift(dateTime);
             }
+            else if (selectLine == LineDescription.LineWS2HR18)
+            {
+                DbSetLineWS2HR18 dbSet = new DbSetLineWS2HR18(new StorageStationDbContext());
+
+                return dbSet.ActiveShift(dateTime);
+            }
             else if (selectLine == LineDescription.LineWS3BLP1 || selectLine == LineDescription.LineWS3BLP2 || selectLine == LineDescription.LineWS3)
             {
                 DbSetLineWS3 dbSet = new DbSetLineWS3(new StorageStationDbContext());
@@ -534,6 +563,12 @@ namespace WebMonitoring.Models
             else if (selectLine == LineDescription.LineWS2)
             {
                 DbSetLineWS2 dbSet = new DbSetLineWS2(new StorageStationDbContext());
+
+                partsPerShift = dbSet.GetDailyRaport(dateTime);
+            }
+            else if (selectLine == LineDescription.LineWS2HR18)
+            {
+                DbSetLineWS2HR18 dbSet = new DbSetLineWS2HR18(new StorageStationDbContext());
 
                 partsPerShift = dbSet.GetDailyRaport(dateTime);
             }

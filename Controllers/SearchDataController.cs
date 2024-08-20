@@ -24,7 +24,8 @@ namespace WebMonitoring.Controllers
              "Wyszukiwanie - Linia STF 3,4,5,6",//8
              "Wyszukiwanie - Linia STF 1",//9
              "Wyszukiwanie - Linia STF 2",//10
-                "Wyszukiwanie - Linia WS7"//11
+                "Wyszukiwanie - Linia WS7",//11
+          "Wyszukiwanie - Linia WS2 HR18"//12
       };
 
 
@@ -151,7 +152,7 @@ namespace WebMonitoring.Controllers
         [HttpGet]
         public IActionResult LineWS3()
         {
-            
+
             ViewBag.TitleNavBar = Desctription[3];
             return View();
         }
@@ -204,7 +205,7 @@ namespace WebMonitoring.Controllers
                     }
                 }
             }
-            
+
             return View();
         }
 
@@ -398,7 +399,7 @@ namespace WebMonitoring.Controllers
         public IActionResult LineWs7(CheckBoxLineWs7 ws)
         {
             ViewBag.TitleNavBar = Desctription[11];
-            bool checkboxChecked = ws.Mixer || ws.OP290 || ws.OP300 || ws.OP310 || ws.OP320 || ws.OP330 || ws.OP325 || ws.OP360||ws.FLT||ws.Marking||ws.OP380||ws.OP390||ws.FG||ws.CL;
+            bool checkboxChecked = ws.Mixer || ws.OP290 || ws.OP300 || ws.OP310 || ws.OP320 || ws.OP330 || ws.OP325 || ws.OP360 || ws.FLT || ws.Marking || ws.OP380 || ws.OP390 || ws.FG || ws.CL;
 
             if (!string.IsNullOrEmpty(ws.TextArea))
                 ws.FindData = new List<string>(
@@ -475,7 +476,7 @@ namespace WebMonitoring.Controllers
                     {
                         stf.GetDataFromSql(stf.FindData);
                     }
-                        
+
                     return View(stf);
                 }
                 else if (stf.SelectDate && stf.DateTime != null)
@@ -616,7 +617,7 @@ namespace WebMonitoring.Controllers
 
                     if (stf.Table?.Count > 0)
                     {
-                        return File(ExtensionMethod.GenerationFile(stf.Table , stf.FileName), "application/zip", "LineStf1.zip");
+                        return File(ExtensionMethod.GenerationFile(stf.Table, stf.FileName), "application/zip", "LineStf1.zip");
                     }
                 }
                 else if (stf.SelectDate && stf.DateTime != null)
@@ -699,6 +700,66 @@ namespace WebMonitoring.Controllers
 
             return View();
         }
+        [HttpGet]
+        public IActionResult LineWs2HR18()
+        {
 
+            ViewBag.TitleNavBar = Desctription[12];
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult LineWs2HR18(CheckBoxLineWS2HR18 ws)
+        {
+            ViewBag.TitleNavBar = Desctription[12];
+            bool checkboxChecked = ws.Cela_spawalnicza || ws.Tester_szczelności || ws.Sprawdzian_geometrii || ws.Odkurzacz || ws.ControlLoop_KJ;
+
+            if (!string.IsNullOrEmpty(ws.TextArea))
+                ws.FindData = new List<string>(
+                                     ws.TextArea.Split(new string[] { "\r\n" },
+                                     StringSplitOptions.RemoveEmptyEntries));
+
+
+            if (!string.IsNullOrEmpty(Request.Form["wyszukiwanie"]))
+            {
+                if ((ws.FindData?.Count > 0 && (ws.SelectCode || ws.SelectPzzw)) && checkboxChecked)
+                {
+                    ws.GetDataCode();
+                    return View(ws);
+                }
+                else if (ws.SelectDate && checkboxChecked && ws.DateTime != null)
+                {
+                    if (ws.DateTime != null)
+                    {
+                        ws.GetDataCode();
+                        return View(ws);
+                    }
+                }
+            }
+            else if (!string.IsNullOrEmpty(Request.Form["pobierz"]))
+            {
+                if ((ws.FindData?.Count > 0 && (ws.SelectCode || ws.SelectPzzw)) && checkboxChecked)
+                {
+                    ws.GetDataCode(true);
+
+                    if (ws.Table?.Count > 0)
+                        return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs2HR18.zip");
+                }
+                else if (ws.SelectDate && checkboxChecked && ws.DateTime != null)
+                {
+                    if (ws.DateTime != null)
+                    {
+                        ws.GetDataCode(true);
+
+                        if (ws.Table?.Count > 0)
+                            return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs2HR18.zip");
+                    }
+                }
+            }
+
+            return View();
+        }
     }
 }
+    
+    

@@ -12,6 +12,7 @@ namespace WebMonitoring.Models
         public DataRaport LineWs1Cnh { get; set; } = new DataRaport();
         public DataRaport LineWs1V50 { get; set; } = new DataRaport();
         public DataRaport LineWs2 { get; set; } = new DataRaport();
+        public DataRaport LineWS2HR18 { get; set; } = new DataRaport();
         public DataRaport LineWs3A_0LP1 { get; set; } = new DataRaport();
         public DataRaport LineWs3A_1LP2_Rurki { get; set; } = new DataRaport();
         public DataRaport LineWs3A_2LP1 { get; set; } = new DataRaport();
@@ -74,6 +75,16 @@ namespace WebMonitoring.Models
             LineWs2.Shift1 = shifts[0];
             LineWs2.Shift2 = shifts[1];
             LineWs2.Shift3 = shifts[2];
+
+            //ws2 hr18
+            LineWS2HR18.Line = LineDescription.LineWS2HR18;
+            LineWS2HR18.Model = "HR18";
+
+            shifts = context.GetDailyReport(LineDescription.LineWS2HR18, dateTime);
+
+            LineWS2HR18.Shift1 = shifts[0];
+            LineWS2HR18.Shift2 = shifts[1];
+            LineWS2HR18.Shift3 = shifts[2];
 
             //ws3A hr10
             LineWs3A_0LP1.Line = LineDescription.LineWS3A + " Cela 0Lp1";

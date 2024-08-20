@@ -33,7 +33,7 @@ namespace WebMonitoring.Models
 
         private string[] DescriptionWS3BLP1 = new string[]
         {
-            "Cela 5 LP1",
+            "Cela 3 LP1",
             "Preleak tester LP1",
             "Enkapsulacja LP1",
             "Wkrętak LP1",
@@ -46,7 +46,7 @@ namespace WebMonitoring.Models
 
         private string[] DescriptionWS3BLP2 = new string[]
         {
-            "Cela 5 LP2",
+            "Cela 3 LP2",
             "Preleak tester LP2",
             "Enkapsulacja LP2",
             "Wkrętak LP2",
@@ -59,7 +59,7 @@ namespace WebMonitoring.Models
 
         private string[] DescriptionWS3BLP3 = new string[]
         {   
-            "Cela 5 LP3",
+            "Cela 3 LP3",
             "Preleak tester LP3",
             "Enkapsulacja LP3",
             "Wkrętak LP3"
@@ -116,7 +116,7 @@ namespace WebMonitoring.Models
         //WS3B LP1
         public List<int> Cela1LP2_RURKI { get; set; }
 
-        public List<int> Cela5LP1 { get; set; }
+        public List<int> Cela3LP1 { get; set; }
 
         public List<int> PLTLP1 { get; set; }
 
@@ -135,7 +135,7 @@ namespace WebMonitoring.Models
         public List<int> PetlaKJLP1 { get; set; }
 
         //WS3B  LP2
-        public List<int> Cela5LP2 { get; set; }
+        public List<int> Cela3LP2 { get; set; }
 
         public List<int> PLTLP2 { get; set; }
 
@@ -154,7 +154,7 @@ namespace WebMonitoring.Models
         public List<int> PetlaKJLP2 { get; set; }
 
         //WS3B LP3
-        public List<int> Cela5LP3 { get; set; }
+        public List<int> Cela3LP3 { get; set; }
 
         public List<int> PLTLP3 { get; set; }
 
@@ -294,7 +294,7 @@ namespace WebMonitoring.Models
             var dateTimeFrom = dateTime;
             var dateTimeTo = dateTimeFrom.AddHours(1);
 
-            Cela5LP1 = new List<int>();
+            Cela3LP1 = new List<int>();
             PLTLP1 = new List<int>();
             EnkapsulacjaLP1 = new List<int>();
             WkretakLP1 = new List<int>();
@@ -312,11 +312,15 @@ namespace WebMonitoring.Models
                 var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
                 var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
 
-                var parts = dpContext.Ws3Cela5lp1s
-                 .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
-                 .Select(x => x.IloscSztuk);
+                //var parts = dpContext.Ws3Cela5lp1s
+                // .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                // .Select(x => x.IloscSztuk);
 
-                Cela5LP1.Add((int)parts.Sum());
+                //Cela3LP1.Add((int)parts.Sum());
+
+                Cela3LP1.Add(context.VCela8AbbL1Monitorings
+                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii.Contains(L1))
+                   .Count());
 
                 PLTLP1.Add(context.VPreleakTesterMonitorings
                    .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikTestu == ResultOk && x.NrLinii == L1)
@@ -354,7 +358,7 @@ namespace WebMonitoring.Models
                 dateTimeTo = dateTimeTo.AddHours(1);
             }
 
-            Cela5LP1.Add(Cela5LP1.Sum());
+            Cela3LP1.Add(Cela3LP1.Sum());
             PLTLP1.Add(PLTLP1.Sum());
             EnkapsulacjaLP1.Add(EnkapsulacjaLP1.Sum());
             WkretakLP1.Add(WkretakLP1.Sum());
@@ -364,7 +368,7 @@ namespace WebMonitoring.Models
             OdkurzaczLP1.Add(OdkurzaczLP1.Sum());
             PetlaKJLP1.Add(PetlaKJLP1.Sum());
 
-            _LineData.Add(DescriptionWS3BLP1[0], Cela5LP1);
+            _LineData.Add(DescriptionWS3BLP1[0], Cela3LP1);
             _LineData.Add(DescriptionWS3BLP1[1], PLTLP1);
             _LineData.Add(DescriptionWS3BLP1[2], EnkapsulacjaLP1);
             _LineData.Add(DescriptionWS3BLP1[3], WkretakLP1);
@@ -380,7 +384,7 @@ namespace WebMonitoring.Models
             var dateTimeFrom = dateTime;
             var dateTimeTo = dateTimeFrom.AddHours(1);
 
-            Cela5LP2 = new List<int>();
+            Cela3LP2 = new List<int>();
             PLTLP2 = new List<int>();
             EnkapsulacjaLP2 = new List<int>();
             WkretakLP2 = new List<int>();
@@ -398,11 +402,15 @@ namespace WebMonitoring.Models
                 var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
                 var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
 
-                var parts = dpContext.Ws3Cela5lp2s
-                 .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
-                 .Select(x => x.IloscSztuk);
+                //var parts = dpContext.Ws3Cela5lp2s
+                // .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                // .Select(x => x.IloscSztuk);
 
-                Cela5LP2.Add((int)parts.Sum());
+                //Cela3LP2.Add((int)parts.Sum());
+
+                Cela3LP2.Add(context.VCela8AbbL1Monitorings
+                  .Where(x => x.FrameTime2 >= frameTimeUtcFrom && x.FrameTime2 < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii.Contains(L2))
+                  .Count());
 
                 PLTLP2.Add(context.VPreleakTesterMonitorings
                    .Where(x => x.FrameTime2 >= frameTimeUtcFrom && x.FrameTime2 < frameTimeUtcTo && x.WynikTestu == ResultOk && x.NrLinii == L2)
@@ -440,7 +448,7 @@ namespace WebMonitoring.Models
                 dateTimeTo = dateTimeTo.AddHours(1);
             }
 
-            Cela5LP2.Add(Cela5LP2.Sum());
+            Cela3LP2.Add(Cela3LP2.Sum());
             PLTLP2.Add(PLTLP2.Sum());
             EnkapsulacjaLP2.Add(EnkapsulacjaLP2.Sum());
             WkretakLP2.Add(WkretakLP2.Sum());
@@ -450,7 +458,7 @@ namespace WebMonitoring.Models
             OdkurzaczLP2.Add(OdkurzaczLP2.Sum());
             PetlaKJLP2.Add(PetlaKJLP2.Sum());
 
-            _LineData.Add(DescriptionWS3BLP2[0], Cela5LP2);
+            _LineData.Add(DescriptionWS3BLP2[0], Cela3LP2);
             _LineData.Add(DescriptionWS3BLP2[1], PLTLP2);
             _LineData.Add(DescriptionWS3BLP2[2], EnkapsulacjaLP2);
             _LineData.Add(DescriptionWS3BLP2[3], WkretakLP2);
@@ -466,7 +474,7 @@ namespace WebMonitoring.Models
             var dateTimeFrom = dateTime;
             var dateTimeTo = dateTimeFrom.AddHours(1);
 
-            Cela5LP3 = new List<int>();
+            Cela3LP3 = new List<int>();
             PLTLP3 = new List<int>();
             EnkapsulacjaLP3 = new List<int>();
             WkretakLP3 = new List<int>();
@@ -479,11 +487,15 @@ namespace WebMonitoring.Models
                 var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
                 var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
 
-                var parts = dpContext.Ws3Cela5lp3s
-               .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
-               .Select(x => x.IloscSztuk);
+                // var parts = dpContext.Ws3Cela5lp3s
+                //.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                //.Select(x => x.IloscSztuk);
 
-                Cela5LP3.Add((int)parts.Sum());
+                // Cela3LP3.Add((int)parts.Sum());
+
+                Cela3LP3.Add(context.VCela8AbbL1Monitorings
+                   .Where(x => x.FrameTime3 >= frameTimeUtcFrom && x.FrameTime3 < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii.Contains(L3))
+                   .Count());
 
                 PLTLP3.Add(context.VPreleakTesterMonitorings
                    .Where(x => x.FrameTime3 >= frameTimeUtcFrom && x.FrameTime3 < frameTimeUtcTo && x.WynikTestu == ResultOk && x.NrLinii == L3)
@@ -501,12 +513,12 @@ namespace WebMonitoring.Models
                 dateTimeTo = dateTimeTo.AddHours(1);
             }
 
-            Cela5LP3.Add(Cela5LP3.Sum());
+            Cela3LP3.Add(Cela3LP3.Sum());
             PLTLP3.Add(PLTLP3.Sum());
             EnkapsulacjaLP3.Add(EnkapsulacjaLP3.Sum());
             WkretakLP3.Add(WkretakLP3.Sum());
 
-            _LineData.Add(DescriptionWS3BLP3[0], Cela5LP3);
+            _LineData.Add(DescriptionWS3BLP3[0], Cela3LP3);
             _LineData.Add(DescriptionWS3BLP3[1], PLTLP3);
             _LineData.Add(DescriptionWS3BLP3[2], EnkapsulacjaLP3);
             _LineData.Add(DescriptionWS3BLP3[3], WkretakLP3);
@@ -713,7 +725,7 @@ namespace WebMonitoring.Models
             Cela2LP1_GPF.Clear();
             Cela1LP2_RURKI.Clear();
 
-            Cela5LP1.Clear();
+            Cela3LP1.Clear();
             PLTLP1.Clear();
             EnkapsulacjaLP1.Clear();
             WkretakLP1.Clear();
@@ -723,7 +735,7 @@ namespace WebMonitoring.Models
             OdkurzaczLP1.Clear();
             PetlaKJLP1.Clear();
 
-            Cela5LP2.Clear();
+            Cela3LP2.Clear();
             PLTLP2.Clear();
             EnkapsulacjaLP2.Clear();
             WkretakLP2.Clear();
@@ -733,7 +745,7 @@ namespace WebMonitoring.Models
             OdkurzaczLP2.Clear();
             PetlaKJLP2.Clear();
 
-            Cela5LP3.Clear();
+            Cela3LP3.Clear();
             PLTLP3.Clear();
             EnkapsulacjaLP3.Clear();
             WkretakLP3.Clear();

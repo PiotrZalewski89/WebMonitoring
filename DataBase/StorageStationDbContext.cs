@@ -30,6 +30,11 @@ namespace WebMonitoring.DataBase
         public virtual DbSet<FinalleakTesterL1> FinalleakTesterL1s { get; set; }
         public virtual DbSet<GbdIoCalibrationBr10L2> GbdIoCalibrationBr10L2s { get; set; }
         public virtual DbSet<HomologationL1> HomologationL1s { get; set; }
+        public virtual DbSet<Hr18ControlLoopL5> Hr18ControlLoopL5s { get; set; }
+        public virtual DbSet<Hr18FinalGaugeL5> Hr18FinalGaugeL5s { get; set; }
+        public virtual DbSet<Hr18LeaktesterL5> Hr18LeaktesterL5s { get; set; }
+        public virtual DbSet<Hr18VacuumL5> Hr18VacuumL5s { get; set; }
+        public virtual DbSet<Hr18WeldingCellL5> Hr18WeldingCellL5s { get; set; }
         public virtual DbSet<InletPressL1> InletPressL1s { get; set; }
         public virtual DbSet<LeakTesterBr10L2> LeakTesterBr10L2s { get; set; }
         public virtual DbSet<M260BracketChecksL4> M260BracketChecksL4s { get; set; }
@@ -1116,6 +1121,314 @@ namespace WebMonitoring.DataBase
                     .HasComment("Wynik operacji NOK/OK");
             });
 
+            modelBuilder.Entity<Hr18ControlLoopL5>(entity =>
+            {
+                entity.HasKey(e => e.NrKatalizatora)
+                    .HasName("HR18_CONTROL_LOOP_L5_PK");
+
+                entity.ToTable("HR18_CONTROL_LOOP_L5");
+
+                entity.HasIndex(e => e.DtOperacji, "HR18_CONTROL_LOOP_DT_OPERACJI_IDX");
+
+                entity.HasIndex(e => e.FrameTime, "HR18_CONTROL_LOOP_L5_FRAME_TIME_IDX");
+
+                entity.HasIndex(e => e.FrameTime, "HR18_CONTROL_LOOP_L5_FRAME_TIME_WYNIK_OPERACJI");
+
+                entity.Property(e => e.NrKatalizatora)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("NR_KATALIZATORA");
+
+                entity.Property(e => e.DtOperacji)
+                    .HasColumnType("datetime")
+                    .HasColumnName("DT_OPERACJI");
+
+                entity.Property(e => e.FrameSeq).HasColumnName("FRAME_SEQ");
+
+                entity.Property(e => e.FrameTime).HasColumnName("FRAME_TIME");
+
+                entity.Property(e => e.NrOperatora)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("NR_OPERATORA");
+
+                entity.Property(e => e.NrPzzw)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("NR_PZZW");
+
+                entity.Property(e => e.Quality)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("QUALITY");
+
+                entity.Property(e => e.TrybPracy)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("TRYB_PRACY");
+
+                entity.Property(e => e.WynikOperacji)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("WYNIK_OPERACJI");
+            });
+
+            modelBuilder.Entity<Hr18FinalGaugeL5>(entity =>
+            {
+                entity.HasKey(e => new { e.NrShella, e.NrGrawerka })
+                    .HasName("HR18_FINAL_GAUGE_L5_PK");
+
+                entity.ToTable("HR18_FINAL_GAUGE_L5");
+
+                entity.Property(e => e.NrShella)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("NR_SHELLA")
+                    .HasComment("Nr shella");
+
+                entity.Property(e => e.NrGrawerka)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("NR_GRAWERKA")
+                    .HasComment("Nr wygrawerowany");
+
+                entity.Property(e => e.DtOperacji)
+                    .HasColumnType("datetime")
+                    .HasColumnName("DT_OPERACJI");
+
+                entity.Property(e => e.FrameSeq).HasColumnName("FRAME_SEQ");
+
+                entity.Property(e => e.FrameSeq2).HasColumnName("FRAME_SEQ_2");
+
+                entity.Property(e => e.FrameSeq3).HasColumnName("FRAME_SEQ_3");
+
+                entity.Property(e => e.FrameTime).HasColumnName("FRAME_TIME");
+
+                entity.Property(e => e.FrameTime2).HasColumnName("FRAME_TIME_2");
+
+                entity.Property(e => e.FrameTime3).HasColumnName("FRAME_TIME_3");
+
+                entity.Property(e => e.NrLinii)
+                    .IsRequired()
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("NR_LINII")
+                    .HasDefaultValueSql("('L1')");
+
+                entity.Property(e => e.TrybPracy)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("TRYB_PRACY")
+                    .HasComment("Tryb zdalny/lokalny");
+
+                entity.Property(e => e.WynikOperacji)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("WYNIK_OPERACJI")
+                    .HasComment("Wynik operacji NOK/OK");
+            });
+
+            modelBuilder.Entity<Hr18LeaktesterL5>(entity =>
+            {
+                entity.HasKey(e => e.NrShella)
+                    .HasName("HR18_PRELEAKTESTER_L5_PK");
+
+                entity.ToTable("HR18_LEAKTESTER_L5");
+
+                entity.Property(e => e.NrShella)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("NR_SHELLA")
+                    .HasComment("Nr shella ze skanera");
+
+                entity.Property(e => e.Cisnienie)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("CISNIENIE")
+                    .HasComment("Wartość ciśnienia");
+
+                entity.Property(e => e.CisnienieJedn)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("CISNIENIE_JEDN")
+                    .HasComment("Jednostka ciśnienia");
+
+                entity.Property(e => e.DtOperacji)
+                    .HasColumnType("datetime")
+                    .HasColumnName("DT_OPERACJI");
+
+                entity.Property(e => e.FrameSeq).HasColumnName("FRAME_SEQ");
+
+                entity.Property(e => e.FrameSeq2).HasColumnName("FRAME_SEQ_2");
+
+                entity.Property(e => e.FrameSeq3).HasColumnName("FRAME_SEQ_3");
+
+                entity.Property(e => e.FrameTime).HasColumnName("FRAME_TIME");
+
+                entity.Property(e => e.FrameTime2).HasColumnName("FRAME_TIME_2");
+
+                entity.Property(e => e.FrameTime3).HasColumnName("FRAME_TIME_3");
+
+                entity.Property(e => e.GrawerkaSeq).HasColumnName("GRAWERKA_SEQ");
+
+                entity.Property(e => e.GrawerkaSeq2).HasColumnName("GRAWERKA_SEQ_2");
+
+                entity.Property(e => e.GrawerkaSeq3).HasColumnName("GRAWERKA_SEQ_3");
+
+                entity.Property(e => e.GrawerkaTime).HasColumnName("GRAWERKA_TIME");
+
+                entity.Property(e => e.GrawerkaTime2).HasColumnName("GRAWERKA_TIME_2");
+
+                entity.Property(e => e.GrawerkaTime3).HasColumnName("GRAWERKA_TIME_3");
+
+                entity.Property(e => e.NrGrawerka)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("NR_GRAWERKA")
+                    .HasComment("Nr shella wysłany do grawerki");
+
+                entity.Property(e => e.NrGrawerka2)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("NR_GRAWERKA_2");
+
+                entity.Property(e => e.NrLinii)
+                    .IsRequired()
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
+                    .HasColumnName("NR_LINII")
+                    .HasDefaultValueSql("('L1')");
+
+                entity.Property(e => e.TrybPracy)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("TRYB_PRACY")
+                    .HasComment("Tryb zdalny/lokalny");
+
+                entity.Property(e => e.Wyciek)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("WYCIEK")
+                    .HasComment("Wartość wycieku");
+
+                entity.Property(e => e.WyciekJedn)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("WYCIEK_JEDN")
+                    .HasComment("Jednostka wycieku");
+
+                entity.Property(e => e.WynikTestu)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("WYNIK_TESTU");
+            });
+
+            modelBuilder.Entity<Hr18VacuumL5>(entity =>
+            {
+                entity.HasKey(e => e.NrShella)
+                    .HasName("HR18_VACUUM_CLEANING_L5_PK");
+
+                entity.ToTable("HR18_VACUUM_L5");
+
+                entity.HasIndex(e => e.DtOperacji, "HR18_VACUUM_L5_DT_OPERACJI_IDX");
+
+                entity.HasIndex(e => e.FrameTime, "HR18_VACUUM_L5_FRAME_TIME_IDX");
+
+                entity.HasIndex(e => e.FrameTime, "HR18_VACUUM_L5_FRAME_TIME_WYNIK_OPERACJI");
+
+                entity.Property(e => e.NrShella)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("NR_SHELLA");
+
+                entity.Property(e => e.DtOperacji)
+                    .HasColumnType("datetime")
+                    .HasColumnName("DT_OPERACJI");
+
+                entity.Property(e => e.FrameSeq).HasColumnName("FRAME_SEQ");
+
+                entity.Property(e => e.FrameTime).HasColumnName("FRAME_TIME");
+
+                entity.Property(e => e.NrGrawerka)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("NR_GRAWERKA");
+
+                entity.Property(e => e.TrybPracy)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("TRYB_PRACY");
+
+                entity.Property(e => e.Vacuum1).HasColumnName("VACUUM_1");
+
+                entity.Property(e => e.Vacuum2).HasColumnName("VACUUM_2");
+
+                entity.Property(e => e.WynikOperacji)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("WYNIK_OPERACJI");
+            });
+
+            modelBuilder.Entity<Hr18WeldingCellL5>(entity =>
+            {
+                entity.HasKey(e => e.NrBasic)
+                    .HasName("HR18_WELDING_CELL_L5_PK");
+
+                entity.ToTable("HR18_WELDING_CELL_L5");
+
+                entity.HasIndex(e => e.FrameTime2, "HR18_WELDING_CELL_L5_FRAME_TIME_2_IDX");
+
+                entity.HasIndex(e => e.FrameTime3, "HR18_WELDING_CELL_L5_FRAME_TIME_3_IDX");
+
+                entity.HasIndex(e => e.FrameTime4, "HR18_WELDING_CELL_L5_FRAME_TIME_4_IDX");
+
+                entity.HasIndex(e => e.FrameTime, "HR18_WELDING_CELL_L5_FRAME_TIME_IDX");
+
+                entity.Property(e => e.NrBasic)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("NR_BASIC")
+                    .HasComment("Nr basic");
+
+                entity.Property(e => e.DtOperacji)
+                    .HasColumnType("datetime")
+                    .HasColumnName("DT_OPERACJI");
+
+                entity.Property(e => e.FrameSeq).HasColumnName("FRAME_SEQ");
+
+                entity.Property(e => e.FrameSeq2).HasColumnName("FRAME_SEQ_2");
+
+                entity.Property(e => e.FrameSeq3).HasColumnName("FRAME_SEQ_3");
+
+                entity.Property(e => e.FrameSeq4).HasColumnName("FRAME_SEQ_4");
+
+                entity.Property(e => e.FrameTime).HasColumnName("FRAME_TIME");
+
+                entity.Property(e => e.FrameTime2).HasColumnName("FRAME_TIME_2");
+
+                entity.Property(e => e.FrameTime3).HasColumnName("FRAME_TIME_3");
+
+                entity.Property(e => e.FrameTime4).HasColumnName("FRAME_TIME_4");
+
+                entity.Property(e => e.NrLinii)
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
+                    .HasColumnName("NR_LINII")
+                    .HasDefaultValueSql("('L1')");
+
+                entity.Property(e => e.TrybPracy)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("TRYB_PRACY")
+                    .HasComment("Tryb zdalny/lokalny");
+
+                entity.Property(e => e.WynikOperacji)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("WYNIK_OPERACJI")
+                    .HasComment("Wynik operacji NOK/OK");
+            });
+
             modelBuilder.Entity<InletPressL1>(entity =>
             {
                 entity.HasKey(e => e.NrShella)
@@ -1683,6 +1996,8 @@ namespace WebMonitoring.DataBase
                     .HasColumnType("datetime")
                     .HasColumnName("DT_OPERACJI");
 
+                entity.Property(e => e.Duplikacja).HasColumnName("DUPLIKACJA");
+
                 entity.Property(e => e.FrameSeq).HasColumnName("FRAME_SEQ");
 
                 entity.Property(e => e.FrameTime).HasColumnName("FRAME_TIME");
@@ -2063,6 +2378,8 @@ namespace WebMonitoring.DataBase
                 entity.HasIndex(e => e.FrameTime3, "IDX_PANEL_FONTIJNE_L1_FRAME_TIME_3");
 
                 entity.HasIndex(e => e.FrameTime4, "IDX_PANEL_FONTIJNE_L1_FRAME_TIME_4");
+
+                entity.HasIndex(e => e.ManufacturingLotTraceCodeOutlet, "IDX_PANEL_FONTIJNE_L1_SHELL_2_NO");
 
                 entity.HasIndex(e => e.ManufacturingLotTraceCode, "IDX_PANEL_FONTIJNE_L1_SHELL_NO");
 

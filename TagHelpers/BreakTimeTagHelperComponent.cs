@@ -18,6 +18,9 @@ namespace WebMonitoring.TagHelpers
             new BreakTime(LineDescription.LineWS2, 1, 10, 0, 11, 50),
             new BreakTime(LineDescription.LineWS2, 2, 18, 0, 19, 50),
             new BreakTime(LineDescription.LineWS2, 3, 2, 0, 3, 50),
+            new BreakTime(LineDescription.LineWS2HR18, 1, 10, 0, 11, 50),
+            new BreakTime(LineDescription.LineWS2HR18, 2, 18, 0, 19, 50),
+            new BreakTime(LineDescription.LineWS2HR18, 3, 2, 0, 3, 50),
             new BreakTime(LineDescription.LineWS3, 1, 9, 30, 11, 40),
             new BreakTime(LineDescription.LineWS3, 2, 17, 30, 19, 40),
             new BreakTime(LineDescription.LineWS3, 3, 1, 30, 3, 30),
@@ -77,6 +80,8 @@ namespace WebMonitoring.TagHelpers
                     Line = LineDescription.LineWS8_GPF;
                 else if (Line == LineDescription.LineWeil)
                     Line = LineDescription.LineWeil;
+                else if (Line == LineDescription.LineWS2HR18)
+                    Line = LineDescription.LineWS2HR18;
 
                 BreakTime = GetBreakTime(Line);
 

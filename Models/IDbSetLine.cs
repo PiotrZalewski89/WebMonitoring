@@ -20,6 +20,7 @@ namespace WebMonitoring.Models
         public void GetProductionCountPerHourWS7(DateTime dateTime, string line);
         public void GetProductionCountPerHourWeil(DateTime dateTime, string line);
         public void GetProductionCountPerHourSdf(DateTime dateTime, string line);
+        public void GetProductionCountPerHourWS2_HR18(DateTime dateTime);
         public int GetWeeklyProduction(string selectLinen, DateTime dateTime);
         public List<int> GetSumWeeklyProduction(string selectLine);
         public void SetTarget(string selectLine, int target, bool trybPracy12h = false);

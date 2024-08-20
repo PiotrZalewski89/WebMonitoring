@@ -33,5 +33,6 @@ namespace WebMonitoring.Models
         public static string LineWeil => "Weil";
         public static string LineWS7 => "WS7";
         public static string LineSDF => "SDF";
+        public static string LineWS2HR18 => "WS2 HR18";
     }
 }

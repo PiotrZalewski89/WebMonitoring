@@ -15,6 +15,7 @@ namespace WebMonitoring.Models
         public DataRaport LineWs1Cnh { get; set; } = new DataRaport();
         //public DataRaport LineWs1V50 { get; set; } = new DataRaport();
         public DataRaport LineWs2 { get; set; } = new DataRaport();
+        public DataRaport LineWS2HR18 { get; set; } = new DataRaport();
         public DataRaport LineWs3 { get; set; } = new DataRaport();
         public DataRaport LineWs8_Bja { get; set; } = new DataRaport();
         public DataRaport LineWs8_Gpf { get; set; } = new DataRaport();
@@ -75,6 +76,20 @@ namespace WebMonitoring.Models
             LineWs2.TargetShift1 = LineWs2.Shift1 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs2.Line, Shift1) : 0;
             LineWs2.TargetShift2 = LineWs2.Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs2.Line, Shift2) : 0;
             LineWs2.TargetShift3 = LineWs2.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs2.Line, Shift3) : 0;
+
+            //ws2 hr18
+            LineWS2HR18.Line = LineDescription.LineWS2HR18;
+            LineWS2HR18.Model = "HR18";
+
+            shifts = Context.GetDailyReport(LineDescription.LineWS2HR18, dateTime);
+
+            LineWS2HR18.Shift1 = shifts[0];
+            LineWS2HR18.Shift2 = shifts[1];
+            LineWS2HR18.Shift3 = shifts[2];
+            //target
+            LineWS2HR18.TargetShift1 = LineWS2HR18.Shift1 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWS2HR18.Line, Shift1) : 0;
+            LineWS2HR18.TargetShift2 = LineWS2HR18.Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWS2HR18.Line, Shift2) : 0;
+            LineWS2HR18.TargetShift3 = LineWS2HR18.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWS2HR18.Line, Shift3) : 0;
 
             //ws3 hr10
             LineWs3.Line = LineDescription.LineWS3;

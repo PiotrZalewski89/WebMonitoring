@@ -48,6 +48,18 @@ namespace WebMonitoring.Models
             50
         };
 
+        private int[] WorkTimeLineWS2HR18 = new int[]
+        {
+            60,
+            60,
+            60,
+            60,
+            30,
+            50,
+            60,
+            50
+        };
+
         private int[] WorkTimeLineWS3 = new int[]
         {
             60,
@@ -196,6 +208,15 @@ namespace WebMonitoring.Models
             1//cl            
         };
 
+        private int[] NumberOfStationsWS2HR18 = new int[]
+        {
+            1,//Welding Cell 
+            1,//leak tester 
+            1,//final gauge
+            1,//vacuum
+            1,//control loop            
+        };
+
 
         private int[] NumberOfStationsWS3A = new int[]
         {
@@ -211,15 +232,15 @@ namespace WebMonitoring.Models
 
         private int[] NumberOfStationsWS3B = new int[]
         {
-            3,
-            3,
-            3,
-            3,
-            2,
-            2,
-            2,
-            2,
-            2
+            3,//cell3
+            3,//plt
+            3,//enc
+            3,//wkretak
+            2,//homo
+            2,//flt
+            2,//gauge
+            2,//vacum
+            2//cl
         };
 
         private int[] NumberOfStationsWS8Br10GPF = new int[]
@@ -349,7 +370,14 @@ namespace WebMonitoring.Models
                 {
                     currentTarget = SetTargetForCell(selectedLine, target, index);
                     lineValues.TrybPracy12h = TrybPracy12h;
-                    lineValues.Goal = lineValues.GetValues(currentTarget, NumberOfStations[index], WorkTime);
+                    if ((Line == LineDescription.LineWS3BLP1 || Line == LineDescription.LineWS3BLP2 || Line == LineDescription.LineWS3BLP3)
+                        && (r == "Cela 3 LP1" || r == "Cela 3 LP2" || r == "Cela 3 LP3" || r == "Wkrętak LP1" || r == "Wkrętak LP2" || r == "Wkrętak LP3"))
+                    {
+                        lineValues.Goal = lineValues.GetValues(currentTarget, 1, WorkTime);
+                    }
+                    else
+                        lineValues.Goal = lineValues.GetValues(currentTarget, NumberOfStations[index], WorkTime);
+
                     lineValues.Result = Results[r];
                 }
                 else
@@ -401,6 +429,8 @@ namespace WebMonitoring.Models
                 return NumberOfStationsWS1V50;
             else if (selectedLine == LineDescription.LineSDF)
                 return NumberOfStationsSdf;
+            else if (selectedLine == LineDescription.LineWS2HR18)
+                return NumberOfStationsWS2HR18;
             //else if (selectedLine == LineDescription.LineWeil)
             //    return NumberOfStationsWeil;
             else
@@ -437,6 +467,8 @@ namespace WebMonitoring.Models
             }
             else if (selectedLine == LineDescription.LineWS2)
                 return WorkTimeLineWS2;
+            else if (selectedLine == LineDescription.LineWS2HR18)
+                return WorkTimeLineWS2HR18;
             else if (selectedLine == LineDescription.LineWS5)
                 return WorkTimeLineWS5;
             else if (selectedLine == LineDescription.LineWS6)
@@ -499,6 +531,14 @@ namespace WebMonitoring.Models
                 else if (positionIndex == 2)
                 {
                     return Convert.ToInt32(Math.Ceiling(target / 0.9));
+                }                
+            }
+            else if (line == LineDescription.LineWS3BLP1 || line == LineDescription.LineWS3BLP2 || line == LineDescription.LineWS3BLP3)
+            {
+                //ustawienie targettu dla celi 3lp1/2/3
+                if (positionIndex == 0 || positionIndex == 3)
+                {
+                    return 650;
                 }
             }
 

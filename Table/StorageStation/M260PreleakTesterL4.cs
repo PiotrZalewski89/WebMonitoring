@@ -17,5 +17,6 @@ namespace WebMonitoring.Table.StorageStation
         public long? FrameTime { get; set; }
         public int? FrameSeq { get; set; }
         public string TrybPracy { get; set; }
+        public bool? Duplikacja { get; set; }
     }
 }

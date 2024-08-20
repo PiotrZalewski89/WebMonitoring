@@ -7,11 +7,8 @@ namespace WebMonitoring.Controllers
     {
         string[] Desctription = new string[]
         {
-             "Linia WS2",
-             "Linia WS2B BR10 BJA - 8h",
-             "Linia WS2B BR10 GPF - 8h",
-             "Linia WS2B BR10 BJA - 12h",
-             "Linia WS2B BR10 GPF - 12h"
+             "Linia WS2 - HR16",
+             "Linia WS2 - HR18"
         };
 
         private LineParametersWS _lineParameters { get; set;
@@ -44,22 +41,18 @@ namespace WebMonitoring.Controllers
         }
 
         [HttpGet]
-        public IActionResult LineWS2B_BR10BJA()
+        public IActionResult LineWS2_HR18()
         {
-            DbSetLineWS8.Line = LineDescription.LineWS8_BJA;
-
-            _lineParameters.Url.ReturnAction = nameof(LineWS2B_BR10BJA);
+            _lineParameters.Url.ReturnAction = nameof(LineWS2_HR18);
             ViewBag.TitleNavBar = Desctription[1];
             return View(_lineParameters);
         }
 
         [HttpPost]
-        public IActionResult LineWS2B_BR10BJA(LineParametersWS line)
+        public IActionResult LineWS2_HR18(LineParametersWS line)
         {
             if (ModelState.IsValid)
             {
-                DbSetLineWS8.Line = LineDescription.LineWS8_BJA;
-
                 _lineParameters = line;
                 ViewBag.TitleNavBar = Desctription[1];
                 return View(_lineParameters);
@@ -67,78 +60,6 @@ namespace WebMonitoring.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpGet]
-        public IActionResult LineWS2B_BR10BJA12h()
-        {
-            DbSetLineWS8.Line = LineDescription.LineWS8_BJA;
-            _lineParameters.TrybPracy12h = true;
-            _lineParameters.Url.ReturnAction = nameof(LineWS2B_BR10BJA12h);
-            ViewBag.TitleNavBar = Desctription[3];
-            return View(_lineParameters);
-        }
-
-        [HttpPost]
-        public IActionResult LineWS2B_BR10BJA12h(LineParametersWS line)
-        {
-            if (ModelState.IsValid)
-            {
-                DbSetLineWS8.Line = LineDescription.LineWS8_BJA;
-
-                _lineParameters = line;
-                _lineParameters.TrybPracy12h = true;
-                ViewBag.TitleNavBar = Desctription[3];
-                return View(_lineParameters);
-            }
-            return BadRequest(ModelState);
-        }
-
-        [HttpGet]
-        public IActionResult LineWS2B_BR10GPF()
-        {
-            DbSetLineWS8.Line = LineDescription.LineWS8_GPF;
-
-            _lineParameters.Url.ReturnAction = nameof(LineWS2B_BR10GPF);
-            ViewBag.TitleNavBar = Desctription[2];
-            return View(_lineParameters);
-        }
-
-        [HttpPost]
-        public IActionResult LineWS2B_BR10GPF(LineParametersWS line)
-        {
-            if (ModelState.IsValid)
-            {
-                DbSetLineWS8.Line = LineDescription.LineWS8_GPF;
-
-                _lineParameters = line;
-                ViewBag.TitleNavBar = Desctription[2];
-                return View(_lineParameters);
-            }
-            return BadRequest(ModelState);
-        }
-
-        [HttpGet]
-        public IActionResult LineWS2B_BR10GPF12h()
-        {
-            DbSetLineWS8.Line = LineDescription.LineWS8_GPF;
-            _lineParameters.TrybPracy12h = true;
-            _lineParameters.Url.ReturnAction = nameof(LineWS2B_BR10GPF12h);
-            ViewBag.TitleNavBar = Desctription[4];
-            return View(_lineParameters);
-        }
-
-        [HttpPost]
-        public IActionResult LineWS2B_BR10GPF12h(LineParametersWS line)
-        {
-            if (ModelState.IsValid)
-            {
-                DbSetLineWS8.Line = LineDescription.LineWS8_GPF;
-
-                _lineParameters = line;
-                _lineParameters.TrybPracy12h = true;
-                ViewBag.TitleNavBar = Desctription[4];
-                return View(_lineParameters);
-            }
-            return BadRequest(ModelState);
-        }
+      
     }
 }

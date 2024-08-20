@@ -77,6 +77,10 @@ namespace WebMonitoring.Components
             {
                 _DbSetLine.GetProductionCountPerHourSdf(dateTime, LineDescription.LineSDF);
             }
+            else if (selectLine == LineDescription.LineWS2HR18)
+            {
+                _DbSetLine.GetProductionCountPerHourWS2_HR18(dateTime);
+            }
 
             //zapis do bazy odnosnie targetu
             if (_LineParameters.ActualTotalParts > 0 && _LineParameters.ActualTotalParts != _DbSetLine.Target)

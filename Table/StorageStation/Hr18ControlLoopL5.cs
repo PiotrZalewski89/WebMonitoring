@@ -5,14 +5,16 @@ using System.Collections.Generic;
 
 namespace WebMonitoring.Table.StorageStation
 {
-    public partial class M260ResistanceWeldingL4
+    public partial class Hr18ControlLoopL5
     {
-        public string NrShella { get; set; }
+        public string NrKatalizatora { get; set; }
+        public string NrPzzw { get; set; }
         public string WynikOperacji { get; set; }
         public string TrybPracy { get; set; }
         public DateTime? DtOperacji { get; set; }
+        public string NrOperatora { get; set; }
+        public string Quality { get; set; }
         public long? FrameTime { get; set; }
         public int? FrameSeq { get; set; }
-        public bool? RobotWeld { get; set; }
     }
 }
