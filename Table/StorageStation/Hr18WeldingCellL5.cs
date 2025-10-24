@@ -20,5 +20,7 @@ namespace WebMonitoring.Table.StorageStation
         public long? FrameTime4 { get; set; }
         public int? FrameSeq4 { get; set; }
         public string NrLinii { get; set; }
+        public long? FrameTime5 { get; set; }
+        public int? FrameSeq5 { get; set; }
     }
 }

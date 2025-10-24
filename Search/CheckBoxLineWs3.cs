@@ -886,7 +886,7 @@ namespace WebMonitoring.Search
                     Stf_3_6 stf = new Stf_3_6();
                     stf.GetDataFromSql(Codes.CodeBasic);
                     if (!string.IsNullOrEmpty(stf.HtmlTable))
-                        HtmlTable = stf.HtmlTable;
+                        HtmlTable += stf.HtmlTable;
                 }
 
                 if (CeleSpawalnicza3 && Codes.CodeBasic != Brak)

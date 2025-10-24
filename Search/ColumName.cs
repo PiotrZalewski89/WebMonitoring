@@ -5,19 +5,25 @@ using System.Threading.Tasks;
 
 namespace WebMonitoring.Search
 {
-      public class BasicColumn
+
+
+    public class Basic
+    {
+        public string Tryb_Pracy { get; set; }
+        public string Wynik_operacji { get; set; }
+        public long? Frame_time { get; set; }
+        public DateTime? DateTime { get; set; }
+
+    }
+    public class BasicColumn : Basic
     {
         public string Nr_Shell { get; set; }
         public string Nr_Grawerka { get; set; }
         public string Nr_Grawerka2 { get; set; }
-        public string Tryb_Pracy { get; set; }
-        public string Wynik_operacji { get; set; }
         public string Uwagi { get; set; }
         public string Nr_linii { get; set; }
-        public long? Frame_time { get; set; }
         public long? Frame_time2 { get; set; }
         public long? Frame_time3 { get; set; }
-        public DateTime DateTime { get; set; }
     }
 
     public class ColumnLT : BasicColumn
@@ -48,41 +54,24 @@ namespace WebMonitoring.Search
         public string OperatorID { get; set; }
     }
 
-    public class BasicColumnWs5
+    public class BasicColumnWs5 : Basic
     {
         public string NrShellDoc { get; set; }
         public string NrShellScrof { get; set; }
         public string NrShellScrucu { get; set; }
         public string NrMixer { get; set; }
         public string Nr_Oslona { get; set; }
-        public string Tryb_Pracy { get; set; }
-        public string Wynik_operacji { get; set; }
-        public long? Frame_time { get; set; }
-        public DateTime DateTime { get; set; }
     }
 
-    public class BasicColumnWs6
+    public class BasicColumnWs6 : Basic
     {
         public string NrShellStf1 { get; set; }
         public string NrShellStf2 { get; set; }
         public string Nr_Oslona { get; set; }
-        public string Tryb_Pracy { get; set; }
-        public string Wynik_operacji { get; set; }
-        public long? Frame_time { get; set; }
-        public DateTime DateTime { get; set; }
     }
 
-    public class BasicColumnWs7
+    public class BasicColumnWs7 : Basic
     {
-        //public string NrShellDoc { get; set; }
-        //public string NrShellScrof { get; set; }
-        //public string NrShellScrucu { get; set; }
-        //public string NrMixer { get; set; }
-        //public string Nr_Oslona { get; set; }
-        public string Tryb_Pracy { get; set; }
-        public string Wynik_operacji { get; set; }
-        public long? Frame_time { get; set; }
-        public DateTime DateTime { get; set; }
     }
 
     public class ColumnPLTWs7:BasicColumnWs7 
@@ -170,14 +159,15 @@ namespace WebMonitoring.Search
         public string Wyciek_jedn { get; set; }
     }
 
-    public class BasicColumnM260
+    public class BasicColumnM260 : Basic
     {
         public string Nr_Shell { get; set; }
-        public string Tryb_Pracy { get; set; }
-        public string Wynik_operacji { get; set; }
         public string Uwagi { get; set; }
-        public long? Frame_time { get; set; }
-        public DateTime? DateTime { get; set; }
+    }
+
+    public class ColumnaVCM260 : BasicColumnM260
+    {
+        public string NrEtykiety { get; set; }
     }
 
     public class ColumnLTM260 : BasicColumnM260
@@ -192,6 +182,48 @@ namespace WebMonitoring.Search
     {
         public string PZZW { get; set; }
         public string NrEtykiety { get; set; }
+        public string OperatorID { get; set; }
+    }
+
+    public class BasicColumnHr12cc : Basic
+    {
+        public string Nr_Shell_Outlet { get; set; }
+        public string Nr_Shell_Inlet { get; set; }
+        public string Nr_Clamshell { get; set; }
+        public string Nr_Grawerka { get; set; }
+        public string Uwagi { get; set; }
+        public string Nr_linii { get; set; }
+        public long? Frame_time2 { get; set; }
+        public long? Frame_time3 { get; set; }
+    }
+
+    public class ColumnLT_Hr12cc : BasicColumnHr12cc
+    {
+        public string Cisnienie { get; set; }
+        public string Cisnienie_jedn { get; set; }
+        public string Wyciek { get; set; }
+        public string Wyciek_jedn { get; set; }
+    }
+
+    public class ColumnFLT_Hr12cc : ColumnLT_Hr12cc
+    {
+        public string Wartosc_Przeplywu_Rurki_1 { get; set; }
+        public string Wartosc_Przeplywu_Rurki_2 { get; set; }
+    }
+
+    public class ColumnTorqueHr12cc : BasicColumnHr12cc
+    {
+        public string Moment_Nr1 { get; set; }
+        public string Kat_Nr1 { get; set; }
+        public string Moment_Nr2 { get; set; }
+        public string Kat_Nr2 { get; set; }
+        public string Moment_Nr3 { get; set; }
+        public string Kat_Nr3 { get; set; }
+    }
+
+    public class ColumnCL_Hr12cc : BasicColumnHr12cc
+    {
+        public string PZZW { get; set; }
         public string OperatorID { get; set; }
     }
 }

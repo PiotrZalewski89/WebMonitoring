@@ -14,7 +14,9 @@ namespace WebMonitoring.Controllers
              "Linia WS3A",
              "Linia WS3B LP1",
              "Linia WS3B LP2",
-             "Linia WS3B LP3"
+             "Linia WS3B LP3",
+             "Linia WS3B"
+
         };
 
         private LineParametersWS _lineParameters { get; set;
@@ -89,6 +91,26 @@ namespace WebMonitoring.Controllers
             {
                 _lineParameters = line;
                 ViewBag.TitleNavBar = Desctription[3];
+                return View(_lineParameters);
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpGet]
+        public IActionResult LineWS3Hr12CC()
+        {
+            _lineParameters.Url.ReturnAction = nameof(LineWS3Hr12CC);
+            ViewBag.TitleNavBar = Desctription[4];
+            return View(_lineParameters);
+        }
+
+        [HttpPost]
+        public IActionResult LineWS3Hr12CC(LineParametersWS line)
+        {
+            if (ModelState.IsValid)
+            {
+                _lineParameters = line;
+                ViewBag.TitleNavBar = Desctription[4];
                 return View(_lineParameters);
             }
             return BadRequest(ModelState);

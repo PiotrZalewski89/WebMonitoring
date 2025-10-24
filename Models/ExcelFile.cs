@@ -396,6 +396,23 @@ namespace WebMonitoring.Models
                                     xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 8].Value = dailyRaport.LineWs7.Shift3;
                             }
 
+                            //insert to Outpu Details WS9
+                            const string ws9 = "Output Details WS9 HR12 UF";
+                            xlSheet = xlWorkBook.Workbook.Worksheets[ws9];
+
+                            //CNH 529
+                            for (int rowShift = 1; rowShift <= 3; rowShift++)
+                            {
+                                xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 7].Value = dailyRaport.LineWs9.Model;
+
+                                if (rowShift == 1)
+                                    xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 8].Value = dailyRaport.LineWs9.Shift1;
+                                else if (rowShift == 2)
+                                    xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 8].Value = dailyRaport.LineWs9.Shift2;
+                                else if (rowShift == 3)
+                                    xlSheet.Cells[(day - offsetDay) * totalShift + startIndexRow + rowShift, 8].Value = dailyRaport.LineWs9.Shift3;
+                            }
+
                             //zapis do piliku
                             xlWorkBook.Save();
                         }

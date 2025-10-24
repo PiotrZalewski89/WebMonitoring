@@ -27,287 +27,474 @@
                     <th>
                         <label style="font-size: 25px;"> I shift </label>
                     </th>
-                    <th >
+                    <th>
                         <label style="font-size: 25px;"> II shift </label>
                     </th>
-                    <th >
+                    <th>
                         <label style="font-size: 25px;"> III shift </label>
                     </th>
-                    <th >
+                    <th>
                         <label style="font-size: 25px;"> Total </label>
                     </th>
                 </tr>
             </thead>
             <tbody>
                 @*<tr>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs1V50.Line </label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs1V50.Model</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs1V50.Shift1 / @Model.LineWs1V50.TargetShift1 </label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs1V50.Shift2 / @Model.LineWs1V50.TargetShift2 </label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs1V50.Shift3 / @Model.LineWs1V50.TargetShift3 </label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @(Model.LineWs1V50.ShiftsSum)  / @Model.LineWs1V50.TargetSuma </label>
-                    </td>
-                </tr>*@
+            <td>
+                <label style="font-size: 18px;"> @Model.LineWs1V50.Line </label>
+            </td>
+            <td>
+                <label style="font-size: 18px;"> @Model.LineWs1V50.Model</label>
+            </td>
+            <td>
+                <label style="font-size: 18px;"> @Model.LineWs1V50.Shift1 / @Model.LineWs1V50.TargetShift1 </label>
+            </td>
+            <td>
+                <label style="font-size: 18px;"> @Model.LineWs1V50.Shift2 / @Model.LineWs1V50.TargetShift2 </label>
+            </td>
+            <td>
+                <label style="font-size: 18px;"> @Model.LineWs1V50.Shift3 / @Model.LineWs1V50.TargetShift3 </label>
+            </td>
+            <td>
+                <label style="font-size: 18px;"> @(Model.LineWs1V50.ShiftsSum)  / @Model.LineWs1V50.TargetSuma </label>
+            </td>
+        </tr>*@
+                @if (Model.LineWs1Cnh?.ShiftsSum > 0)
+                {
+                    <tr>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs1Cnh.Line </label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs1Cnh.Model</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs1Cnh.Shift1 / @Model.LineWs1Cnh.TargetShift1 </label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs1Cnh.Shift2 / @Model.LineWs1Cnh.TargetShift2</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs1Cnh.Shift3 / @Model.LineWs1Cnh.TargetShift3</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @(Model.LineWs1Cnh.ShiftsSum) / @Model.LineWs1Cnh.TargetSuma</label>
+                        </td>
+                    </tr>
+                }
 
-                <tr>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs1Cnh.Line </label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs1Cnh.Model</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs1Cnh.Shift1 / @Model.LineWs1Cnh.TargetShift1 </label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs1Cnh.Shift2 / @Model.LineWs1Cnh.TargetShift2</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs1Cnh.Shift3 / @Model.LineWs1Cnh.TargetShift3</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @(Model.LineWs1Cnh.ShiftsSum) / @Model.LineWs1Cnh.TargetSuma</label>
-                    </td>
-                </tr>
+                @if (Model.LineWs2?.ShiftsSum > 0)
+                {
+                    <tr>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs2.Line </label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs2.Model</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs2.Shift1 / @Model.LineWs2.TargetShift1</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs2.Shift2 / @Model.LineWs2.TargetShift2</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs2.Shift3 / @Model.LineWs2.TargetShift3</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @(Model.LineWs2.ShiftsSum) / @Model.LineWs2.TargetSuma</label>
+                        </td>
+                    </tr>
+                }
 
-                <tr>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs2.Line </label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs2.Model</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs2.Shift1 / @Model.LineWs2.TargetShift1</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs2.Shift2 / @Model.LineWs2.TargetShift2</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs2.Shift3 / @Model.LineWs2.TargetShift3</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @(Model.LineWs2.ShiftsSum) / @Model.LineWs2.TargetSuma</label>
-                    </td>
-                </tr>
+                @if (Model.LineWS2HR18?.ShiftsSum > 0)
+                {
+                    <tr>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWS2HR18.Line </label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWS2HR18.Model</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWS2HR18.Shift1 / @Model.LineWS2HR18.TargetShift1</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWS2HR18.Shift2 / @Model.LineWS2HR18.TargetShift2</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWS2HR18.Shift3 / @Model.LineWS2HR18.TargetShift3</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @(Model.LineWS2HR18.ShiftsSum) / @Model.LineWS2HR18.TargetSuma</label>
+                        </td>
+                    </tr>
+                }
 
-            <tr>
-                <td>
-                    <label style="font-size: 18px;"> @Model.LineWS2HR18.Line </label>
-                </td>
-                <td>
-                    <label style="font-size: 18px;"> @Model.LineWS2HR18.Model</label>
-                </td>
-                <td>
-                    <label style="font-size: 18px;"> @Model.LineWS2HR18.Shift1 / @Model.LineWS2HR18.TargetShift1</label>
-                </td>
-                <td>
-                    <label style="font-size: 18px;"> @Model.LineWS2HR18.Shift2 / @Model.LineWS2HR18.TargetShift2</label>
-                </td>
-                <td>
-                    <label style="font-size: 18px;"> @Model.LineWS2HR18.Shift3 / @Model.LineWS2HR18.TargetShift3</label>
-                </td>
-                <td>
-                    <label style="font-size: 18px;"> @(Model.LineWS2HR18.ShiftsSum) / @Model.LineWS2HR18.TargetSuma</label>
-                </td>
-            </tr>
+                @if (Model.LineWs3?.ShiftsSum > 0)
+                {
+                    <tr>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs3.Line </label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs3.Model</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs3.Shift1 / @Model.LineWs3.TargetShift1</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs3.Shift2 / @Model.LineWs3.TargetShift2</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs3.Shift3 / @Model.LineWs3.TargetShift3</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @(Model.LineWs3.ShiftsSum) / @Model.LineWs3.TargetSuma</label>
+                        </td>
+                    </tr>
+                }
 
-                <tr>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs3.Line </label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs3.Model</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs3.Shift1 / @Model.LineWs3.TargetShift1</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs3.Shift2 / @Model.LineWs3.TargetShift2</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs3.Shift3 / @Model.LineWs3.TargetShift3</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @(Model.LineWs3.ShiftsSum) / @Model.LineWs3.TargetSuma</label>
-                    </td>
-                </tr>
+                @if (Model.LineWs3Hr12CC?.ShiftsSum > 0)
+                {
+                    <tr>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs3Hr12CC.Line </label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs3Hr12CC.Model</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs3Hr12CC.Shift1 / @Model.LineWs3Hr12CC.TargetShift1</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs3Hr12CC.Shift2 / @Model.LineWs3Hr12CC.TargetShift2</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs3Hr12CC.Shift3 / @Model.LineWs3Hr12CC.TargetShift3</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @(Model.LineWs3Hr12CC.ShiftsSum) / @Model.LineWs3Hr12CC.TargetSuma</label>
+                        </td>
+                    </tr>
+                }
 
-                <tr>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs8_Bja.Line </label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs8_Bja.Model</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs8_Bja.Shift1 / @Model.LineWs8_Bja.TargetShift1</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs8_Bja.Shift2 / @Model.LineWs8_Bja.TargetShift2</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs8_Bja.Shift3 / @Model.LineWs8_Bja.TargetShift3</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @(Model.LineWs8_Bja.ShiftsSum) / @Model.LineWs8_Bja.TargetSuma</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs8_Gpf.Line </label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs8_Gpf.Model</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs8_Gpf.Shift1 / @Model.LineWs8_Gpf.TargetShift1</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs8_Gpf.Shift2 / @Model.LineWs8_Gpf.TargetShift2</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs8_Gpf.Shift3 / @Model.LineWs8_Gpf.TargetShift3</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @(Model.LineWs8_Gpf.ShiftsSum) / @Model.LineWs8_Gpf.TargetSuma</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs4M260.Line </label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs4M260.Model</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs4M260.Shift1 / @Model.LineWs4M260.TargetShift1</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs4M260.Shift2 / @Model.LineWs4M260.TargetShift2</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs4M260.Shift3 / @Model.LineWs4M260.TargetShift3</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @(Model.LineWs4M260.ShiftsSum) / @Model.LineWs4M260.TargetSuma</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs5.Line </label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs5.Model</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs5.Shift1 / @Model.LineWs5.TargetShift1</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs5.Shift2 / @Model.LineWs5.TargetShift2</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs5.Shift3 / @Model.LineWs5.TargetShift3</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @(Model.LineWs5.ShiftsSum) / @Model.LineWs5.TargetSuma</label>
-                    </td>
-                </tr>
+                @if (Model.LineWs8_Bja?.ShiftsSum > 0)
+                {
+                    <tr>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs8_Bja.Line </label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs8_Bja.Model</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs8_Bja.Shift1 / @Model.LineWs8_Bja.TargetShift1</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs8_Bja.Shift2 / @Model.LineWs8_Bja.TargetShift2</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs8_Bja.Shift3 / @Model.LineWs8_Bja.TargetShift3</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @(Model.LineWs8_Bja.ShiftsSum) / @Model.LineWs8_Bja.TargetSuma</label>
+                        </td>
+                    </tr>
+                }
 
-                <tr>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs6.Line </label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs6.Model</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs6.Shift1 / @Model.LineWs6.TargetShift1</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs6.Shift2 / @Model.LineWs6.TargetShift2</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWs6.Shift3 / @Model.LineWs6.TargetShift3</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @(Model.LineWs6.ShiftsSum) / @Model.LineWs6.TargetSuma</label>
-                    </td>
-                </tr>
+                @if (Model.LineWs8_Gpf?.ShiftsSum > 0)
+                {
+                    <tr>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs8_Gpf.Line </label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs8_Gpf.Model</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs8_Gpf.Shift1 / @Model.LineWs8_Gpf.TargetShift1</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs8_Gpf.Shift2 / @Model.LineWs8_Gpf.TargetShift2</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs8_Gpf.Shift3 / @Model.LineWs8_Gpf.TargetShift3</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @(Model.LineWs8_Gpf.ShiftsSum) / @Model.LineWs8_Gpf.TargetSuma</label>
+                        </td>
+                    </tr>
+                }
 
-                <tr>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineSdf.Line </label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineSdf.Model</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineSdf.Shift1 / @Model.LineSdf.TargetShift1</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineSdf.Shift2 / @Model.LineSdf.TargetShift2</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineSdf.Shift3 / @Model.LineSdf.TargetShift3</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @(Model.LineSdf.ShiftsSum) / @Model.LineSdf.TargetSuma</label>
-                    </td>
-                </tr>
+                @if (Model.LineWs4M260?.ShiftsSum > 0)
+                {
+                    <tr>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs4M260.Line </label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs4M260.Model</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs4M260.Shift1 / @Model.LineWs4M260.TargetShift1</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs4M260.Shift2 / @Model.LineWs4M260.TargetShift2</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs4M260.Shift3 / @Model.LineWs4M260.TargetShift3</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @(Model.LineWs4M260.ShiftsSum) / @Model.LineWs4M260.TargetSuma</label>
+                        </td>
+                    </tr>
+                }
 
-                <tr>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWeil.Line </label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWeil.Model</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWeil.Shift1 / @Model.LineWeil.TargetShift1</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWeil.Shift2 / @Model.LineWeil.TargetShift2</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @Model.LineWeil.Shift3 / @Model.LineWeil.TargetShift3</label>
-                    </td>
-                    <td>
-                        <label style="font-size: 18px;"> @(Model.LineWeil.ShiftsSum) / @Model.LineWeil.TargetSuma</label>
-                    </td>
-                </tr>
+                @if (Model.LineWs5?.ShiftsSum > 0)
+                {
+                    <tr>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs5.Line </label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs5.Model</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs5.Shift1 / @Model.LineWs5.TargetShift1</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs5.Shift2 / @Model.LineWs5.TargetShift2</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs5.Shift3 / @Model.LineWs5.TargetShift3</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @(Model.LineWs5.ShiftsSum) / @Model.LineWs5.TargetSuma</label>
+                        </td>
+                    </tr>
+                }
 
+                @if (Model.LineWs6?.ShiftsSum > 0)
+                {
+                    <tr>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs6.Line </label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs6.Model</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs6.Shift1 / @Model.LineWs6.TargetShift1</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs6.Shift2 / @Model.LineWs6.TargetShift2</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs6.Shift3 / @Model.LineWs6.TargetShift3</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @(Model.LineWs6.ShiftsSum) / @Model.LineWs6.TargetSuma</label>
+                        </td>
+                    </tr>
+                }
+
+                @if (Model.LineSdf?.ShiftsSum > 0)
+                {
+                    <tr>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineSdf.Line </label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineSdf.Model</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineSdf.Shift1 / @Model.LineSdf.TargetShift1</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineSdf.Shift2 / @Model.LineSdf.TargetShift2</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineSdf.Shift3 / @Model.LineSdf.TargetShift3</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @(Model.LineSdf.ShiftsSum) / @Model.LineSdf.TargetSuma</label>
+                        </td>
+                    </tr>
+                }
+
+                @if (Model.LineWeil?.ShiftsSum > 0)
+                {
+                    <tr>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWeil.Line </label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWeil.Model</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWeil.Shift1 / @Model.LineWeil.TargetShift1</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWeil.Shift2 / @Model.LineWeil.TargetShift2</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWeil.Shift3 / @Model.LineWeil.TargetShift3</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @(Model.LineWeil.ShiftsSum) / @Model.LineWeil.TargetSuma</label>
+                        </td>
+                    </tr>
+                }
+
+                @if (Model.LineWs7?.ShiftsSum > 0)
+                {
+                    <tr>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs7.Line </label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs7.Model</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs7.Shift1 / @Model.LineWs7.TargetShift1</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs7.Shift2 / @Model.LineWs7.TargetShift2</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs7.Shift3 / @Model.LineWs7.TargetShift3</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @(Model.LineWs7.ShiftsSum) / @Model.LineWs7.TargetSuma</label>
+                        </td>
+                    </tr>
+                }
+
+                @if (Model.LineWs9?.ShiftsSum > 0)
+                {
+                    <tr>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs9.Line </label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs9.Model</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs9.Shift1 / @Model.LineWs9.TargetShift1</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs9.Shift2 / @Model.LineWs9.TargetShift2</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs9.Shift3 / @Model.LineWs9.TargetShift3</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @(Model.LineWs9.ShiftsSum) / @Model.LineWs9.TargetSuma</label>
+                        </td>
+                    </tr>
+                }
+
+                @*@if (Model.LineWs10?.Count > 0)
+        {
+            @foreach (var line in Model.LineWs10)
+            {
                 <tr>
+
                     <td>
-                        <label style="font-size: 18px;"> @Model.LineWs7.Line </label>
+                        <label style="font-size: 18px;"> @line.Line </label>
                     </td>
                     <td>
-                        <label style="font-size: 18px;"> @Model.LineWs7.Model</label>
+                        <label style="font-size: 18px;"> @line.Model</label>
                     </td>
                     <td>
-                        <label style="font-size: 18px;"> @Model.LineWs7.Shift1 / @Model.LineWs7.TargetShift1</label>
+                        <label style="font-size: 18px;"> @line.Shift1 / @line.TargetShift1</label>
                     </td>
                     <td>
-                        <label style="font-size: 18px;"> @Model.LineWs7.Shift2 / @Model.LineWs7.TargetShift2</label>
+                        <label style="font-size: 18px;"> @line.Shift2 / @line.TargetShift2</label>
                     </td>
                     <td>
-                        <label style="font-size: 18px;"> @Model.LineWs7.Shift3 / @Model.LineWs7.TargetShift3</label>
+                        <label style="font-size: 18px;"> @line.Shift3 / @line.TargetShift3</label>
                     </td>
                     <td>
-                        <label style="font-size: 18px;"> @(Model.LineWs7.ShiftsSum) / @Model.LineWs7.TargetSuma</label>
+                        <label style="font-size: 18px;"> @(line.ShiftsSum) / @line.TargetSuma</label>
                     </td>
+
                 </tr>
+            }
+        }*@
+
+                @if (Model.LineWs10_CL?.ShiftsSum > 0)
+                {
+                    <tr>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs10_CL.Line </label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs10_CL.Model</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs10_CL.Shift1 / @Model.LineWs10_CL.TargetShift1</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs10_CL.Shift2 / @Model.LineWs10_CL.TargetShift2</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs10_CL.Shift3 / @Model.LineWs10_CL.TargetShift3</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @(Model.LineWs10_CL.ShiftsSum) / @Model.LineWs10_CL.TargetSuma</label>
+                        </td>
+                    </tr>
+                }
+
+                @if (Model.LineWs10_RW_L1?.ShiftsSum > 0)
+                {
+                    <tr>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs10_RW_L1.Line </label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs10_RW_L1.Model</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs10_RW_L1.Shift1 / @Model.LineWs10_RW_L1.TargetShift1</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs10_RW_L1.Shift2 / @Model.LineWs10_RW_L1.TargetShift2</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs10_RW_L1.Shift3 / @Model.LineWs10_RW_L1.TargetShift3</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @(Model.LineWs10_RW_L1.ShiftsSum) / @Model.LineWs10_RW_L1.TargetSuma</label>
+                        </td>
+                    </tr>
+                }
+
+                @if (Model.LineWs10_RW_L2?.ShiftsSum > 0)
+                {
+                    <tr>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs10_RW_L2.Line </label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs10_RW_L2.Model</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs10_RW_L2.Shift1 / @Model.LineWs10_RW_L2.TargetShift1</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs10_RW_L2.Shift2 / @Model.LineWs10_RW_L2.TargetShift2</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @Model.LineWs10_RW_L2.Shift3 / @Model.LineWs10_RW_L2.TargetShift3</label>
+                        </td>
+                        <td>
+                            <label style="font-size: 18px;"> @(Model.LineWs10_RW_L2.ShiftsSum) / @Model.LineWs10_RW_L2.TargetSuma</label>
+                        </td>
+                    </tr>
+                }
 
             </tbody>
         </table>

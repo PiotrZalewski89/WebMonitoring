@@ -66,13 +66,22 @@ namespace WebMonitoring.Search
                     }).ToArray();
 
                     if (result.Length == 0)
+                    {
                         result = context.Hr18LeaktesterL5s
-                        .Where(x => x.NrGrawerka2.Contains(code))
-                        .Select(x => new Codes
+                       .Where(x => x.NrGrawerka2.Contains(code))
+                       .Select(x => new Codes
+                       {
+                           CodeBasic = x.NrShella,
+                           CodeCatalyst = x.NrGrawerka
+                       }).ToArray();
+
+                        if (result.Length == 0)
                         {
-                            CodeBasic = x.NrShella,
-                            CodeCatalyst = x.NrGrawerka
-                        }).ToArray();
+                            result = context.PanelFontijneL1s
+                                .Where(x => x.ManufacturingLotTraceCode == code)
+                                .Select(x => new Codes { CodeBasic = x.ManufacturingLotTraceCode, CodeCatalyst = Brak }).ToArray();
+                        }
+                    }
                 }
             }
 
@@ -115,23 +124,12 @@ namespace WebMonitoring.Search
                               Nr_linii = x.NrLinii,
                               Frame_time = x.FrameTime,
                               Frame_time2 = x.FrameTime2,
-                              Frame_time3 = x.FrameTime3
+                              Frame_time3 = x.FrameTime3,
+                              DateTime = (DateTime)x.DtOperacji
                           }).ToArray();
-
-            //var result = get.ToList();
-
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, r.Frame_time2, r.Frame_time3, null);
-                }
-            }
 
             return result;
         }
-
-
 
         private IList<ColumnLT> GetDataFromLT(string code)
         {
@@ -141,7 +139,7 @@ namespace WebMonitoring.Search
                     {
                         Nr_Shell = x.NrShella,
                         Nr_Grawerka = x.NrGrawerka,
-                        Wynik_operacji = x.WynikTestu,
+                        Wynik_operacji = x.WynikOperacji,
                         Wyciek = x.Wyciek,
                         Wyciek_jedn = x.WyciekJedn,
                         Cisnienie = x.Cisnienie,
@@ -149,18 +147,9 @@ namespace WebMonitoring.Search
                         Nr_linii = x.NrLinii,
                         Frame_time = x.FrameTime,
                         Frame_time2 = x.FrameTime2,
-                        Frame_time3 = x.FrameTime3
+                        Frame_time3 = x.FrameTime3,
+                        DateTime = (DateTime)x.DtOperacji
                     }).ToArray();
-
-            //var result = get?.ToList();
-
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, r.Frame_time2, r.Frame_time3, null);
-                }
-            }
 
             return result;
         }
@@ -177,18 +166,9 @@ namespace WebMonitoring.Search
                         Nr_linii = x.NrLinii,
                         Frame_time = x.FrameTime,
                         Frame_time2 = x.FrameTime2,
-                        Frame_time3 = x.FrameTime3
+                        Frame_time3 = x.FrameTime3,
+                        DateTime = (DateTime)x.DtOperacji
                     }).ToArray();
-
-            //var result = get?.ToList();
-
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, r.Frame_time2, r.Frame_time3, null);
-                }
-            }
 
             return result;
         }
@@ -202,18 +182,9 @@ namespace WebMonitoring.Search
                         Nr_Shell = x.NrShella,
                         Nr_Grawerka = x.NrGrawerka,
                         Wynik_operacji = x.WynikOperacji,
-                        Frame_time = x.FrameTime
+                        Frame_time = x.FrameTime,
+                        DateTime = (DateTime)x.DtOperacji
                     }).ToArray();
-
-            //var result = get?.ToList();
-
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, null, null, null, true);
-                }
-            }
 
             return result;
         }
@@ -229,47 +200,32 @@ namespace WebMonitoring.Search
                          Wynik_operacji = x.WynikOperacji,
                          Uwagi = x.Quality,
                          OperatorID = x.NrOperatora,
-                         Frame_time = x.FrameTime
+                         Frame_time = x.FrameTime,
+                         DateTime = (DateTime)x.DtOperacji
                      }).ToArray();
-
-
-
-            //var result = get?.ToList();
-
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, null, null, null, true);
-                }
-            }
 
             return result;
         }
 
         private IList<BasicColumn> GetDataFromWeldingCell_ByDate(DateTime from, DateTime to)
         {
-            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
-            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
+            //var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
+            //var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
             var result = context.Hr18WeldingCellL5s
-                          .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                          .Where(x => (x.DtOperacji >= from && x.DtOperacji < to)
                           )
                           .Select(x => new BasicColumn
                           {
                               Nr_Shell = x.NrBasic,
                               Wynik_operacji = x.WynikOperacji,
-                              Frame_time = x.FrameTime
+                              Nr_linii = x.NrLinii,
+                              Frame_time = x.FrameTime,
+                              Frame_time2 = x.FrameTime2,
+                              Frame_time3 = x.FrameTime3,
+                              DateTime = (DateTime)x.DtOperacji
                           })
                           .ToArray();
-
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, null, null, null);
-                }
-            }
 
             return result;
         }
@@ -288,7 +244,7 @@ namespace WebMonitoring.Search
                               Nr_Shell = x.NrShella,
                               Nr_Grawerka = x.NrGrawerka,
                               Nr_Grawerka2 = x.NrGrawerka2,
-                              Wynik_operacji = x.WynikTestu,
+                              Wynik_operacji = x.WynikOperacji,
                               Wyciek = x.Wyciek,
                               Wyciek_jedn = x.WyciekJedn,
                               Cisnienie = x.Cisnienie,
@@ -296,48 +252,10 @@ namespace WebMonitoring.Search
                               Nr_linii = x.NrLinii,
                               Frame_time = x.FrameTime,
                               Frame_time2 = x.FrameTime2,
-                              Frame_time3 = x.FrameTime3
+                              Frame_time3 = x.FrameTime3,
+                              DateTime = (DateTime)x.DtOperacji
                           })
                      .ToArray();
-
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, r.Frame_time2, r.Frame_time3, null);
-                }
-            }
-            else
-            {
-                result = context.Hr18LeaktesterL5s
-                         .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
-                          || (x.FrameTime2 >= frameTimeFrom && x.FrameTime2 < frameTimeTo)
-                          || (x.FrameTime3 >= frameTimeFrom && x.FrameTime3 < frameTimeTo))
-                          .Select(x => new ColumnLT
-                          {
-                              Nr_Shell = x.NrShella,
-                              Nr_Grawerka = x.NrGrawerka,
-                              Nr_Grawerka2 = x.NrGrawerka2,
-                              Wynik_operacji = x.WynikTestu,
-                              Wyciek = x.Wyciek,
-                              Wyciek_jedn = x.WyciekJedn,
-                              Cisnienie = x.Cisnienie,
-                              Cisnienie_jedn = x.CisnienieJedn,
-                              Nr_linii = x.NrLinii,
-                              Frame_time = x.FrameTime,
-                              Frame_time2 = x.FrameTime2,
-                              Frame_time3 = x.FrameTime3
-                          })
-                     .ToArray();
-
-                if (result.Length > 0)
-                {
-                    foreach (var r in result)
-                    {
-                        r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, r.Frame_time2, r.Frame_time3, null);
-                    }
-                }
-            }
 
             return result;
         }
@@ -360,25 +278,18 @@ namespace WebMonitoring.Search
                         Nr_linii = x.NrLinii,
                         Frame_time = x.FrameTime,
                         Frame_time2 = x.FrameTime2,
-                        Frame_time3 = x.FrameTime3
+                        Frame_time3 = x.FrameTime3,
+                        DateTime = (DateTime)x.DtOperacji
                     })
                       .ToArray();
-
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, r.Frame_time2, r.Frame_time3, null);
-                }
-            }
 
             return result;
         }
 
         private IList<BasicColumn> GetDataFromVaccumCleanerByDate(DateTime from, DateTime to)
         {
-            var frameTimeFrom = from.ConvertDateTimeToFrameTime();
-            var frameTimeTo = to.ConvertDateTimeToFrameTime();
+            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
+            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
             var result = context.Hr18VacuumL5s
                      .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
@@ -388,17 +299,10 @@ namespace WebMonitoring.Search
                         Nr_Shell = x.NrShella,
                         Nr_Grawerka = x.NrGrawerka,
                         Wynik_operacji = x.WynikOperacji,
-                        Frame_time = x.FrameTime
+                        Frame_time = x.FrameTime,
+                        DateTime = (DateTime)x.DtOperacji
                     })
                       .ToArray();
-
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, r.Frame_time2, r.Frame_time3, null, true);
-                }
-            }
 
             return result;
         }
@@ -418,17 +322,10 @@ namespace WebMonitoring.Search
                         Wynik_operacji = x.WynikOperacji,
                         Uwagi = x.Quality,
                         OperatorID = x.NrOperatora,
-                        Frame_time = x.FrameTime
+                        Frame_time = x.FrameTime,
+                        DateTime = (DateTime)x.DtOperacji
                     })
                     .ToArray();
-
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, null, null, null, true);
-                }
-            }
 
             return result;
         }
@@ -452,7 +349,7 @@ namespace WebMonitoring.Search
                         Stf_3_6 stf = new Stf_3_6();
                         stf.GetDataFromSql(Codes.CodeBasic);
                         if (!string.IsNullOrEmpty(stf.HtmlTable))
-                            HtmlTable = stf.HtmlTable;
+                            HtmlTable += stf.HtmlTable;
                     }
 
                     if (Cela_spawalnicza && Codes.CodeBasic != Brak)

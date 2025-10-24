@@ -588,8 +588,8 @@ namespace WebMonitoring.Models
 
             for (int i = 0; i < 3; i++)
             {
-                var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc();
-                var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTimeUtc();
+                var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
+                var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
 
                 if (station == "CelaGpf1Lp1")
                 {
@@ -661,7 +661,15 @@ namespace WebMonitoring.Models
                 dateTimeTo = dateTimeTo.AddHours(8);
             }
 
-            return partsShift;
+            for (int i = 0; i < 3; i++)
+            {
+                if(partsShift[i] < 10)
+                {
+                    partsShift[i] = 0;
+                }
+            }
+
+                return partsShift;
         }
 
         public int ActiveShift(DateTime dateTime)

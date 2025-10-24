@@ -34,7 +34,7 @@ namespace WebMonitoring.Models
         public DataRaport LineStf6Hr16 { get; set; } = new DataRaport();
         public DataRaport LineWeil { get; set; } = new DataRaport();
         public DataRaport LineWs7 { get; set; } = new DataRaport();
-
+        public DataRaport LineWs9 { get; set; } = new DataRaport();
         public DateTime DateTime { get; set; }
 
 
@@ -295,6 +295,16 @@ namespace WebMonitoring.Models
             LineWs7.Shift1 = shifts[0];
             LineWs7.Shift2 = shifts[1];
             LineWs7.Shift3 = shifts[2];
+
+            //ws9
+            LineWs7.Line = LineDescription.LineWS9;
+            LineWs7.Model = "HR12 UF / HR13 UF";
+
+            shifts = context.GetDailyReport(LineDescription.LineWS9, dateTime);
+
+            LineWs9.Shift1 = shifts[0];
+            LineWs9.Shift2 = shifts[1];
+            LineWs9.Shift3 = shifts[2];
         }
     }
 }

@@ -1,0 +1,382 @@
+﻿@model CheckBoxLineWS9
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="~/js/CheckBox.js"></script>
+<script src="~/js/loading.js"></script>
+<link href="~/css/DivWyszukiwarka.css" rel="stylesheet" />
+
+
+<div>
+    <div id="idDivCheckBox" class="fixed">
+        @*<h2>Opcja wyboru:</h2>*@
+
+        @*<div asp-validation-summary="All" class="text-danger"></div>*@
+
+        <form asp-action="LineWs7" method="post">
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <td colspan="3">
+                        <label style="font-size:20px; font-weight:bold;">Opcja wyszukiwania:</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" asp-for="@Model.SelectCode">
+                        <label asp-for="@Model.SelectCode"> Wyszukiwanie pod kodzie</label><br>
+                    </td>
+                    <td>
+                        <input type="checkbox" asp-for="@Model.SelectPzzw">
+                        <label asp-for="@Model.SelectPzzw"> Wyszukiwanie po zleceniu PZZW</label><br>
+                    </td>
+                    <td>
+                        <input type="checkbox" asp-for="@Model.SelectDate">
+                        <label asp-for="@Model.SelectDate"> Wyszukiwanie po dacie</label><br>
+                        <div id="divDateTime">
+                            @*<label asp-for="@Model.From">Wybór daty od kiedy:</label>
+                                <input type="date" asp-for="@Model.From"><br>*@
+                            <label asp-for="@Model.DateTime">Wybierz dzień:</label>
+                            @*<div><span asp-validation-for="@Model.DateTime" class="text-danger"></span></div>*@
+                            <input type="date" asp-for="@Model.DateTime"><br>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label style="font-size:20px; font-weight:bold;">Stanowiska:</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="checkboxes">
+                        <input type="checkbox" asp-for="@Model.All">
+                        <label asp-for="@Model.All"> Zaznacz wszystko</label><br>
+                        <input type="checkbox" asp-for="@Model.Stf">
+                        <label asp-for="@Model.Stf"> Stf</label><br>
+                        <input type="checkbox" asp-for="@Model.WeldingCell">
+                        <label asp-for="@Model.WeldingCell"> Cela spwalnicza</label><br>
+                        <input type="checkbox" asp-for="@Model.Leaktester">
+                        <label asp-for="@Model.Leaktester"> Tester szczelności</label><br>
+                        <input type="checkbox" asp-for="@Model.FinalGauge">
+                        <label asp-for="@Model.FinalGauge"> Sprawdzian geometri</label>
+                    </td>
+
+                    <td class="checkboxes">
+                        <input type="checkbox" asp-for="@Model.Vacuum">
+                        <label asp-for="@Model.Vacuum"> Odkurzacz</label><br />
+                        <input type="checkbox" asp-for="@Model.LaserMarking">
+                        <label asp-for="@Model.LaserMarking"> Grawerka</label><br>
+                        <input type="checkbox" asp-for="@Model.ControlLoop">
+                        <label asp-for="@Model.ControlLoop"> kontrola jakości</label><br />
+                    </td>
+
+
+                </tr>
+                <tr>
+                    <td colspan="3" id="widthTdSubmit">
+                        <input id="submitClick" type="submit" value="Wyszukiwanie" class="btn btn-primary mb-2" name="wyszukiwanie">
+                        <input id="idPobierz" type="submit" value="Pobranie" class="btn btn-primary mb-2" name="pobierz">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="4">
+                        @*   <div><span asp-validation-for="@Model.TextArea" class="text-danger"></span></div>*@
+                        <textarea id="textArea" asp-for="@Model.TextArea" rows="10" cols="100"></textarea>
+                    </td>
+                </tr>
+
+
+            </table>
+        </form>
+    </div>
+
+    <div>
+        <div id="divLoading" class="fixed">
+            <h4>Trwa wyszukiwanie...</h4>
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+
+        <div id="divTables" class="fixed_2">
+
+            @if (Model != null)
+            {
+                if (!string.IsNullOrEmpty(Model.HtmlTable))
+                {
+                    <h4>Stf</h4>
+                    <div htmltable="@Model.HtmlTable" style="width:1200px;" />
+                }
+            }
+
+            @*Cela spawalnicza*@
+            @if (Model?.DaneCelaSpawalnicza?.Count > 0)
+            {
+                <h4>Cela spawalnicza</h4>
+                <table class="table table-hover table-striped table-bordered" id="idWC" style="width:850px;">
+                    <thead class="btn-dark">
+                        <tr class="text-white">
+                            <th style="font-size:14px">Nr Basic</th>
+                            <th style="font-size:14px">Wynik operacji</th>
+                            <th style="font-size:14px">Data Operacji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var m in Model.DaneCelaSpawalnicza)
+                        {
+                            <tr style="font-size:12px">
+                                <td>@m.Nr_Shell</td>
+                                <td>@m.Wynik_operacji</td>
+                                <td>@m.DateTime</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+
+            @*Leaktester*@
+            @if (Model?.DaneLT?.Count > 0)
+            {
+                <h4>tester szczelności</h4>
+                <table class="table table-hover table-striped table-bordered" id="idLT" style="width:850px;">
+                    <thead class="btn-dark">
+                        <tr class="text-white">
+                            <th style="font-size:14px">Nr Basic</th>
+                            <th style="font-size:14px">Wynik operacji</th>
+                            <th style="font-size:14px">Wyciek</th>
+                            <th style="font-size:14px">Ciśnienie</th>
+                            <th style="font-size:14px">Data operacji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var m in Model.DaneLT)
+                        {
+                            <tr style="font-size:12px">
+                                <td>@m.Nr_Shell</td>
+                                <td>@m.Wynik_operacji</td>
+                                <td>@m.Wyciek</td>
+                                <td>@m.Cisnienie</td>
+                                <td>@m.DateTime</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+
+            @*Final gauge*@
+            @if (Model?.DaneFG?.Count > 0)
+            {
+                <h4>Sprawdzian geometrii</h4>
+                <table class="table table-hover table-striped table-bordered" id="idFG" style="width:850px;">
+                    <thead class="btn-dark">
+                        <tr class="text-white">
+                            <th style="font-size:14px">Nr Basic</th>
+                            <th style="font-size:14px">Wynik operacji</th>
+                            <th style="font-size:14px">Data operacji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var m in Model.DaneFG)
+                        {
+                            <tr style="font-size:12px">
+                                <td>@m.Nr_Shell</td>
+                                <td>@m.Wynik_operacji</td>
+                                <td>@m.DateTime</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+
+            @*Vacuum*@
+            @if (Model?.DaneVacuum?.Count > 0)
+            {
+                <h4>Odkurzacz</h4>
+                <table class="table table-hover table-striped table-bordered" id="idVC" style="width:1200px;">
+                    <thead class="btn-dark">
+                        <tr class="text-white">
+                            <th style="font-size:14px">Nr Basic</th>
+                            <th style="font-size:14px">Wynik operacji</th>
+                            <th style="font-size:14px">Data operacji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var m in Model.DaneVacuum)
+                        {
+                            <tr style="font-size:12px">
+                                <td>@m.Nr_Shell</td>
+                                <td>@m.Wynik_operacji</td>
+                                <td>@m.DateTime</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+
+            @*LaserMarking*@
+            @if (Model?.DaneLM?.Count > 0)
+            {
+                <h4>Grawerka</h4>
+                <table class="table table-hover table-striped table-bordered" id="idLM" style="width:1700px;">
+                    <thead class="btn-dark">
+                        <tr class="text-white">
+                            <th style="font-size:14px">Nr Basic</th>
+                            <th style="font-size:14px">Nr Grawerki</th>
+                            <th style="font-size:14px">Wynik operacji</th>
+                            <th style="font-size:14px">Data operacji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var m in Model.DaneLM)
+                        {
+                            <tr style="font-size:12px">
+                                <td>@m.Nr_Shell</td>
+                                <td>@m.Nr_Grawerka</td>
+                                <td>@m.Wynik_operacji</td>
+                                <td>@m.DateTime</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+
+
+            @*CL*@
+            @if (Model?.DaneCL?.Count > 0)
+            {
+                <h4>Kontrola jakości</h4>
+                <table class="table table-hover table-striped table-bordered" id="idCL" style="width:1500px;">
+                    <thead class="btn-dark">
+                        <tr class="text-white">
+                            <th style="font-size:14px">Nr katalizatora</th>
+                            <th style="font-size:14px">Pzzw</th>
+                            <th style="font-size:14px">Wynik operacji</th>
+                            <th style="font-size:14px">Uwagi</th>
+                            <th style="font-size:14px">Nr operatora</th>
+                            <th style="font-size:14px">Data operacji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var m in Model.DaneCL)
+                        {
+                            <tr style="font-size:12px">
+                                <td>@m.Nr_Grawerka</td>
+                                <td>@m.PZZW</td>
+                                <td>@m.Wynik_operacji</td>
+                                <td>@m.Uwagi</td>
+                                <td>@m.OperatorID</td>
+                                <td>@m.DateTime</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function exportCSV() {
+
+        var fileName = 'LiniaWS7_';
+
+        if ($('#Mixer').is(':checked') && $('#idM').find('tr').length > 0)
+            $('#idM').table2csv({
+                filename: fileName + 'Mixer.csv',
+                separator: ';'
+            });
+
+        if ($('#OP290').is(':checked') && $('#idOP290').find('tr').length > 0)
+            $('#idOP290').table2csv({
+                filename: fileName + 'OP290.csv',
+                separator: ';'
+            });
+
+        if ($('#OP300').is(':checked') && $('#idOP300').find('tr').length > 0)
+            $('#idOP300').table2csv({
+                filename: fileName + 'OP300.csv',
+                separator: ';'
+            });
+
+        if ($('#OP310').is(':checked') && $('#idOP310').find('tr').length > 0)
+            $('#idOP310').table2csv({
+                filename: fileName + 'OP310.csv',
+                separator: ';'
+            });
+
+        if ($('#OP320').is(':checked') && $('#idOP320').find('tr').length > 0)
+            $('#idOP320').table2csv({
+                filename: fileName + 'OP320.csv',
+                separator: ';'
+            });
+
+        if ($('#OP325').is(':checked') && $('#idOP325').find('tr').length > 0)
+            $('#idOP325').table2csv({
+                filename: fileName + 'OP325.csv',
+                separator: ';'
+            });
+
+        if ($('#OP330').is(':checked') && $('#idOP330').find('tr').length > 0)
+            $('#idOP330').table2csv({
+                filename: fileName + 'OP330.csv',
+                separator: ';'
+            });
+
+        if ($('#OP360').is(':checked') && $('#idOP360').find('tr').length > 0)
+            $('#idOP360').table2csv({
+                filename: fileName + 'OP360.csv',
+                separator: ';'
+            });
+
+        if ($('#FLT').is(':checked') && $('#idFLT').find('tr').length > 0)
+            $('#idFLT').table2csv({
+                filename: fileName + 'FLT.csv',
+                separator: ';'
+            });
+
+        if ($('#Marking').is(':checked') && $('#idM2').find('tr').length > 0)
+            $('#idM2').table2csv({
+                filename: fileName + 'Marking.csv',
+                separator: ';'
+            });
+
+        if ($('#OP380').is(':checked') && $('#idOP380').find('tr').length > 0)
+            $('#idOP380').table2csv({
+                filename: fileName + 'OP380.csv',
+                separator: ';'
+            });
+
+        if ($('#OP390').is(':checked') && $('#idOP390').find('tr').length > 0)
+            $('#idOP390').table2csv({
+                filename: fileName + 'OP390.csv',
+                separator: ';'
+            });
+
+        if ($('#FG').is(':checked') && $('#idFG').find('tr').length > 0)
+            $('#idFG').table2csv({
+                filename: fileName + 'FG.csv',
+                separator: ';'
+            });
+
+        if ($('#CL').is(':checked') && $('#idCL').find('tr').length > 0)
+            $('#idCL').table2csv({
+                filename: fileName + 'CL.csv',
+                separator: ';'
+            });
+    }
+
+</script>
+

@@ -17,6 +17,7 @@ namespace WebMonitoring.Models
         public DataRaport LineWs2 { get; set; } = new DataRaport();
         public DataRaport LineWS2HR18 { get; set; } = new DataRaport();
         public DataRaport LineWs3 { get; set; } = new DataRaport();
+        public DataRaport LineWs3Hr12CC { get; set; } = new DataRaport();
         public DataRaport LineWs8_Bja { get; set; } = new DataRaport();
         public DataRaport LineWs8_Gpf { get; set; } = new DataRaport();
         public DataRaport LineWs4M260 { get; set; } = new DataRaport();
@@ -25,6 +26,11 @@ namespace WebMonitoring.Models
         public DataRaport LineWeil { get; set; } = new DataRaport();
         public DataRaport LineWs7 { get; set; } = new DataRaport();
         public DataRaport LineSdf { get; set; } = new DataRaport();
+        public DataRaport LineWs9 { get; set; } = new DataRaport();
+        public List<DataRaport> LineWs10 { get; set; } = new();
+        public DataRaport LineWs10_CL { get; set; } = new DataRaport();
+        public DataRaport LineWs10_RW_L1{ get; set; } = new DataRaport();
+        public DataRaport LineWs10_RW_L2 { get; set; } = new DataRaport();
         public DateTime DateTime { get; set; }
 
         public void GetDailyRaport (DateTime dateTime)
@@ -104,6 +110,20 @@ namespace WebMonitoring.Models
             LineWs3.TargetShift1 = LineWs3.Shift1 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs3.Line, Shift1) : 0;
             LineWs3.TargetShift2 = LineWs3.Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs3.Line, Shift2) : 0;
             LineWs3.TargetShift3 = LineWs3.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs3.Line, Shift3) : 0;
+
+            //ws3 hr12cc
+            LineWs3Hr12CC.Line = LineDescription.LineWS3Hr12CC;
+            LineWs3Hr12CC.Model = "HR12 CC";
+
+            shifts = Context.GetDailyReport(LineDescription.LineWS3Hr12CC, dateTime);
+
+            LineWs3Hr12CC.Shift1 = shifts[0];
+            LineWs3Hr12CC.Shift2 = shifts[1];
+            LineWs3Hr12CC.Shift3 = shifts[2];
+            //target
+            LineWs3Hr12CC.TargetShift1 = LineWs3Hr12CC.Shift1 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs3Hr12CC.Line, Shift1) : 0;
+            LineWs3Hr12CC.TargetShift2 = LineWs3Hr12CC.Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs3Hr12CC.Line, Shift2) : 0;
+            LineWs3Hr12CC.TargetShift3 = LineWs3Hr12CC.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs3Hr12CC.Line, Shift3) : 0;
 
             //ws2B bja
             LineWs8_Bja.Line = LineDescription.LineWS8_BJA;
@@ -216,6 +236,110 @@ namespace WebMonitoring.Models
             LineSdf.TargetShift2 = LineSdf.Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineSdf.Model, Shift2) : 0;
             LineSdf.TargetShift1 = LineSdf.Shift1 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineSdf.Model, Shift1) : 0;
             LineSdf.TargetShift3 = LineSdf.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineSdf.Model, Shift3) : 0;
+
+            //ws9
+            LineWs9.Line = LineDescription.LineWS9;
+            LineWs9.Model = "HR12 UF / HR13 UF";
+
+            shifts = Context.GetDailyReport(LineDescription.LineWS9, dateTime);
+
+            LineWs9.Shift1 = shifts[0];
+            LineWs9.Shift2 = shifts[1];
+            LineWs9.Shift3 = shifts[2];
+            //target
+            LineWs9.TargetShift1 = LineWs9.Shift1 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs9.Line, Shift1) : 0;
+            LineWs9.TargetShift2 = LineWs9.Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs9.Line, Shift2) : 0;
+            LineWs9.TargetShift3 = LineWs9.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs9.Line, Shift3) : 0;
+
+
+            //ws10
+            //var allPN = Context.GetDailyReport_Ws10(dateTime);
+
+            //LineWs10.Clear();
+
+            //if(allPN?.Count > 0)
+            //{
+            //    foreach (var line in allPN)
+            //    {
+            //        foreach (var l in line)
+            //        {
+            //            int index = LineWs10.FindIndex(x => x.Model == l.PN);
+
+            //            if (index >= 0)
+            //            {
+            //                if (LineWs10[index].Shift2 == 0)
+            //                {
+            //                    LineWs10[index].Shift2 = l.Qty > 0 ? l.Qty : -1;
+            //                    LineWs10[index].TargetShift2 = LineWs10[index].Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs10[index].Line, Shift2) : 0;
+            //                }
+            //                else
+            //                {
+            //                    LineWs10[index].Shift3 = l.Qty;
+            //                    LineWs10[index].TargetShift3 = LineWs10[index].Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs10[index].Line, Shift3) : 0;
+
+            //                    if (LineWs10[index].Shift2 < 0)
+            //                    {
+            //                        LineWs10[index].Shift2 = 0;
+            //                    }
+            //                }
+            //            }
+            //            else
+            //            {
+            //                LineWs10.Add(new DataRaport
+            //                {
+            //                    Line = LineDescription.LineWS10,
+            //                    Model = l.PN,
+            //                    Shift1 = l.Qty
+            //                });
+
+            //                LineWs10[LineWs10.Count - 1].TargetShift1 = LineWs10[LineWs10.Count - 1].Shift1 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs10[LineWs10.Count - 1].Line + "_" + l.PN, Shift1) : 0;
+            //            }
+            //        }
+            //    }
+            //}
+
+
+            //ws10 CL
+            LineWs10_CL.Line = LineDescription.LineWS10;
+            LineWs10_CL.Model = "PAKOWANIE";
+
+            shifts = Context.GetDailyReportCL_Ws10(dateTime);
+
+            LineWs10_CL.Shift1 = shifts[0];
+            LineWs10_CL.Shift2 = shifts[1];
+            LineWs10_CL.Shift3 = shifts[2];
+            //target
+            LineWs10_CL.TargetShift1 = LineWs10_CL.Shift1 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs10_CL.Line, Shift1) : 0;
+            LineWs10_CL.TargetShift2 = LineWs10_CL.Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs10_CL.Line, Shift2) : 0;
+            LineWs10_CL.TargetShift3 = LineWs10_CL.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs10_CL.Line, Shift3) : 0;
+
+
+            //ws10 RW
+            LineWs10_RW_L1.Line = LineDescription.LineWS10;
+            LineWs10_RW_L1.Model = "LINIA ZGRZEWAJĄCA - L1";
+
+            shifts = Context.GetDailyReportRW_Ws10(dateTime, "L1");
+
+            LineWs10_RW_L1.Shift1 = shifts[0];
+            LineWs10_RW_L1.Shift2 = shifts[1];
+            LineWs10_RW_L1.Shift3 = shifts[2];
+            //target
+            LineWs10_RW_L1.TargetShift1 = LineWs10_RW_L1.Shift1 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs10_RW_L1.Line, Shift1) : 0;
+            LineWs10_RW_L1.TargetShift2 = LineWs10_RW_L1.Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs10_RW_L1.Line, Shift2) : 0;
+            LineWs10_RW_L1.TargetShift3 = LineWs10_RW_L1.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs10_RW_L1.Line, Shift3) : 0;
+
+            LineWs10_RW_L2.Line = LineDescription.LineWS10;
+            LineWs10_RW_L2.Model = "LINIA ZGRZEWAJĄCA - L2";
+
+            shifts = Context.GetDailyReportRW_Ws10(dateTime, "L2");
+
+            LineWs10_RW_L2.Shift1 = shifts[0];
+            LineWs10_RW_L2.Shift2 = shifts[1];
+            LineWs10_RW_L2.Shift3 = shifts[2];
+            //target
+            LineWs10_RW_L2.TargetShift1 = LineWs10_RW_L2.Shift1 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs10_RW_L2.Line, Shift1) : 0;
+            LineWs10_RW_L2.TargetShift2 = LineWs10_RW_L2.Shift2 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs10_RW_L2.Line, Shift2) : 0;
+            LineWs10_RW_L2.TargetShift3 = LineWs10_RW_L2.Shift3 > 0 ? ContextProd.CheckDailyTarget(dateTime, LineWs10_RW_L2.Line, Shift3) : 0;
         }
     }
 

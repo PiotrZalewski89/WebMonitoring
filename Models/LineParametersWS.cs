@@ -172,6 +172,30 @@ namespace WebMonitoring.Models
             50
         };
 
+        private int[] WorkTimeLineWS9 = new int[]
+        {
+            60,
+            60,
+            60,
+            60,
+            30,
+            50,
+            60,
+            50
+        };
+
+        private int[] WorkTimeLineWS10 = new int[]
+   {
+            60,
+            60,
+            60,
+            60,
+            30,
+            50,
+            60,
+            50
+   };
+
         private int[] NumberOfStationsWS1CNH = new int[]
         {
             1,
@@ -210,13 +234,15 @@ namespace WebMonitoring.Models
 
         private int[] NumberOfStationsWS2HR18 = new int[]
         {
-            1,//Welding Cell 
+            4,//Welding Cell 
+            4,//Welding Cell 
+            4,//Welding Cell 
+            4,//Welding Cell 
             1,//leak tester 
             1,//final gauge
             1,//vacuum
             1,//control loop            
         };
-
 
         private int[] NumberOfStationsWS3A = new int[]
         {
@@ -241,6 +267,23 @@ namespace WebMonitoring.Models
             2,//gauge
             2,//vacum
             2//cl
+        };
+
+        private int[] NumberOfStationsWS3Hr12CC = new int[]
+        {
+            1,//sizer inlet
+            1,//sizer outlet
+            1,//cell3
+            1,//clea4
+            1,//plt
+            1,//enc
+            1,//wkretak
+            1,//homo
+            1,//flt
+            1,//deflector
+            1,//gauge
+            1,//vacum
+            1//cl
         };
 
         private int[] NumberOfStationsWS8Br10GPF = new int[]
@@ -312,6 +355,7 @@ namespace WebMonitoring.Models
             1,
             1
         };
+
         private int[] NumberOfStationsWS7 = new int[]
         {
             1,
@@ -329,6 +373,29 @@ namespace WebMonitoring.Models
             1,
             1
         };
+
+        private int[] NumberOfStationsWS9 = new int[]
+        {
+            4,//Welding Cell 
+              4,//Welding Cell 
+                4,//Welding Cell 
+                  4,//Welding Cell 
+            1,//leak tester 
+            1,//final gauge
+            1,//vacuum
+            1,//laser marking
+            1,//control loop            
+        };
+
+        private int[] NumberOfStationsWS10 = new int[]
+{
+            1,//Welding Cell 
+            1,//LM 
+            1,//Wiremash
+            1,//Clip
+            1,//Gauge
+            1,//control loop            
+};
 
         public void SetValues(string selectedLine, IDictionary<string, List<int>> Results, int target)
         {
@@ -409,6 +476,8 @@ namespace WebMonitoring.Models
                 return NumberOfStationsWS3B;
             else if (selectedLine == LineDescription.LineWS3A)
                 return NumberOfStationsWS3A;
+            else if (selectedLine == LineDescription.LineWS3Hr12CC)
+                return NumberOfStationsWS3Hr12CC;
             else if (selectedLine == LineDescription.LineWS2)
                 return NumberOfStationsWS2;
             else if (selectedLine == LineDescription.LineWS8_GPF)
@@ -431,6 +500,10 @@ namespace WebMonitoring.Models
                 return NumberOfStationsSdf;
             else if (selectedLine == LineDescription.LineWS2HR18)
                 return NumberOfStationsWS2HR18;
+            else if (selectedLine == LineDescription.LineWS9)
+                return NumberOfStationsWS9;
+            else if (selectedLine == LineDescription.LineWS10)
+                return NumberOfStationsWS10;
             //else if (selectedLine == LineDescription.LineWeil)
             //    return NumberOfStationsWeil;
             else
@@ -442,7 +515,8 @@ namespace WebMonitoring.Models
             if (selectedLine == LineDescription.LineWS3A
                 || selectedLine == LineDescription.LineWS3BLP1
                 || selectedLine == LineDescription.LineWS3BLP2
-                || selectedLine == LineDescription.LineWS3BLP3)
+                || selectedLine == LineDescription.LineWS3BLP3
+                || selectedLine == LineDescription.LineWS3Hr12CC)
                 return WorkTimeLineWS3;
             else if (selectedLine == LineDescription.LineWS8_GPF)
             {
@@ -481,6 +555,10 @@ namespace WebMonitoring.Models
                 return WorkTimeLineWS7;
             else if (selectedLine == LineDescription.LineSDF)
                 return WorkTimeLineSdf;
+            else if (selectedLine == LineDescription.LineWS9)
+                return WorkTimeLineWS9;
+            else if (selectedLine == LineDescription.LineWS10)
+                return WorkTimeLineWS10;
             //else if (selectedLine == LineDescription.LineWeil)
             //    return WorkTimeLineWeil;
             else

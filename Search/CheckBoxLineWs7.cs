@@ -329,7 +329,7 @@ namespace WebMonitoring.Search
         }
         private IList<ColumnFGWs7> GetDataFromFG(string codeCover)
         {
-            var result = context.Ws7TtOp380s
+            var result = context.Ws7TtFinalGauges
                     .Where(x => x.NrOslony == codeCover)
                     .Select(x => new ColumnFGWs7
                     {

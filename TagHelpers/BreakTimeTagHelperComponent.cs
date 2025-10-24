@@ -24,6 +24,9 @@ namespace WebMonitoring.TagHelpers
             new BreakTime(LineDescription.LineWS3, 1, 9, 30, 11, 40),
             new BreakTime(LineDescription.LineWS3, 2, 17, 30, 19, 40),
             new BreakTime(LineDescription.LineWS3, 3, 1, 30, 3, 30),
+            new BreakTime(LineDescription.LineWS3Hr12CC, 1, 9, 30, 11, 40),
+            new BreakTime(LineDescription.LineWS3Hr12CC, 2, 17, 30, 19, 40),
+            new BreakTime(LineDescription.LineWS3Hr12CC, 3, 1, 30, 3, 30),
             new BreakTime(LineDescription.LineWS4, 1, 10, 30, 12, 0),
             new BreakTime(LineDescription.LineWS4, 2, 10, 0, 20, 0),
             new BreakTime(LineDescription.LineWS4, 3, 2, 0, 4, 0),
@@ -50,9 +53,17 @@ namespace WebMonitoring.TagHelpers
             new BreakTime(LineDescription.LineWS8_GPF, 1, 10, 30, 12, 0),
             new BreakTime(LineDescription.LineWS8_GPF, 2, 10, 0, 20, 0),
             new BreakTime(LineDescription.LineWS8_GPF, 3, 2, 0, 4, 0),
-             new BreakTime(LineDescription.LineSDF, 1, 10, 30, 11, 50),
+            new BreakTime(LineDescription.LineSDF, 1, 10, 30, 11, 50),
             new BreakTime(LineDescription.LineSDF, 2, 10, 0, 19, 50),
-            new BreakTime(LineDescription.LineSDF, 3, 2, 0, 3, 50)
+            new BreakTime(LineDescription.LineSDF, 3, 2, 0, 3, 50),
+
+            new BreakTime(LineDescription.LineWS9, 1, 10, 0, 11, 50),
+            new BreakTime(LineDescription.LineWS9, 2, 18, 0, 19, 50),
+            new BreakTime(LineDescription.LineWS9, 3, 2, 0, 3, 50),
+
+            new BreakTime(LineDescription.LineWS10, 1, 10, 0, 11, 50),
+            new BreakTime(LineDescription.LineWS10, 2, 18, 0, 19, 50),
+            new BreakTime(LineDescription.LineWS10, 3, 2, 0, 3, 50),
         };
 
         private BreakTime BreakTime { get; set; }
@@ -82,6 +93,10 @@ namespace WebMonitoring.TagHelpers
                     Line = LineDescription.LineWeil;
                 else if (Line == LineDescription.LineWS2HR18)
                     Line = LineDescription.LineWS2HR18;
+                else if (Line == LineDescription.LineWS9)
+                    Line = LineDescription.LineWS9;
+                else if (Line == LineDescription.LineWS10)
+                    Line = LineDescription.LineWS10;
 
                 BreakTime = GetBreakTime(Line);
 

@@ -15,7 +15,7 @@ namespace WebMonitoring.Components
            // _LineParameters = line;
         }
 
-        public IViewComponentResult Invoke(string selectLine, LineParametersWS _LineParameters, bool tryb12h = false)
+        public IViewComponentResult Invoke(string selectLine, LineParametersWS _LineParameters, bool tryb12h = false, string partNumber = "")
         {
 
             var dateTime = DateTime.Now; //DateTime.Parse("06.05.2022 06:00:00"); //DateTime.Parse("19.05.2022 06:00:00");
@@ -44,6 +44,10 @@ namespace WebMonitoring.Components
             else if (selectLine == LineDescription.LineWS3BLP3)
             {
                 _DbSetLine.GetProductionCountPerHourWS3(dateTime, LineDescription.LineWS3BLP3);
+            }
+            else if (selectLine == LineDescription.LineWS3Hr12CC)
+            {
+                _DbSetLine.GetProductionCountPerHourWS3Hr12CC(dateTime, LineDescription.LineWS3Hr12CC);
             }
             else if (selectLine == LineDescription.LineWS8_GPF)
             {
@@ -81,13 +85,37 @@ namespace WebMonitoring.Components
             {
                 _DbSetLine.GetProductionCountPerHourWS2_HR18(dateTime);
             }
+            else if (selectLine == LineDescription.LineWS9)
+            {
+                _DbSetLine.GetProductionCountPerHourWS9(dateTime);
+            }
+            else if (selectLine == LineDescription.LineWS10)
+            {
+                //"976.119.213.F"
+                //"976.119.213.G"
+                //"976.119.213.H"
+                //"976.119.213.J"
+                //"976.119.213.K"
+                //"976.119.364.G"
+                //"976.119.364.H"
+                //"976.119.368.C"
+                //"976.119.369.E"
+                //"976.119.520.E"
+                //"976.119.535.B"
+                //"976.119.714.D"
+                if (!string.IsNullOrEmpty(partNumber))
+                    _DbSetLine.GetProductionCountPerHourWS10(dateTime, partNumber).Wait();
+                else 
+                    _DbSetLine.GetProductionCountPerHourWS10(dateTime).Wait();
+            }
 
             //zapis do bazy odnosnie targetu
             if (_LineParameters.ActualTotalParts > 0 && _LineParameters.ActualTotalParts != _DbSetLine.Target)
-                _DbSetLine.SetTarget(selectLine, _LineParameters.ActualTotalParts, tryb12h);
+                _DbSetLine.SetTarget(selectLine, _LineParameters.ActualTotalParts, tryb12h, partNumber);
 
             _LineParameters.TrybPracy12h = tryb12h;
-            _LineParameters.SetValues(selectLine, _DbSetLine.LineData, _LineParameters.ActualTotalParts > 0 ? _LineParameters.ActualTotalParts : _DbSetLine.Target);
+            if (_DbSetLine.LineData is { })
+                _LineParameters.SetValues(selectLine, _DbSetLine.LineData, _LineParameters.ActualTotalParts > 0 ? _LineParameters.ActualTotalParts : _DbSetLine.Target);
 
             if (_LineParameters.ActualTotalParts == 0)
             {

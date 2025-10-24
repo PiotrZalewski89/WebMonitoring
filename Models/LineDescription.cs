@@ -13,6 +13,7 @@ namespace WebMonitoring.Models
         public static string LineWS2 => "WS2";
         public static string LineWS3A => "WS3A";
         public static string LineWS3 => "WS3";
+        public static string LineWS3Hr12CC => "WS3 HR12 CC";
         public static string LineWS3BLP1 => "WS3BLP1";
         public static string LineWS3BLP2 => "WS3BLP2";
         public static string LineWS3BLP3 => "WS3BLP3";
@@ -34,5 +35,7 @@ namespace WebMonitoring.Models
         public static string LineWS7 => "WS7";
         public static string LineSDF => "SDF";
         public static string LineWS2HR18 => "WS2 HR18";
+        public static string LineWS9 => "WS9";
+        public static string LineWS10 => "WS10";
     }
 }

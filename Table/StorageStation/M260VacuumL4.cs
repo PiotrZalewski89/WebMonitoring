@@ -15,5 +15,6 @@ namespace WebMonitoring.Table.StorageStation
         public int? FrameSeq { get; set; }
         public float? Vacuum1 { get; set; }
         public float? Vacuum2 { get; set; }
+        public string NrEtykiety { get; set; }
     }
 }

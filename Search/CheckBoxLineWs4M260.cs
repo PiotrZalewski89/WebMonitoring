@@ -15,6 +15,7 @@ namespace WebMonitoring.Search
         public bool All { get; set; }
         public bool PLT { get; set; }
         public bool SizerGBDio { get; set; }
+        public bool WeldingCell1 { get; set; }
         public bool LT { get; set; }
         public bool Enkapsulacja1 { get; set; }
         public bool Enkapsulacja2 { get; set; }
@@ -25,17 +26,18 @@ namespace WebMonitoring.Search
         public bool StacjaMontazowa { get; set; }
         public bool PetlaKJ { get; set; }
         public bool Stf { get; set; }
-        public IList<BasicColumn> DanePLT { get; set; }
-        public IList<BasicColumn> DaneSizerGBDio { get; set; }
-        public IList<ColumnLT> DaneLT { get; set; }
-        public IList<BasicColumn> DaneEnkapsulacja1 { get; set; }
-        public IList<BasicColumn> DaneEnkapsulacja2 { get; set; }
-        public IList<BasicColumn> DaneCelaRezystancyjna8 { get; set; }
-        public IList<BasicColumn> DaneSpawaniePinu { get; set; }
-        public IList<BasicColumn> DaneFG { get; set; }
-        public IList<BasicColumn> DaneOdkurzacz { get; set; }
-        public IList<BasicColumn> DaneStacjaMontazowa { get; set; }
-        public IList<ColumnCL> DanePetlaKJ { get; set; }
+        public IList<ColumnLTM260> DanePLT { get; set; }
+        public IList<BasicColumnM260> DaneSizerGBDio { get; set; }
+        public IList<BasicColumnM260> DaneWeldingCell1 { get; set; }
+        public IList<ColumnLTM260> DaneLT { get; set; }
+        public IList<BasicColumnM260> DaneEnkapsulacja1 { get; set; }
+        public IList<BasicColumnM260> DaneEnkapsulacja2 { get; set; }
+        public IList<BasicColumnM260> DaneCelaRezystancyjna8 { get; set; }
+        public IList<BasicColumnM260> DaneSpawaniePinu { get; set; }
+        public IList<BasicColumnM260> DaneFG { get; set; }
+        public IList<ColumnaVCM260> DaneOdkurzacz { get; set; }
+        public IList<BasicColumnM260> DaneStacjaMontazowa { get; set; }
+        public IList<ColumnCLM260> DanePetlaKJ { get; set; }
 
         public new string HtmlTable { get; set; }
 
@@ -47,7 +49,7 @@ namespace WebMonitoring.Search
 
         private Codes FindCode(string code)
         {
-            var result = context.M260BracketChecksL4s
+            var result = context.M260VacuumL4s
                 .Where(x => x.NrShella == code)
                 .Select(x => new Codes
                 {
@@ -58,7 +60,7 @@ namespace WebMonitoring.Search
 
             if (result.Length == 0)
             {
-                result = context.M260BracketChecksL4s
+                result = context.M260VacuumL4s
                        .Where(x => x.NrShella.Contains(code))
                        .Select(x => new Codes
                        {
@@ -68,7 +70,7 @@ namespace WebMonitoring.Search
 
                 if (result.Length == 0)
                 {
-                    result = context.M260BracketChecksL4s
+                    result = context.M260VacuumL4s
                     .Where(x => x.NrEtykiety.Contains(code))
                     .Select(x => new Codes
                     {
@@ -106,21 +108,37 @@ namespace WebMonitoring.Search
             return codeFromPzzw;
         }
 
-        private IList<BasicColumnM260> GetDataFromPLT(string code)
+        private IList<ColumnLTM260> GetDataFromPLT(string code)
         {
             return context.M260PreleakTesterL4s
                           .Where(x => x.NrShella == code)
-                          .Select(x => new BasicColumnM260
+                          .Select(x => new ColumnLTM260
                           {
                               Nr_Shell = x.NrShella,
                               Wynik_operacji = x.WynikTestu,
-                              DateTime = x.DtOperacji
+                              DateTime = x.DtOperacji,
+                              Cisnienie = x.Cisnienie,
+                              Cisnienie_jedn = x.CisnienieJedn,
+                              Wyciek = x.Wyciek,
+                              Wyciek_jedn = x.WyciekJedn
                           }).ToArray();
         }
 
         private IList<BasicColumnM260> GetDataFromSizerGBDio(string code)
         {
             return context.M260GbdIoCalibrationL4s
+                          .Where(x => x.NrShella == code)
+                          .Select(x => new BasicColumnM260
+                          {
+                              Nr_Shell = x.NrShella,
+                              Wynik_operacji = x.WynikOperacji,
+                              DateTime = x.DtOperacji
+                          }).ToArray();
+        }
+
+        private IList<BasicColumnM260> GetDataFromWeldingCell1(string code)
+        {
+            return context.M260WeldingCell1L4s
                           .Where(x => x.NrShella == code)
                           .Select(x => new BasicColumnM260
                           {
@@ -209,13 +227,14 @@ namespace WebMonitoring.Search
                     }).ToArray();
         }
 
-        private IList<BasicColumnM260> GetDataFromVaccumCleaner(string code)
+        private IList<ColumnaVCM260> GetDataFromVaccumCleaner(string code)
         {
             return context.M260VacuumL4s
                     .Where(x => x.NrShella == code)
-                    .Select(x => new BasicColumnM260
+                    .Select(x => new ColumnaVCM260
                     {
                         Nr_Shell = x.NrShella,
+                        NrEtykiety = x.NrEtykiety,
                         Wynik_operacji = x.WynikOperacji,
                         Frame_time = x.FrameTime
                     }).ToArray();
@@ -237,550 +256,533 @@ namespace WebMonitoring.Search
                      }).ToArray();
         }
 
-        private IList<BasicColumn> GetDataFromWiremashByDate(DateTime from, DateTime to)
+        private IList<ColumnLTM260> GetDataFromPLTByDate(DateTime from, DateTime to)
         {
-            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
-            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
-
-            var result = context.WiremeshBr10L2s
-                          .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                          .Select(x => new BasicColumn
+            var result = context.M260PreleakTesterL4s
+                          .Where(x => (x.DtOperacji >= from && x.DtOperacji < to))
+                          .Select(x => new ColumnLTM260
                           {
                               Nr_Shell = x.NrShella,
-                              Wynik_operacji = x.WynikOperacji,
-                              Frame_time = x.FrameTime
+                              Wynik_operacji = x.WynikTestu,
+                              Cisnienie = x.Cisnienie,
+                              Cisnienie_jedn = x.CisnienieJedn,
+                              Wyciek = x.Wyciek,
+                              Wyciek_jedn = x.WyciekJedn,
+                              DateTime = x.DtOperacji
                           })
                           .ToArray();
-
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, null, null, null);
-                }
-            }
 
             return result;
         }
 
-        private IList<BasicColumn> GetDataFromSizerbjaByDate(DateTime from, DateTime to)
+        private IList<BasicColumnM260> GetDataFromSizerByDate(DateTime from, DateTime to)
         {
-            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
-            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
-
-            var result = context.GbdIoCalibrationBr10L2s
-                          .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                          .Select(x => new BasicColumn
+            var result = context.M260GbdIoCalibrationL4s
+                          .Where(x => (x.DtOperacji >= from && x.DtOperacji < to))
+                          .Select(x => new BasicColumnM260
                           {
                               Nr_Shell = x.NrShella,
                               Wynik_operacji = x.WynikOperacji,
-                              Frame_time = x.FrameTime
+                              DateTime = x.DtOperacji
                           })
                           .ToArray();
-
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, null, null, null);
-                }
-            }
 
             return result;
         }
 
-        private IList<BasicColumn> GetDataFromWeldingCell5ByDate(DateTime from, DateTime to)
+        private IList<BasicColumnM260> GetDataFromWeldingCell1ByDate(DateTime from, DateTime to)
         {
-            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
-            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
-
-            var result = context.Cela5AbbBr10L2s
-                          .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                          .Select(x => new BasicColumn
+            var result = context.M260WeldingCell1L4s
+                          .Where(x => (x.DtOperacji >= from && x.DtOperacji < to))
+                          .Select(x => new BasicColumnM260
                           {
                               Nr_Shell = x.NrShella,
                               Wynik_operacji = x.WynikOperacji,
-                              Frame_time = x.FrameTime
+                              DateTime = x.DtOperacji
                           })
                           .ToArray();
-
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, null, null, null);
-                }
-            }
 
             return result;
         }
 
-        private IList<ColumnLT> GetDataFromLTByDate(DateTime from, DateTime to)
+        private IList<ColumnLTM260> GetDataFromLTByDate(DateTime from, DateTime to)
         {
-            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
-            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
-
-            var result = context.LeakTesterBr10L2s
-                        .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                          .Select(x => new ColumnLT
+            var result = context.M260LeakTesterAndMarkingL4s
+                          .Where(x => (x.DtOperacji >= from && x.DtOperacji < to))
+                          .Select(x => new ColumnLTM260
                           {
                               Nr_Shell = x.NrShella,
-                              Nr_Grawerka = x.NrGrawerka,
-                              Nr_Grawerka2 = x.NrGrawerka2,
                               Wynik_operacji = x.WynikTestu,
                               Wyciek = x.Wyciek,
                               Wyciek_jedn = x.WyciekJedn,
                               Cisnienie = x.Cisnienie,
                               Cisnienie_jedn = x.CisnienieJedn,
-                              Frame_time = x.FrameTime
+                              DateTime = x.DtOperacji
                           })
                      .ToArray();
 
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, null, null, null);
-                }
-            }
-
             return result;
         }
 
-        private IList<BasicColumn> GetDataFromPressByDate(DateTime from, DateTime to)
+        private IList<BasicColumnM260> GetDataFromPress1ByDate(DateTime from, DateTime to)
         {
-            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
-            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
-
-            var result = context.EnkapsulacjaBr10L2s
-                     .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                     .Select(x => new BasicColumn
+            var result = context.M260EncapsulationBodyL4s
+                          .Where(x => (x.DtOperacji >= from && x.DtOperacji < to))
+                     .Select(x => new BasicColumnM260
                      {
                          Nr_Shell = x.NrShella,
-                         Nr_Grawerka = x.NrGrawerka,
                          Wynik_operacji = x.WynikOperacji,
-                         Frame_time = x.FrameTime
+                         DateTime = x.DtOperacji
                      })
                      .ToArray();
 
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, null, null, null);
-                }
-            }
+            return result;
+        }
+
+        private IList<BasicColumnM260> GetDataFromPress2ByDate(DateTime from, DateTime to)
+        {
+            var result = context.M260EncapsulationPipeL4s
+                          .Where(x => (x.DtOperacji >= from && x.DtOperacji < to))
+                     .Select(x => new BasicColumnM260
+                     {
+                         Nr_Shell = x.NrShella,
+                         Wynik_operacji = x.WynikOperacji,
+                         DateTime = x.DtOperacji
+                     })
+                     .ToArray();
 
             return result;
         }
 
-        private IList<BasicColumn> GetDataFromTorqueByDate(DateTime from, DateTime to)
+        private IList<BasicColumnM260> GetDataFromResistanceCellByDate(DateTime from, DateTime to)
         {
-            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
-            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
-
-            var result = context.WkretakBr10L2s
-                     .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                      .Select(x => new BasicColumn
+            var result = context.M260ResistanceWeldingL4s
+                          .Where(x => (x.DtOperacji >= from && x.DtOperacji < to))
+                      .Select(x => new BasicColumnM260
                       {
                           Nr_Shell = x.NrShella,
-                          Nr_Grawerka = x.NrGrawerka,
                           Wynik_operacji = x.WynikOperacji,
-                          Frame_time = x.FrameTime
+                          DateTime = x.DtOperacji
                       })
                      .ToArray();
 
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, null, null, null);
-                }
-            }
+            return result;
+        }
+
+        private IList<BasicColumnM260> GetDataFromPinWeldingByDate(DateTime from, DateTime to)
+        {
+            var result = context.VM260PressStationL4Alls
+                          .Where(x => (x.DtOperacji >= from && x.DtOperacji < to))
+                      .Select(x => new BasicColumnM260
+                      {
+                          Nr_Shell = x.NrShella,
+                          Wynik_operacji = x.WynikOperacji,
+                          DateTime = x.DtOperacji
+                      })
+                     .ToArray();
 
             return result;
         }
 
-        private IList<BasicColumn> GetDataFromFinalGaugeByDate(DateTime from, DateTime to)
+        private IList<BasicColumnM260> GetDataFromFinalGaugeByDate(DateTime from, DateTime to)
         {
-            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
-            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
-
-            var result = context.FinalGaugeBr10L2s
-                    .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                    .Select(x => new BasicColumn
+            var result = context.M260GeometryGaugeL4s
+                    .Where(x => (x.DtOperacji >= from && x.DtOperacji < to))
+                    .Select(x => new BasicColumnM260
                     {
                         Nr_Shell = x.NrShella,
-                        Nr_Grawerka = x.NrGrawerka,
                         Wynik_operacji = x.WynikOperacji,
-                        Frame_time = x.FrameTime
+                        DateTime = x.DtOperacji
                     })
                       .ToArray();
 
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, null, null, null);
-                }
-            }
-
             return result;
         }
 
-        private IList<BasicColumn> GetDataFromVaccumCleanerByDate(DateTime from, DateTime to)
+        private IList<ColumnaVCM260> GetDataFromVaccumCleanerByDate(DateTime from, DateTime to)
         {
-            var frameTimeFrom = from.ConvertDateTimeToFrameTime();
-            var frameTimeTo = to.ConvertDateTimeToFrameTime();
-
-            var result = context.OdkurzaczBr10L2s
-                     .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                    .OrderByDescending(x => x.Id)
-                    .Select(x => new BasicColumn
+            var result = context.M260VacuumL4s
+                     .Where(x => (x.DtOperacji >= from && x.DtOperacji < to))
+                    .Select(x => new ColumnaVCM260
                     {
                         Nr_Shell = x.NrShella,
-                        Nr_Grawerka = x.NrGrawerka,
+                        NrEtykiety = x.NrEtykiety,
                         Wynik_operacji = x.WynikOperacji,
-                        Frame_time = x.FrameTime
+                        DateTime = x.DtOperacji
                     })
                       .ToArray();
 
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, null, null, null, true);
-                }
-            }
-
             return result;
         }
 
-        private IList<ColumnCL> GetDataFromControlLoopByDate(DateTime from, DateTime to)
+        private IList<ColumnCLM260> GetDataFromControlLoopByDate(DateTime from, DateTime to)
         {
-            var frameTimeFrom = from.ConvertDateTimeToFrameTime();
-            var frameTimeTo = to.ConvertDateTimeToFrameTime();
-
-            var result = context.PetlaKontrolnaBr10L2s
-                     .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                    .OrderByDescending(x => x.Id)
-                    .Select(x => new ColumnCL
+            var result = context.M260ControlLoopL4s
+                     .Where(x => (x.DtOperacji >= from && x.DtOperacji < to))
+                    .Select(x => new ColumnCLM260
                     {
-                        Nr_Grawerka = x.NrGrawerka,
-                        PZZW = x.NrPaleta,
+                        Nr_Shell = x.NrShella,
+                        NrEtykiety = x.NrEtykiety,
+                        PZZW = x.NrPzzw,
                         Wynik_operacji = x.WynikOperacji,
                         Uwagi = x.Quality,
                         OperatorID = x.NrOperatora,
-                        Frame_time = x.FrameTime
+                        DateTime = x.DtOperacji
                     })
                     .ToArray();
-
-            if (result.Length > 0)
-            {
-                foreach (var r in result)
-                {
-                    r.DateTime = FrameTime.SelectedFrameTime(r.Frame_time, r.Frame_time2, r.Frame_time3, null, true);
-                }
-            }
 
             return result;
         }
 
-        //public void GetDataCode(bool download = false)
-        //{
-        //    DaneWiremash = new List<BasicColumn>();
-        //    DaneSizerBja = new List<BasicColumn>();
-        //    DaneCelaSprawalnicza5 = new List<BasicColumn>();
-        //    DaneLT = new List<ColumnLT>();
-        //    DaneEnkapsulacja = new List<BasicColumn>();
-        //    DaneWkretak = new List<BasicColumn>();
-        //    DaneFG = new List<BasicColumn>();
-        //    DaneOdkurzacz = new List<BasicColumn>();
-        //    DanePetlaKJ = new List<ColumnCL>();
+        public void GetDataCode(bool download = false)
+        {
+            DanePLT = new List<ColumnLTM260>();
+            DaneSizerGBDio = new List<BasicColumnM260>();
+            DaneWeldingCell1 = new List<BasicColumnM260>();
+            DaneLT = new List<ColumnLTM260>();
+            DaneEnkapsulacja1 = new List<BasicColumnM260>();
+            DaneEnkapsulacja2 = new List<BasicColumnM260>();
+            DaneCelaRezystancyjna8 = new List<BasicColumnM260>();
+            DaneSpawaniePinu = new List<BasicColumnM260>();
+            DaneFG = new List<BasicColumnM260>();
+            DaneOdkurzacz = new List<ColumnaVCM260>();
+            DanePetlaKJ = new List<ColumnCLM260>();
 
-        //    if (SelectCode)
-        //    {
-        //        FindDataCode(FindData);
-        //    }
-        //    else if (SelectPzzw)
-        //    {
-        //        foreach (var pzzw in FindData)
-        //        {
-        //            var codes = FindCodeByPzzw(pzzw);
+            if (SelectCode)
+            {
+                FindDataCode(FindData);
+            }
+            else if (SelectPzzw)
+            {
+                foreach (var pzzw in FindData)
+                {
+                    var codes = FindCodeByPzzw(pzzw);
 
-        //            if (codes?.Count > 0)
-        //            {
-        //                FindDataCode(codes);
-        //            }
-        //        }
-        //    }
-        //    else if (SelectDate)
-        //    {
-        //        DateTime from = (DateTime)DateTime;
-        //        DateTime to = (DateTime)DateTime.Value.AddDays(1);
+                    if (codes?.Count > 0)
+                    {
+                        FindDataCode(codes);
+                    }
+                }
+            }
+            else if (SelectDate)
+            {
+                DateTime from = (DateTime)DateTime;
+                DateTime to = (DateTime)DateTime.Value.AddDays(1);
 
-        //        if (Wiremash)
-        //        {
-        //            var result = GetDataFromWiremashByDate(from, to);
+                if (PLT)
+                {
+                    var result = GetDataFromPLTByDate(from, to);
 
-        //            foreach (var r in result)
-        //            {
-        //                DaneWiremash.Add(r);
-        //            }
-        //        }
+                    foreach (var r in result)
+                    {
+                        DanePLT.Add(r);
+                    }
+                }
 
-        //        if (SizerBja)
-        //        {
-        //            var result = GetDataFromSizerbjaByDate(from, to);
+                if (SizerGBDio)
+                {
+                    var result = GetDataFromSizerByDate(from, to);
 
-        //            foreach (var r in result)
-        //            {
-        //                DaneSizerBja.Add(r);
-        //            }
-        //        }
+                    foreach (var r in result)
+                    {
+                        DaneSizerGBDio.Add(r);
+                    }
+                }
 
-        //        if (CeleSpawalnicza5)
-        //        {
-        //            var result = GetDataFromWeldingCell5ByDate(from, to);
+                if (WeldingCell1)
+                {
+                    var result = GetDataFromWeldingCell1ByDate(from, to);
 
-        //            foreach (var r in result)
-        //            {
-        //                DaneCelaSprawalnicza5.Add(r);
-        //            }
-        //        }
+                    foreach (var r in result)
+                    {
+                        DaneWeldingCell1.Add(r);
+                    }
+                }
 
-        //        if (LT)
-        //        {
-        //            var result = GetDataFromLTByDate(from, to);
+                if (LT)
+                {
+                    var result = GetDataFromLTByDate(from, to);
 
-        //            foreach (var r in result)
-        //            {
-        //                DaneLT.Add(r);
-        //            }
-        //        }
+                    foreach (var r in result)
+                    {
+                        DaneLT.Add(r);
+                    }
+                }
 
-        //        if (Enkapsulacja)
-        //        {
-        //            var result = GetDataFromPressByDate(from, to);
+                if (Enkapsulacja1)
+                {
+                    var result = GetDataFromPress1ByDate(from, to);
 
-        //            foreach (var r in result)
-        //            {
-        //                DaneEnkapsulacja.Add(r);
-        //            }
-        //        }
+                    foreach (var r in result)
+                    {
+                        DaneEnkapsulacja1.Add(r);
+                    }
+                }
 
-        //        if (Wkretak)
-        //        {
-        //            var result = GetDataFromTorqueByDate(from, to);
+                if (Enkapsulacja2)
+                {
+                    var result = GetDataFromPress2ByDate(from, to);
 
-        //            foreach (var r in result)
-        //            {
-        //                DaneWkretak.Add(r);
-        //            }
-        //        }                
+                    foreach (var r in result)
+                    {
+                        DaneEnkapsulacja2.Add(r);
+                    }
+                }
 
-        //        if (FG)
-        //        {
-        //            var result = GetDataFromFinalGaugeByDate(from, to);
+                if (CelaRezystancyjna8)
+                {
+                    var result = GetDataFromResistanceCellByDate(from, to);
 
-        //            foreach (var r in result)
-        //            {
-        //                DaneFG.Add(r);
-        //            }
-        //        }
+                    foreach (var r in result)
+                    {
+                        DaneCelaRezystancyjna8.Add(r);
+                    }
+                }
 
-        //        if (Odkurzacz)
-        //        {
-        //            var result = GetDataFromVaccumCleanerByDate(from, to);
+                if (FG)
+                {
+                    var result = GetDataFromFinalGaugeByDate(from, to);
 
-        //            foreach (var r in result)
-        //            {
-        //                DaneOdkurzacz.Add(r);
-        //            }
-        //        }
+                    foreach (var r in result)
+                    {
+                        DaneFG.Add(r);
+                    }
+                }
 
-        //        if (PetlaKJ)
-        //        {
-        //            var result = GetDataFromControlLoopByDate(from, to);
+                if (FG)
+                {
+                    var result = GetDataFromFinalGaugeByDate(from, to);
 
-        //            foreach (var r in result)
-        //            {
-        //                DanePetlaKJ.Add(r);
-        //            }
-        //        }
-        //    }
+                    foreach (var r in result)
+                    {
+                        DaneFG.Add(r);
+                    }
+                }
 
-        //    if (download)
-        //        WriteData();
-        //}
+                if (Odkurzacz)
+                {
+                    var result = GetDataFromVaccumCleanerByDate(from, to);
 
-        //private void FindDataCode(IList<string> codes)
-        //{
-        //    foreach (var code in codes)
-        //    {
-        //        Codes = FindCode(code);
+                    foreach (var r in result)
+                    {
+                        DaneOdkurzacz.Add(r);
+                    }
+                }
 
-        //        if (Stf && Codes.CodeBasic != Brak)
-        //        {
-        //            Stf_3_6 stf = new Stf_3_6();
-        //            stf.GetDataFromSql(Codes.CodeBasic);
-        //            if (!string.IsNullOrEmpty(stf.HtmlTable))
-        //                HtmlTable = stf.HtmlTable;
-        //        }
+                if (PetlaKJ)
+                {
+                    var result = GetDataFromControlLoopByDate(from, to);
 
-        //        if (Wiremash && Codes.CodeBasic != Brak)
-        //        {
-        //            var result = GetDataFromWiremash(Codes.CodeBasic);
+                    foreach (var r in result)
+                    {
+                        DanePetlaKJ.Add(r);
+                    }
+                }
+            }
 
-        //            foreach (var r in result)
-        //            {
-        //                DaneWiremash.Add(r);
-        //            }
-        //        }
+            if (download)
+                WriteData();
+        }
 
-        //        if (SizerBja && Codes.CodeBasic != Brak)
-        //        {
-        //            var result = GetDataFromSizerBja(Codes.CodeBasic);
+        private void FindDataCode(IList<string> codes)
+        {
+            foreach (var code in codes)
+            {
+                Codes = FindCode(code);
 
-        //            foreach (var r in result)
-        //            {
-        //                DaneSizerBja.Add(r);
-        //            }
-        //        }
+                if (Stf && Codes.CodeBasic != Brak)
+                {
+                    Stf_3_6 stf = new Stf_3_6();
+                    stf.GetDataFromSql(Codes.CodeBasic);
+                    if (!string.IsNullOrEmpty(stf.HtmlTable))
+                        HtmlTable += stf.HtmlTable;
+                }
 
-        //        if (CeleSpawalnicza5 && Codes.CodeBasic != Brak)
-        //        {
-        //            var result = GetDataFromWeldingCell5(Codes.CodeBasic);
+                if (PLT && Codes.CodeBasic != Brak)
+                {
+                    var result = GetDataFromPLT(Codes.CodeBasic);
 
-        //            foreach (var r in result)
-        //            {
-        //                DaneCelaSprawalnicza5.Add(r);
-        //            }
-        //        }
+                    foreach (var r in result)
+                    {
+                        DanePLT.Add(r);
+                    }
+                }
 
-        //        if (LT && Codes.CodeBasic != Brak)
-        //        {
-        //            var result = GetDataFromLT(Codes.CodeBasic);
+                if (SizerGBDio && Codes.CodeBasic != Brak)
+                {
+                    var result = GetDataFromSizerGBDio(Codes.CodeBasic);
 
-        //            foreach (var r in result)
-        //            {
-        //                DaneLT.Add(r);
-        //            }
-        //        }
+                    foreach (var r in result)
+                    {
+                        DaneSizerGBDio.Add(r);
+                    }
+                }
 
-        //        if (Enkapsulacja && Codes.CodeCatalyst != Brak)
-        //        {
-        //            var result = GetDataFromPress(Codes.CodeCatalyst);
+                if (WeldingCell1 && Codes.CodeBasic != Brak)
+                {
+                    var result = GetDataFromWeldingCell1(Codes.CodeBasic);
 
-        //            foreach (var r in result)
-        //            {
-        //                DaneEnkapsulacja.Add(r);
-        //            }
-        //        }
+                    foreach (var r in result)
+                    {
+                        DaneWeldingCell1.Add(r);
+                    }
+                }
 
-        //        if (Wkretak && Codes.CodeCatalyst != Brak)
-        //        {
-        //            var result = GetDataFromTorque(Codes.CodeCatalyst);
+                if (LT && Codes.CodeBasic != Brak)
+                {
+                    var result = GetDataFromLT(Codes.CodeBasic);
 
-        //            foreach (var r in result)
-        //            {
-        //                DaneWkretak.Add(r);
-        //            }
-        //        }
+                    foreach (var r in result)
+                    {
+                        DaneLT.Add(r);
+                    }
+                }
 
-        //        if (FG && Codes.CodeCatalyst != Brak)
-        //        {
-        //            var result = GetDataFromFinalGauge(Codes.CodeCatalyst);
+                if (Enkapsulacja1 && Codes.CodeBasic != Brak)
+                {
+                    var result = GetDataFromEnkapsulacja1(Codes.CodeBasic);
 
-        //            foreach (var r in result)
-        //            {
-        //                DaneFG.Add(r);
-        //            }
-        //        }
+                    foreach (var r in result)
+                    {
+                        DaneEnkapsulacja1.Add(r);
+                    }
+                }
 
-        //        if (Odkurzacz && Codes.CodeCatalyst != Brak)
-        //        {
-        //            var result = GetDataFromVaccumCleaner(Codes.CodeCatalyst);
+                if (Enkapsulacja2 && Codes.CodeBasic != Brak)
+                {
+                    var result = GetDataFromEnkapsulacja1(Codes.CodeBasic);
 
-        //            foreach (var r in result)
-        //            {
-        //                DaneOdkurzacz.Add(r);
-        //            }
-        //        }
+                    foreach (var r in result)
+                    {
+                        DaneEnkapsulacja2.Add(r);
+                    }
+                }
 
-        //        if (PetlaKJ && Codes.CodeCatalyst != Brak)
-        //        {
-        //            var result = GetDataFromControlLoop(Codes.CodeCatalyst);
+                if (CelaRezystancyjna8 && Codes.CodeBasic != Brak)
+                {
+                    var result = GetDataFromCela8(Codes.CodeBasic);
 
-        //            foreach (var r in result)
-        //            {
-        //                DanePetlaKJ.Add(r);
-        //            }
-        //        }
-        //    }
-        //}
+                    foreach (var r in result)
+                    {
+                        DaneCelaRezystancyjna8.Add(r);
+                    }
+                }
 
-        //private void WriteData()
-        //{
-        //    DataTable dataTable = new DataTable();
+                if (SpawaniePinu && Codes.CodeBasic != Brak)
+                {
+                    var result = GetDataFromSpawaniePinu(Codes.CodeBasic);
 
-        //    Table = new List<string>();
-        //    FileName = new List<string>();
+                    foreach (var r in result)
+                    {
+                        DaneSpawaniePinu.Add(r);
+                    }
+                }
 
-        //    if (DaneCelaSprawalnicza5?.Count > 0)
-        //    {
-        //        Table.Add(dataTable.WriteTextToFile(DaneCelaSprawalnicza5.ToArray()));
-        //        FileName.Add("CelaSpawalnicza5");
-        //    }
+                if (FG && Codes.CodeBasic != Brak)
+                {
+                    var result = GetDataFromFinalGauge(Codes.CodeBasic);
 
-        //    if (DaneLT?.Count > 0)
-        //    {
-        //        Table.Add(dataTable.WriteTextToFile(DaneLT.ToArray()));
-        //        FileName.Add("leak tester");
-        //    }
+                    foreach (var r in result)
+                    {
+                        DaneFG.Add(r);
+                    }
+                }
 
-        //    if (DaneEnkapsulacja?.Count > 0)
-        //    {
-        //        Table.Add(dataTable.WriteTextToFile(DaneEnkapsulacja.ToArray()));
-        //        FileName.Add("Enkapsulacja");
-        //    }
+                if (Odkurzacz && Codes.CodeBasic != Brak)
+                {
+                    var result = GetDataFromVaccumCleaner(Codes.CodeBasic);
 
-        //    if (DaneWkretak?.Count > 0)
-        //    {
-        //        Table.Add(dataTable.WriteTextToFile(DaneWkretak.ToArray()));
-        //        FileName.Add("Wkretak");
-        //    }
+                    foreach (var r in result)
+                    {
+                        DaneOdkurzacz.Add(r);
+                    }
+                }
 
-        //    if (DaneSizerBja?.Count > 0)
-        //    {
-        //        Table.Add(dataTable.WriteTextToFile(DaneSizerBja.ToArray()));
-        //        FileName.Add("Sizer GBD IO");
-        //    }
+                if (PetlaKJ && Codes.CodeBasic != Brak)
+                {
+                    var result = GetDataFromControlLoop(Codes.CodeBasic);
 
-        //    if (DaneWiremash?.Count > 0)
-        //    {
-        //        Table.Add(dataTable.WriteTextToFile(DaneWiremash.ToArray()));
-        //        FileName.Add("Wiremash");
-        //    }
+                    foreach (var r in result)
+                    {
+                        DanePetlaKJ.Add(r);
+                    }
+                }
+            }
+        }
 
-        //    if (DaneFG?.Count > 0)
-        //    {
-        //        Table.Add(dataTable.WriteTextToFile(DaneFG.ToArray()));
-        //        FileName.Add("Sprawdzian geometrii");
-        //    }
+        private void WriteData()
+        {
+            DataTable dataTable = new DataTable();
 
-        //    if (DaneOdkurzacz?.Count > 0)
-        //    {
-        //        Table.Add(dataTable.WriteTextToFile(DaneOdkurzacz.ToArray()));
-        //        FileName.Add("Odkurzacz");
-        //    }
+            Table = new List<string>();
+            FileName = new List<string>();
 
-        //    if (DanePetlaKJ?.Count > 0)
-        //    {
-        //        Table.Add(dataTable.WriteTextToFile(DanePetlaKJ.ToArray()));
-        //        FileName.Add("Petla KJ");
-        //    }
-        //}
+            if (DanePLT?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DanePLT.ToArray()));
+                FileName.Add("PreLeak tester");
+            }
+
+            if (DaneSizerGBDio?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DaneSizerGBDio.ToArray()));
+                FileName.Add("Sizer GBD IO");
+            }
+
+            if (DaneWeldingCell1?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DaneWeldingCell1.ToArray()));
+                FileName.Add("Cela spawalnicza nr 1");
+            }
+
+            if (DaneLT?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DaneLT.ToArray()));
+                FileName.Add("Leat tester");
+            }
+
+            if (DaneEnkapsulacja1?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DaneEnkapsulacja1.ToArray()));
+                FileName.Add("Enkapsulacja nr 1");
+            }
+
+            if (DaneEnkapsulacja2?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DaneEnkapsulacja2.ToArray()));
+                FileName.Add("Enkapsulacja nr 2");
+            }
+
+            if (DaneCelaRezystancyjna8?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DaneCelaRezystancyjna8.ToArray()));
+                FileName.Add("Cela rezystancyjna");
+            }
+
+            if (DaneSpawaniePinu?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DaneSpawaniePinu.ToArray()));
+                FileName.Add("Spawanie pinu");
+            }
+
+            if (DaneFG?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DaneFG.ToArray()));
+                FileName.Add("Sprawdzian geometrii");
+            }
+
+            if (DaneOdkurzacz?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DaneOdkurzacz.ToArray()));
+                FileName.Add("Odkurzacz");
+            }
+
+            if (DanePetlaKJ?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DanePetlaKJ.ToArray()));
+                FileName.Add("Petla KJ");
+            }
+        }
     }
 
 

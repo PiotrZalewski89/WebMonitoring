@@ -17,7 +17,7 @@ namespace WebMonitoring.Table.StorageStation
         public int? FrameSeq { get; set; }
         public long? GrawerkaTime { get; set; }
         public int? GrawerkaSeq { get; set; }
-        public string WynikTestu { get; set; }
+        public string WynikOperacji { get; set; }
         public string NrLinii { get; set; }
         public long? FrameTime2 { get; set; }
         public int? FrameSeq2 { get; set; }

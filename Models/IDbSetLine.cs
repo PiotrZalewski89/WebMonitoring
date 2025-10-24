@@ -13,6 +13,7 @@ namespace WebMonitoring.Models
         public void GetProductionCountPerHourWS1(DateTime dateTime, string line);
         public void GetProductionCountPerHourWS2(DateTime dateTime);
         public void GetProductionCountPerHourWS3(DateTime dateTime, string line);
+        public void GetProductionCountPerHourWS3Hr12CC(DateTime dateTime, string line);
         public void GetProductionCountPerHourWS4(DateTime dateTime, string line, bool tryb12h);
         public void GetProductionCountPerHourWS4M260(DateTime dateTime, string line, bool tryb12h);
         public void GetProductionCountPerHourWS5(DateTime dateTime, string line);
@@ -21,11 +22,16 @@ namespace WebMonitoring.Models
         public void GetProductionCountPerHourWeil(DateTime dateTime, string line);
         public void GetProductionCountPerHourSdf(DateTime dateTime, string line);
         public void GetProductionCountPerHourWS2_HR18(DateTime dateTime);
+        public void GetProductionCountPerHourWS9(DateTime dateTime);
+        public Task GetProductionCountPerHourWS10(DateTime dateTime, string pn = "");
         public int GetWeeklyProduction(string selectLinen, DateTime dateTime);
         public List<int> GetSumWeeklyProduction(string selectLine);
-        public void SetTarget(string selectLine, int target, bool trybPracy12h = false);
+        public void SetTarget(string selectLine, int target, bool trybPracy12h = false, string partNumber = "");
         public Shifts GetTargetForProduction(string selectLine, DateTime dateTime);
         public List<int> GetSumWeeklyActiveShifts(string selectLine);
         public int[] GetDailyReport(string selectLine, DateTime dateTime);
+        public List<List<DataFromCL>> GetDailyReport_Ws10(DateTime dateTime);
+        public int[] GetDailyReportCL_Ws10(DateTime dateTime);
+        public int[] GetDailyReportRW_Ws10(DateTime dateTime, string line);
     }
 }

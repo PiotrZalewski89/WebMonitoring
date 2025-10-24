@@ -10,6 +10,13 @@ namespace WebMonitoring.Search
         public string CodeBasic { get; set; }
         public string CodeCatalyst { get; set; }
     }
+    public class CodesHr12cc
+    {
+        public string CodeBasicInlet { get; set; }
+        public string CodeBasicOutlet { get; set; }
+        public string CodeCatalyst { get; set; }
+    }
+
 
     public class CodesWs5
     {

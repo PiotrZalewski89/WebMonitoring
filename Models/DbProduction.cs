@@ -24,8 +24,11 @@ namespace WebMonitoring.Models
             8, //6 - cnh 529 ws6
             661, //7 - stf 3-6
             800, //8 - weil
-            80,//ws7
-            20, //sdf
+            80,//9 ws7
+            20, //10 sdf
+            60, //11 ws9 hr12uf
+            10, //12 - ws10
+            600, //13 - hr12cc
         };
 
         public DbProduction(ProductionDbContext ctx)
@@ -33,7 +36,7 @@ namespace WebMonitoring.Models
             context = ctx;
         }
 
-        public ProductionPlan[] GetTarget(string line, bool trybPracy12h = false)
+        public ProductionPlan[] GetTarget(string line, bool trybPracy12h = false, string pn = "")
         {
             ProductionPlan[] result;
 
@@ -53,7 +56,7 @@ namespace WebMonitoring.Models
             return result;
         }
 
-        public void SetTarget(string line, int target, bool trybPracy12h = false)
+        public void SetTarget(string line, int target, bool trybPracy12h = false, string pn = "")
         {
             ProductionPlan productionPlans = new ProductionPlan();
 
@@ -63,7 +66,7 @@ namespace WebMonitoring.Models
                 line += "_12h";
 
             productionPlans.CallendarWeek = dateTime.CalendarWeek();
-            productionPlans.Line = line;
+            productionPlans.Line = line + pn;
             productionPlans.OperationDate = dateTime;
             productionPlans.Target = target;
             productionPlans.ProductionShift = dateTime.GetShift().ToString();
@@ -114,6 +117,10 @@ namespace WebMonitoring.Models
             {
                 return DefaultTarget[3];
             }
+            else if (LineDescription.LineWS3Hr12CC == line)
+            {
+                return DefaultTarget[13];
+            }
             else if (LineDescription.LineWS8_GPF == line)
             {
                 return DefaultTarget[4];
@@ -137,6 +144,10 @@ namespace WebMonitoring.Models
             else if (LineDescription.LineWeil == line)
             {
                 return DefaultTarget[8];
+            }
+            else if (LineDescription.LineWS9 == line)
+            {
+                return DefaultTarget[11];
             }
 
             return 0;

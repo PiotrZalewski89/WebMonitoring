@@ -17,15 +17,18 @@ namespace WebMonitoring.Controllers
              "Wyszukiwanie - Linia WS1 V50",//1
              "Wyszukiwanie - Linia WS2 HR16",//2
              "Wyszukiwanie - Linia WS3 HR10",//3
-             "Wyszukiwanie - Linia WS4 BR10",//4
-             "Wyszukiwanie - Linia WS4 BR10 BJA",//5
+             "Wyszukiwanie - Linia WS8 BR10",//4
+             "Wyszukiwanie - Linia WS8 BR10 BJA",//5
              "Wyszukiwanie - Linia WS5 CNH 537",//6
              "Wyszukiwanie - Linia WS6 CNH 529",//7
              "Wyszukiwanie - Linia STF 3,4,5,6",//8
              "Wyszukiwanie - Linia STF 1",//9
              "Wyszukiwanie - Linia STF 2",//10
-                "Wyszukiwanie - Linia WS7",//11
-          "Wyszukiwanie - Linia WS2 HR18"//12
+             "Wyszukiwanie - Linia WS7",//11
+             "Wyszukiwanie - Linia WS2 HR18",//12             
+             "Wyszukiwanie - Linia WS9",//13            
+             "Wyszukiwanie - Linia WS4 M260",//14   
+             "Wyszukiwanie - Linia WS3 HR12CC",//15
       };
 
 
@@ -700,6 +703,7 @@ namespace WebMonitoring.Controllers
 
             return View();
         }
+
         [HttpGet]
         public IActionResult LineWs2HR18()
         {
@@ -753,6 +757,186 @@ namespace WebMonitoring.Controllers
 
                         if (ws.Table?.Count > 0)
                             return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs2HR18.zip");
+                    }
+                }
+            }
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult LineWs9()
+        {
+
+            ViewBag.TitleNavBar = Desctription[13];
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult LineWs9(CheckBoxLineWS9 ws)
+        {
+            ViewBag.TitleNavBar = Desctription[13];
+            bool checkboxChecked = ws.WeldingCell || ws.Leaktester || ws.FinalGauge || ws.Vacuum || ws.LaserMarking || ws.ControlLoop;
+
+            if (!string.IsNullOrEmpty(ws.TextArea))
+                ws.FindData = new List<string>(
+                                     ws.TextArea.Split(new string[] { "\r\n" },
+                                     StringSplitOptions.RemoveEmptyEntries));
+
+
+            if (!string.IsNullOrEmpty(Request.Form["wyszukiwanie"]))
+            {
+                if ((ws.FindData?.Count > 0 && (ws.SelectCode || ws.SelectPzzw)) && checkboxChecked)
+                {
+                    ws.GetDataCode();
+                    return View(ws);
+                }
+                else if (ws.SelectDate && checkboxChecked && ws.DateTime != null)
+                {
+                    if (ws.DateTime != null)
+                    {
+                        ws.GetDataCode();
+                        return View(ws);
+                    }
+                }
+            }
+            else if (!string.IsNullOrEmpty(Request.Form["pobierz"]))
+            {
+                if ((ws.FindData?.Count > 0 && (ws.SelectCode || ws.SelectPzzw)) && checkboxChecked)
+                {
+                    ws.GetDataCode(true);
+
+                    if (ws.Table?.Count > 0)
+                        return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs9.zip");
+                }
+                else if (ws.SelectDate && checkboxChecked && ws.DateTime != null)
+                {
+                    if (ws.DateTime != null)
+                    {
+                        ws.GetDataCode(true);
+
+                        if (ws.Table?.Count > 0)
+                            return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs9.zip");
+                    }
+                }
+            }
+
+            return View();
+        }
+
+
+        [HttpGet]
+        public IActionResult LineWs4M260()
+        {
+
+            ViewBag.TitleNavBar = Desctription[14];
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult LineWs4M260(CheckBoxLineWs4M260 ws)
+        {
+            ViewBag.TitleNavBar = Desctription[14];
+            bool checkboxChecked = ws.CelaRezystancyjna8 || ws.Enkapsulacja1 || ws.Enkapsulacja2 || ws.FG || ws.LT || ws.Odkurzacz || ws.PetlaKJ || ws.PLT || ws.SizerGBDio || ws.SpawaniePinu;
+
+            if (!string.IsNullOrEmpty(ws.TextArea))
+                ws.FindData = new List<string>(
+                                     ws.TextArea.Split(new string[] { "\r\n" },
+                                     StringSplitOptions.RemoveEmptyEntries));
+
+
+            if (!string.IsNullOrEmpty(Request.Form["wyszukiwanie"]))
+            {
+                if ((ws.FindData?.Count > 0 && (ws.SelectCode || ws.SelectPzzw)) && checkboxChecked)
+                {
+                    ws.GetDataCode();
+                    return View(ws);
+                }
+                else if (ws.SelectDate && checkboxChecked && ws.DateTime != null)
+                {
+                    if (ws.DateTime != null)
+                    {
+                        ws.GetDataCode();
+                        return View(ws);
+                    }
+                }
+            }
+            else if (!string.IsNullOrEmpty(Request.Form["pobierz"]))
+            {
+                if ((ws.FindData?.Count > 0 && (ws.SelectCode || ws.SelectPzzw)) && checkboxChecked)
+                {
+                    ws.GetDataCode(true);
+
+                    if (ws.Table?.Count > 0)
+                        return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs4_M260.zip");
+                }
+                else if (ws.SelectDate && checkboxChecked && ws.DateTime != null)
+                {
+                    if (ws.DateTime != null)
+                    {
+                        ws.GetDataCode(true);
+
+                        if (ws.Table?.Count > 0)
+                            return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs4_M260.zip");
+                    }
+                }
+            }
+
+            return View();
+        }
+        [HttpGet]
+        public IActionResult LineWS3_Hr12cc()
+        {
+
+            ViewBag.TitleNavBar = Desctription[15];
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult LineWS3_Hr12cc(CheckBoxLineWs3HR12CC ws)
+        {
+            ViewBag.TitleNavBar = Desctription[15];
+
+            bool checkboxChecked = ws.Stf || ws.SizerInlet || ws.SizerOutlet || ws.CelaSpawalniczaWlot || ws.CelaSpawalniczaWylot || ws.Deflector || ws.Enkapsulacja || ws.FG || ws.FLT || ws.Homologacja || ws.Odkurzacz || ws.PetlaKJ || ws.PLT || ws.Wkretak;
+
+            if (!string.IsNullOrEmpty(ws.TextArea))
+                ws.FindData = new List<string>(
+                                     ws.TextArea.Split(new string[] { "\r\n" },
+                                     StringSplitOptions.RemoveEmptyEntries));
+
+            if (!string.IsNullOrEmpty(Request.Form["wyszukiwanie"]))
+            {
+                if ((ws.FindData?.Count > 0 && (ws.SelectCode || ws.SelectPzzw)) && checkboxChecked)
+                {
+                    ws.GetDataCode();
+                    return View(ws);
+                }
+                else if (ws.SelectDate && checkboxChecked && ws.DateTime != null)
+                {
+                    if (ws.DateTime != null)
+                    {
+                        ws.GetDataCode();
+                        return View(ws);
+                    }
+                }
+            }
+            else if (!string.IsNullOrEmpty(Request.Form["pobierz"]))
+            {
+                if ((ws.FindData?.Count > 0 && (ws.SelectCode || ws.SelectPzzw)) && checkboxChecked)
+                {
+                    ws.GetDataCode(true);
+
+                    if (ws.Table?.Count > 0)
+                        return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs3.zip");
+                }
+                else if (ws.SelectDate && checkboxChecked && ws.DateTime != null)
+                {
+                    if (ws.DateTime != null)
+                    {
+                        ws.GetDataCode(true);
+
+                        if (ws.Table?.Count > 0)
+                            return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs3.zip");
                     }
                 }
             }

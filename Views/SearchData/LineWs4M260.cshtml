@@ -1,0 +1,527 @@
+﻿@model CheckBoxLineWs4M260
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="~/js/CheckBox.js"></script>
+<script src="~/js/loading.js"></script>
+<link href="~/css/DivWyszukiwarka.css" rel="stylesheet" />
+
+<div>
+    <div id="idDivCheckBox" class="fixed">
+        @*<h2>Opcja wyboru:</h2>*@
+
+        @*<div asp-validation-summary="All" class="text-danger"></div>*@
+
+        <form asp-action="LineWS4M260" method="post">
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <td colspan="3">
+                        <label style="font-size:20px; font-weight:bold;">Opcja wyszukiwania:</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" asp-for="@Model.SelectCode">
+                        <label asp-for="@Model.SelectCode"> Wyszukiwanie pod kodzie</label><br>
+                    </td>
+                    <td>
+                        <input type="checkbox" asp-for="@Model.SelectPzzw">
+                        <label asp-for="@Model.SelectPzzw"> Wyszukiwanie po zleceniu PZZW</label><br>
+                    </td>
+                    <td>
+                        <input type="checkbox" asp-for="@Model.SelectDate">
+                        <label asp-for="@Model.SelectDate"> Wyszukiwanie po dacie</label><br>
+                        <div id="divDateTime">
+                            @*<label asp-for="@Model.From">Wybór daty od kiedy:</label>
+                                <input type="date" asp-for="@Model.From"><br>*@
+                            <label asp-for="@Model.DateTime">Wybierz dzień:</label>
+                            @*<div><span asp-validation-for="@Model.DateTime" class="text-danger"></span></div>*@
+                            <input type="date" asp-for="@Model.DateTime"><br>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label style="font-size:20px; font-weight:bold;">Stanowiska:</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="checkboxes">
+                        <input type="checkbox" asp-for="@Model.All">
+                        <label asp-for="@Model.All"> Zaznacz wszystko</label><br />
+                        <input type="checkbox" asp-for="@Model.Stf">
+                        <label asp-for="@Model.Stf"> Stf</label><br />
+                        <input type="checkbox" asp-for="@Model.PLT">
+                        <label asp-for="@Model.PLT"> PreLeak tester</label><br />
+                        <input type="checkbox" asp-for="@Model.SizerGBDio">
+                        <label asp-for="@Model.SizerGBDio"> Sizer GBD IO</label>
+                    </td>
+
+                    <td class="checkboxes">
+
+                        <input type="checkbox" asp-for="@Model.WeldingCell1">
+                        <label asp-for="@Model.WeldingCell1"> Cela spawalnicza </label><br />
+                        <input type="checkbox" asp-for="@Model.LT">
+                        <label asp-for="@Model.LT"> Leak tester</label><br>
+                        <input type="checkbox" asp-for="@Model.Enkapsulacja1">
+                        <label asp-for="@Model.Enkapsulacja1"> Enkapsulacja nr 1</label><br />
+                        <input type="checkbox" asp-for="@Model.Enkapsulacja2">
+                        <label asp-for="@Model.Enkapsulacja2"> Enkapsulacja nr 2</label>
+                    </td>
+
+                    <td class="checkboxes">
+                        <input type="checkbox" asp-for="@Model.CelaRezystancyjna8">
+                        <label asp-for="@Model.CelaRezystancyjna8"> Cela rezystancyjna</label><br />
+                        <input type="checkbox" asp-for="@Model.SpawaniePinu">
+                        <label asp-for="@Model.SpawaniePinu"> Spawanie pina</label><br />
+                        <input type="checkbox" asp-for="@Model.FG">
+                        <label asp-for="@Model.FG"> Sprawdzian geometrii</label><br />
+                        <input type="checkbox" asp-for="@Model.Odkurzacz">
+                        <label asp-for="@Model.Odkurzacz"> Odkurzacz</label><br />
+                        <input type="checkbox" asp-for="@Model.PetlaKJ">
+                        <label asp-for="@Model.PetlaKJ"> Pętla KJ</label>
+                    </td>
+
+
+                </tr>
+                <tr>
+                    <td colspan="3" id="widthTdSubmit">
+                        <input id="submitClick" type="submit" value="Wyszukiwanie" class="btn btn-primary mb-2" name="wyszukiwanie">
+                        <input id="idPobierz" type="submit" value="Pobranie" class="btn btn-primary mb-2" name="pobierz">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="4">
+                        @*   <div><span asp-validation-for="@Model.TextArea" class="text-danger"></span></div>*@
+                        <textarea id="textArea" asp-for="@Model.TextArea" rows="10" cols="100"></textarea>
+                    </td>
+                </tr>
+
+
+            </table>
+        </form>
+    </div>
+
+    <div>
+        <div id="divLoading" class="fixed">
+            <h4>Trwa wyszukiwanie...</h4>
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+
+        <div id="divTables" class="fixed_2">
+
+            @if (Model != null)
+            {
+                if (!string.IsNullOrEmpty(Model.HtmlTable))
+                {
+                    <h4>Stf</h4>
+                    <div htmltable="@Model.HtmlTable" style="width:1200px;" />
+                }
+            }
+
+            @*PLT*@
+            @if (Model?.DanePLT?.Count > 0)
+            {
+                <h4>Preleak tester</h4>
+                <table class="table table-hover table-striped table-bordered" id="idPLT" style="width:850px;">
+                    <thead class="btn-dark">
+                        <tr class="text-white">
+                            <th style="font-size:14px">Nr shell</th>
+                            <th style="font-size:14px">Wynik operacji</th>
+                            <th style="font-size:14px">Wyciek</th>
+                            <th style="font-size:14px">Wyciek jendostka</th>
+                            <th style="font-size:14px">Ciśnienie</th>
+                            <th style="font-size:14px">Ciśnienie jednostka</th>
+                            <th style="font-size:14px">Data operacji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var m in Model.DanePLT)
+                        {
+                            <tr style="font-size:12px">
+                                <td>@m.Nr_Shell</td>
+                                <td>@m.Wynik_operacji</td>
+                                <td>@m.Wyciek</td>
+                                <td>@m.Wyciek_jedn</td>
+                                <td>@m.Cisnienie</td>
+                                <td>@m.Cisnienie_jedn</td>
+                                <td>@m.DateTime</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+
+            @*Sizer GBD IO*@
+            @if (Model?.DaneSizerGBDio?.Count > 0)
+            {
+                <h4>Sizer GBD IO</h4>
+                <table class="table table-hover table-striped table-bordered" id="idS" style="width:850px;">
+                    <thead class="btn-dark">
+                        <tr class="text-white">
+                            <th style="font-size:14px">Nr shell</th>
+                            <th style="font-size:14px">Wynik operacji</th>
+                            <th style="font-size:14px">Data operacji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var m in Model.DaneSizerGBDio)
+                        {
+                            <tr style="font-size:12px">
+                                <td>@m.Nr_Shell</td>
+                                <td>@m.Wynik_operacji</td>
+                                <td>@m.DateTime</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+
+            @*Cela sprawalnicza 1*@
+            @if (Model?.DaneWeldingCell1?.Count > 0)
+            {
+                <h4>Cela spawalnicza 1</h4>
+                <table class="table table-hover table-striped table-bordered" id="idCS1" style="width:850px;">
+                    <thead class="btn-dark">
+                        <tr class="text-white">
+                            <th style="font-size:14px">Nr shell</th>
+                            <th style="font-size:14px">Wynik operacji</th>
+                            <th style="font-size:14px">Data operacji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var m in Model.DaneWeldingCell1)
+                        {
+                            <tr style="font-size:12px">
+                                <td>@m.Nr_Shell</td>
+                                <td>@m.Wynik_operacji</td>
+                                <td>@m.DateTime</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+
+            @*LT*@
+            @if (Model?.DaneLT?.Count > 0)
+            {
+                <h4>Pre leak tester</h4>
+                <table class="table table-hover table-striped table-bordered" id="idLT" style="width:1500px;">
+                    <thead class="btn-dark">
+                        <tr class="text-white">
+                            <th style="font-size:14px">Nr shell</th>
+                            <th style="font-size:14px">Wynik operacji</th>
+                            <th style="font-size:14px">Wyciek</th>
+                            <th style="font-size:14px">Wyciek jendostka</th>
+                            <th style="font-size:14px">Ciśnienie</th>
+                            <th style="font-size:14px">Ciśnienie jednostka</th>
+                            <th style="font-size:14px">Data operacji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var m in Model.DaneLT)
+                        {
+                            <tr style="font-size:12px">
+                                <td>@m.Nr_Shell</td>
+                                <td>@m.Wynik_operacji</td>
+                                <td>@m.Wyciek</td>
+                                <td>@m.Wyciek_jedn</td>
+                                <td>@m.Cisnienie</td>
+                                <td>@m.Cisnienie_jedn</td>
+                                <td>@m.DateTime</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+
+            @*Enkapsulacja*@
+            @if (Model?.DaneEnkapsulacja1?.Count > 0)
+            {
+                <h4>Enkapsulacja nr 1</h4>
+                <table class="table table-hover table-striped table-bordered" id="idPress1" style="width:850px;">
+                    <thead class="btn-dark">
+                        <tr class="text-white">
+                            <th style="font-size:14px">Nr shell</th>
+                            <th style="font-size:14px">Wynik operacji</th>
+                            <th style="font-size:14px">Data operacji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var m in Model.DaneEnkapsulacja1)
+                        {
+                            <tr style="font-size:12px">
+                                <td>@m.Nr_Shell</td>
+                                <td>@m.Wynik_operacji</td>
+                                <td>@m.DateTime</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+
+            @*Enkapsulacja*@
+            @if (Model?.DaneEnkapsulacja2?.Count > 0)
+            {
+                <h4>Enkapsulacja nr 2</h4>
+                <table class="table table-hover table-striped table-bordered" id="idPress2" style="width:850px;">
+                    <thead class="btn-dark">
+                        <tr class="text-white">
+                            <th style="font-size:14px">Nr shell</th>
+                            <th style="font-size:14px">Wynik operacji</th>
+                            <th style="font-size:14px">Data operacji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var m in Model.DaneEnkapsulacja2)
+                        {
+                            <tr style="font-size:12px">
+                                <td>@m.Nr_Shell</td>
+                                <td>@m.Wynik_operacji</td>
+                                <td>@m.DateTime</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+
+            @*Cela rezystancyjna*@
+            @if (Model?.DaneCelaRezystancyjna8?.Count > 0)
+            {
+                <h4>Cela rezystancyjna nr 8</h4>
+                <table class="table table-hover table-striped table-bordered" id="idCR8" style="width:1200px;">
+                    <thead class="btn-dark">
+                        <tr class="text-white">
+                            <th style="font-size:14px">Nr shell</th>
+                            <th style="font-size:14px">Wynik operacji</th>
+                            <th style="font-size:14px">Data operacji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var m in Model.DaneCelaRezystancyjna8)
+                        {
+                            <tr style="font-size:12px">
+                                <td>@m.Nr_Shell</td>
+                                <td>@m.Wynik_operacji</td>
+                                <td>@m.DateTime</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+
+
+            @*Spawanie pina*@
+            @if (Model?.DaneSpawaniePinu?.Count > 0)
+            {
+                <h4>Spawanie pina</h4>
+                <table class="table table-hover table-striped table-bordered" id="idSP" style="width:1200px;">
+                    <thead class="btn-dark">
+                        <tr class="text-white">
+                            <th style="font-size:14px">Nr shell</th>
+                            <th style="font-size:14px">Wynik operacji</th>
+                            <th style="font-size:14px">Data operacji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var m in Model.DaneSpawaniePinu)
+                        {
+                            <tr style="font-size:12px">
+                                <td>@m.Nr_Shell</td>
+                                <td>@m.Wynik_operacji</td>
+                                <td>@m.DateTime</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+
+
+            @*Sprawdzian geometrii*@
+            @if (Model?.DaneFG?.Count > 0)
+            {
+                <h4>Sprawdzian geometrii</h4>
+                <table class="table table-hover table-striped table-bordered" id="idFG" style="width:850px;">
+                    <thead class="btn-dark">
+                        <tr class="text-white">
+                            <th style="font-size:14px">Nr shell</th>
+                            <th style="font-size:14px">Wynik operacji</th>
+                            <th style="font-size:14px">Data operacji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var m in Model.DaneFG)
+                        {
+                            <tr style="font-size:12px">
+                                <td>@m.Nr_Shell</td>
+                                <td>@m.Wynik_operacji</td>
+                                <td>@m.DateTime</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+
+            @*Odkurzacz*@
+
+            @if (Model?.DaneOdkurzacz?.Count > 0)
+            {
+                <h4>Odkurzacz</h4>
+                <table class="table table-hover table-striped table-bordered" id="idVC" style="width:850px;">
+                    <thead class="btn-dark">
+                        <tr class="text-white">
+                            <th style="font-size:14px">Nr shell</th>
+                            <th style="font-size:14px">Nr entykiety</th>
+                            <th style="font-size:14px">Wynik operacji</th>
+                            <th style="font-size:14px">Data operacji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var m in Model.DaneOdkurzacz)
+                        {
+                            <tr style="font-size:12px">
+                                <td>@m.Nr_Shell</td>
+                                <td>@m.NrEtykiety</td>
+                                <td>@m.Wynik_operacji</td>
+                                <td>@m.DateTime</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+
+            @*CL*@
+            @if (Model?.DanePetlaKJ?.Count > 0)
+            {
+                <h4>Pętla KJ</h4>
+                <table class="table table-hover table-striped table-bordered" id="idCL" style="width:1500px;">
+                    <thead class="btn-dark">
+                        <tr class="text-white">
+                            <th style="font-size:14px">Nr shell</th>
+                            <th style="font-size:14px">Nr etykiety</th>
+                            <th style="font-size:14px">Pzzw</th>
+                            <th style="font-size:14px">Wynik operacji</th>
+                            <th style="font-size:14px">Uwagi</th>
+                            <th style="font-size:14px">Nr operatora</th>
+                            <th style="font-size:14px">Data operacji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var m in Model.DanePetlaKJ)
+                        {
+                            <tr style="font-size:12px">
+                                <td>@m.NrEtykiety</td>
+                                <td>@m.PZZW</td>
+                                <td>@m.Wynik_operacji</td>
+                                <td>@m.Uwagi</td>
+                                <td>@m.OperatorID</td>
+                                <td>@m.DateTime</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function exportCSV() {
+
+        var fileName = 'LiniaWS4M260_';
+
+        if ($('#PLT').is(':checked') && $('#idPLT').find('tr').length > 0)
+            $('#idPLT').table2csv({
+                filename: fileName + 'PreLeakTester.csv',
+                separator: ';'
+            });
+
+        if ($('#SizerGBDio').is(':checked') && $('#idS').find('tr').length > 0)
+            $('#idS').table2csv({
+                filename: fileName + 'SizerGBDIO.csv',
+                separator: ';'
+            });
+
+        if ($('#WeldingCell1').is(':checked') && $('#idCS1').find('tr').length > 0)
+            $('#idCS1').table2csv({
+                filename: fileName + 'CelaSpawalnicza1.csv',
+                separator: ';'
+            });
+
+        if ($('#LT').is(':checked') && $('#idLT').find('tr').length > 0)
+            $('#idLT').table2csv({
+                filename: fileName + 'LeakTester.csv',
+                separator: ';'
+            });
+
+        if ($('#Enkapsulacja1').is(':checked') && $('#idPress1').find('tr').length > 0)
+            $('#idPress1').table2csv({
+                filename: fileName + 'EnkapsulacjaNr1.csv',
+                separator: ';'
+            });
+
+        if ($('#Enkapsulacja2').is(':checked') && $('#idPress2').find('tr').length > 0)
+            $('#idPress2').table2csv({
+                filename: fileName + 'EnkapsulacjaNr2.csv',
+                separator: ';'
+            });
+
+        if ($('#CelaRezystancyjna8').is(':checked') && $('#idCR8').find('tr').length > 0)
+            $('#idCR8').table2csv({
+                filename: fileName + 'CelaRezystancyjna.csv',
+                separator: ';'
+            });
+
+        if ($('#SpawaniePinu').is(':checked') && $('#idSP').find('tr').length > 0)
+            $('#idSP').table2csv({
+                filename: fileName + 'SpawaniePinu.csv',
+                separator: ';'
+            });
+
+        if ($('#FG').is(':checked') && $('#idFG').find('tr').length > 0)
+            $('#idFG').table2csv({
+                filename: fileName + 'SprawdzianGeometrii.csv',
+                separator: ';'
+            });
+
+        if ($('#Odkurzacz').is(':checked') && $('#idVC').find('tr').length > 0)
+            $('#idVC').table2csv({
+                filename: fileName + 'Odkurzacz.csv',
+                separator: ';'
+            });
+
+        if ($('#PetlaKJ').is(':checked') && $('#idCL').find('tr').length > 0)
+            $('#idCL').table2csv({
+                filename: fileName + 'PetlaKJ.csv',
+                separator: ';'
+            });
+    }
+
+</script>
+

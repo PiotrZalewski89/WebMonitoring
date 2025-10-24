@@ -56,7 +56,10 @@ namespace WebMonitoring.Models
             }
         }
 
-        public List<int> Cela_spawalnicza { get; set; }
+        public List<int> Cela_spawalnicza_1 { get; set; }
+        public List<int> Cela_spawalnicza_2 { get; set; }
+        public List<int> Cela_spawalnicza_3 { get; set; }
+        public List<int> Cela_spawalnicza_4 { get; set; }
 
         public List<int> Tester_szczelności { get; set; }
 
@@ -78,7 +81,10 @@ namespace WebMonitoring.Models
 
             _LineData = new Dictionary<string, List<int>>();
 
-            Cela_spawalnicza = new List<int>();
+            Cela_spawalnicza_1 = new List<int>();
+            Cela_spawalnicza_2 = new List<int>();
+            Cela_spawalnicza_3 = new List<int>();
+            Cela_spawalnicza_4 = new List<int>();
             Tester_szczelności = new List<int>();
             Sprawdzian_geometrii = new List<int>();
             Odkurzacz = new List<int>();
@@ -93,12 +99,24 @@ namespace WebMonitoring.Models
                 var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
                 var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
 
-                Cela_spawalnicza.Add(DbContext.Hr18WeldingCellL5s
-                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
+                Cela_spawalnicza_1.Add(DbContext.Hr18WeldingCellL5s
+                   .Where(x => x.DtOperacji >= dateTimeFrom && x.DtOperacji < dateTimeTo && x.WynikOperacji == ResultOk && x.NrLinii == "L1_D1")
                    .Count());
 
+                Cela_spawalnicza_2.Add(DbContext.Hr18WeldingCellL5s
+                 .Where(x => x.DtOperacji >= dateTimeFrom && x.DtOperacji < dateTimeTo && x.WynikOperacji == ResultOk && x.NrLinii == "L1_D2")
+                 .Count());
+
+                Cela_spawalnicza_3.Add(DbContext.Hr18WeldingCellL5s
+                 .Where(x => x.DtOperacji >= dateTimeFrom && x.DtOperacji < dateTimeTo && x.WynikOperacji == ResultOk && x.NrLinii == "L1_D3")
+                 .Count());
+
+                Cela_spawalnicza_4.Add(DbContext.Hr18WeldingCellL5s
+                 .Where(x => x.DtOperacji >= dateTimeFrom && x.DtOperacji < dateTimeTo && x.WynikOperacji == ResultOk && x.NrLinii == "L1_D4")
+                 .Count());
+
                 Tester_szczelności.Add(DbContext.Hr18LeaktesterL5s
-                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikTestu == ResultOk)
+                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
                    .Count());
 
                 Sprawdzian_geometrii.Add(DbContext.Hr18FinalGaugeL5s
@@ -117,14 +135,20 @@ namespace WebMonitoring.Models
                 dateTimeTo = dateTimeTo.AddHours(1);
             }
 
-            Cela_spawalnicza.Add(Cela_spawalnicza.Sum());
+            Cela_spawalnicza_1.Add(Cela_spawalnicza_1.Sum());
+            Cela_spawalnicza_2.Add(Cela_spawalnicza_2.Sum());
+            Cela_spawalnicza_3.Add(Cela_spawalnicza_3.Sum());
+            Cela_spawalnicza_4.Add(Cela_spawalnicza_4.Sum());
             Tester_szczelności.Add(Tester_szczelności.Sum());
             Sprawdzian_geometrii.Add(Sprawdzian_geometrii.Sum());
             Odkurzacz.Add(Odkurzacz.Sum());
             ControlLoop_KJ.Add(ControlLoop_KJ.Sum());
   
 
-            _LineData.Add(DescriptionWS2_HR18[0], Cela_spawalnicza);
+            _LineData.Add(DescriptionWS2_HR18[0] + "_C1", Cela_spawalnicza_1);
+            _LineData.Add(DescriptionWS2_HR18[0] + "_C2", Cela_spawalnicza_2);
+            _LineData.Add(DescriptionWS2_HR18[0] + "_C3", Cela_spawalnicza_3);
+            _LineData.Add(DescriptionWS2_HR18[0] + "_C4", Cela_spawalnicza_4);
             _LineData.Add(DescriptionWS2_HR18[1], Tester_szczelności);
             _LineData.Add(DescriptionWS2_HR18[2], Sprawdzian_geometrii);
             _LineData.Add(DescriptionWS2_HR18[3], Odkurzacz);
@@ -139,7 +163,7 @@ namespace WebMonitoring.Models
             var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc_AllDay();
             var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTimeUtc_AllDay();
 
-            return DbContext.Hr18FinalGaugeL5s
+            return DbContext.Hr18VacuumL5s
                .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk)
                .Count();
         }
@@ -156,7 +180,7 @@ namespace WebMonitoring.Models
                 var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc();
                 var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTimeUtc();
 
-                partsShift[i] = DbContext.Hr18FinalGaugeL5s
+                partsShift[i] = DbContext.Hr18VacuumL5s
                    .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo) && x.WynikOperacji == ResultOk)
                    .Count();
 
@@ -181,7 +205,7 @@ namespace WebMonitoring.Models
 
             for (int i = 0; i < 3; i++)
             {
-                var result1 = DbContext.Hr18FinalGaugeL5s
+                var result1 = DbContext.Hr18VacuumL5s
                .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo) && x.WynikOperacji == ResultOk)
                .Count();
 
