@@ -34,7 +34,10 @@
         <label for="ws2"> Linia WS2B</label>
 
         <input type="checkbox" id="@("ch_" + LineDescription.LineWS3)" name="ws3" onclick="showChart('ws3')" class="horizontalPosition">
-        <label for="ws3"> Linia WS3</label>
+        <label for="ws3"> Linia WS3 HR10</label>
+
+        <input type="checkbox" id="ch_WS3Hr12CC" name="ws3hr12cc" onclick="showChart('ws3hr12cc')" class="horizontalPosition">
+        <label for="ws3hr12cc"> Linia WS3 HR12 CC</label>
 
         <input type="checkbox" id="@("ch_" + LineDescription.LineWS4M260)" name="ws3_m260" onclick="showChart('ws4_m260')" class="horizontalPosition">
         <label for="ws4_m260"> Linia WS4 M260A</label>
@@ -128,6 +131,8 @@
         new Dictionary('@("ch_" + LineDescription.LineWS2)', '<div> <h4 id="@("h4_" + LineDescription.LineWS2)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS2)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS2" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
          new Dictionary('@("ch_" + LineDescription.LineWS2HR18)', '<div> <h4 id="@("h4_" + LineDescription.LineWS2HR18)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS2HR18)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS2HR18" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
         new Dictionary('@("ch_" + LineDescription.LineWS3)', '<div> <h4 id="@("h4_" + LineDescription.LineWS3)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS3)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS3" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
+         new Dictionary('ch_WS3Hr12CC', '<div> <h4 id="h4_WS3Hr12CC" style="text-align: center;"></h4> <div id="spinner_WS3Hr12CC" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="WS3Hr12CC" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
+
         new Dictionary('@("ch_" + LineDescription.LineWS8_BJA.Replace(" ", "_"))', '<div> <h4 id="@("h4_" + LineDescription.LineWS8_BJA.Replace(" ", "_"))" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS8_BJA.Replace(" ", "_"))" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%"></div> <canvas class="myChart" id="@LineDescription.LineWS8_BJA.Replace(" ", "_")" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
         new Dictionary('@("ch_" + LineDescription.LineWS8_GPF.Replace(" ", "_"))', '<div> <h4 id="@("h4_" + LineDescription.LineWS8_GPF.Replace(" ", "_"))" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS8_GPF.Replace(" ", "_"))" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%""></div> <canvas class="myChart" id="@LineDescription.LineWS8_GPF.Replace(" ", "_")" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
         new Dictionary('@("ch_" + LineDescription.LineWS4M260)', '<div> <h4 id="@("h4_" + LineDescription.LineWS4M260)" style="text-align: center;"></h4> <div id="@("spinner_" + LineDescription.LineWS4M260)" class="spinner-border" style="visibility: visible; margin: auto; position: relative; top: 170px; left: 45%""></div> <canvas class="myChart" id="@LineDescription.LineWS4M260" style="width: 100%; width:400px; height: 300px; "></canvas> </div>'),
@@ -313,7 +318,7 @@
     }
 
     function showChart(event) {
-
+        console.log(event)
         var idTag = '';
 
         if (event == 'ws1_cnh') {
@@ -330,6 +335,9 @@
         }
         else if (event == 'ws3') {
             idTag = "ch_WS3";
+        }
+        else if (event == 'ws3hr12cc') {
+            idTag = "ch_WS3Hr12CC";
         }
         else if (event == 'ws8_bja') {
             idTag = "ch_WS8_BJA";

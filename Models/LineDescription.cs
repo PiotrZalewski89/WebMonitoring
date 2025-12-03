@@ -14,6 +14,7 @@ namespace WebMonitoring.Models
         public static string LineWS3A => "WS3A";
         public static string LineWS3 => "WS3";
         public static string LineWS3Hr12CC => "WS3 HR12 CC";
+        public static string LineWS3Hr12CC_Welding => "WS3 HR12 CC - Welding";
         public static string LineWS3BLP1 => "WS3BLP1";
         public static string LineWS3BLP2 => "WS3BLP2";
         public static string LineWS3BLP3 => "WS3BLP3";

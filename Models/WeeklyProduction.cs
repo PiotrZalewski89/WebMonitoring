@@ -118,6 +118,10 @@ namespace WebMonitoring.Models
         {
             WeeklyProduction weeklyProduction = new WeeklyProduction();
             var tempLine = line != LineDescription.LineWS8_BJA.Replace(" ", "_") && line != LineDescription.LineWS8_GPF.Replace(" ", "_") ? line : line == LineDescription.LineWS8_BJA.Replace(" ", "_") ? LineDescription.LineWS8_BJA : LineDescription.LineWS8_GPF;
+
+            if (line == "WS3Hr12CC")
+                tempLine = LineDescription.LineWS3Hr12CC;
+
             weeklyProduction.Line = line;
             weeklyProduction.Description = line;
             weeklyProduction.ActiveShifts = _DbSetLine.GetSumWeeklyActiveShifts(tempLine);

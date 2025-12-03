@@ -18,23 +18,28 @@ namespace WebMonitoring.Models
 
         private string[] DescriptionHR12CC = new string[]
         {
-            "Cela spawalnicza - Basic wlot",
-            "Cela spawalnicza - Midclamshell",
-            "Sizer wlot",
-            "Cela spawalnicza - Basic wlot + midlamshell",
-            "Cela spawalnicza - Basic wylot",
-            "Sizer wylot",
-            "Cela spawalnicza - Basic wlot - midclamshell + wylot",
-            "Preleak tester",
-            "Enkapsulacja",
-            "Wkrętak",
-            "Homologacja",
-            "Final leak tester",
-            "Deflector",
-            "Deflecotr gauge",
-            "Sprawdzian geometrii",
-            "Odkurzacz",
-            "Kontrola Jakościowa"
+            "Cela spawalnicza - Basic wlot (2LP2)",//0
+            "Cela spawalnicza - Basic wlot (1GPF1 GPF)",//1
+            "Cela spawalnicza - Midclamshell (2LP2)",//2
+            "Cela spawalnicza - Midclamshell (1GPF1 GPF)",//3
+            "Sizer wlot",//4
+            "Cela spawalnicza - Basic wlot + midlamshell (2LP1 GPF)",//5
+            "Cela spawalnicza - Basic wlot + midlamshell (3LP1 GPF)",//6
+            "Cela spawalnicza - Basic wylot (2LP1 GPF)",//7
+            "Cela spawalnicza - Basic wylot (3LP1 GPF)",//8
+            "Sizer wylot",//9
+            "Cela spawalnicza - Basic wlot - midclamshell + wylot (3LP2)",//10            
+            "Cela spawalnicza - Basic wlot - midclamshell + wylot (4LP2)",//11
+            "Preleak tester",//12
+            "Enkapsulacja",//13
+            "Wkrętak",//14
+            "Homologacja",//15
+            "Final leak tester",//16
+            "Deflector",//17
+            "Deflecotr gauge",//18
+            "Sprawdzian geometrii",//19
+            "Odkurzacz",//20
+            "Kontrola Jakościowa",//21
         };
 
         private Dictionary<string, List<int>> _LineData { get; set; }
@@ -73,11 +78,16 @@ namespace WebMonitoring.Models
         //WS3B 
         public List<int> SizerInlet { get; set; }
         public List<int> SizerOutlet { get; set; }
-        public List<int> Cela_BasicInlet { get; set; }
-        public List<int> Cela_Midlamshell { get; set; }
-        public List<int> Cela_BasicInlet_Midlamshell { get; set; }
-        public List<int> Cela_BasicOutlet { get; set; }
-        public List<int> Cela_BasicInletMidclamshell_BasicOutlet { get; set; }
+        public List<int> Cela_BasicInlet_1 { get; set; }
+        public List<int> Cela_Midlamshell_1 { get; set; }
+        public List<int> Cela_BasicInlet_Midlamshell_1 { get; set; }
+        public List<int> Cela_BasicOutlet_1 { get; set; }
+        public List<int> Cela_BasicInletMidclamshell_BasicOutlet_1  { get; set; }
+        public List<int> Cela_BasicInlet_2 { get; set; }
+        public List<int> Cela_Midlamshell_2 { get; set; }
+        public List<int> Cela_BasicInlet_Midlamshell_2 { get; set; }
+        public List<int> Cela_BasicOutlet_2 { get; set; }
+        public List<int> Cela_BasicInletMidclamshell_BasicOutlet_2 { get; set; }
         public List<int> PLT { get; set; }
         public List<int> Enkapsulacja { get; set; }
         public List<int> Wkretak { get; set; }
@@ -105,28 +115,132 @@ namespace WebMonitoring.Models
             dpContext = dpCtx;
         }
 
-        public void GetProductionCountPerHour(DateTime dateTime, string line)
+        public void GetProductionCountPerHour(DateTime dateTime, string line, bool postProces = true)
         {
             _LineData = new Dictionary<string, List<int>>();
 
             if (line == LineDescription.LineWS3Hr12CC)
             {
-                GetProductionCountPerHourWS3B(dateTime);
+                if (postProces)
+                    GetProductionCountPerHourWS3B_postProces(dateTime);
+                else
+                    GetProductionCountPerHourWS3B_Welding(dateTime); 
             }
         }
 
-        private void GetProductionCountPerHourWS3B(DateTime dateTime)
+        private void GetProductionCountPerHourWS3B_Welding(DateTime dateTime)
         {
             var dateTimeFrom = dateTime;
             var dateTimeTo = dateTimeFrom.AddHours(1);
 
             SizerInlet = new List<int>();
             SizerOutlet = new List<int>();
-            Cela_BasicInlet = new List<int>();
-            Cela_Midlamshell = new List<int>();
-            Cela_BasicInlet_Midlamshell = new List<int>();
-            Cela_BasicOutlet = new List<int>();
-            Cela_BasicInletMidclamshell_BasicOutlet = new List<int>();
+
+            Cela_BasicInlet_1 = new List<int>();
+            Cela_Midlamshell_1 = new List<int>();
+            Cela_BasicInlet_Midlamshell_1 = new List<int>();
+            Cela_BasicOutlet_1 = new List<int>();
+            Cela_BasicInletMidclamshell_BasicOutlet_1 = new List<int>();
+
+            Cela_BasicInlet_2 = new List<int>();
+            Cela_Midlamshell_2 = new List<int>();
+            Cela_BasicInlet_Midlamshell_2 = new List<int>();
+            Cela_BasicOutlet_2 = new List<int>();
+            Cela_BasicInletMidclamshell_BasicOutlet_2 = new List<int>();
+
+            for (int i = 0; i < 8; i++)
+            {
+                var frameTimeUtcFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc();
+                var frameTimeUtcTo = dateTimeTo.ConvertDateTimeToFrameTimeUtc();
+
+                var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
+                var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
+
+                SizerInlet.Add(context.Hr12ccSizerGbdInletL7s
+                 .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
+                 .Count());
+
+                SizerOutlet.Add(context.Hr12ccSizerGbdOutletL7s
+                 .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
+                 .Count());
+
+                Cela_BasicInlet_1.Add(context.Hr12ccWeldingCellInletBasicClamshellOp3L7s
+                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii.Contains("L1"))
+                   .Count());
+
+                Cela_BasicInlet_2.Add(context.Hr12ccWeldingCellInletBasicClamshellOp3L7s
+                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii.Contains("L2"))
+                   .Count());
+
+                Cela_Midlamshell_1.Add(context.Hr12ccWeldingCellMidclamshellOp7L7s
+                     .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii.Contains("L1"))
+                     .Count());
+
+                Cela_Midlamshell_2.Add(context.Hr12ccWeldingCellMidclamshellOp7L7s
+                     .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii.Contains("L2"))
+                     .Count());
+
+                Cela_BasicInlet_Midlamshell_1.Add(context.Hr12ccWeldingCellIntletBasicMidclamshellOp8L7s
+                    .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii.Contains("L1"))
+                    .Count());
+
+                Cela_BasicInlet_Midlamshell_2.Add(context.Hr12ccWeldingCellIntletBasicMidclamshellOp8L7s
+                    .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii.Contains("L2"))
+                    .Count());
+
+                Cela_BasicOutlet_1.Add(context.Hr12ccWeldingCellOutletBasicClamshellOp6L7s
+                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii.Contains("L1"))
+                  .Count());
+
+                Cela_BasicOutlet_2.Add(context.Hr12ccWeldingCellOutletBasicClamshellOp6L7s
+                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii.Contains("L2"))
+                  .Count());
+
+                Cela_BasicInletMidclamshell_BasicOutlet_1.Add(context.Hr12ccWeldingCellInletOutletBasicMidclamshellL7s
+                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii.Contains("L1"))
+                  .Count());
+
+                Cela_BasicInletMidclamshell_BasicOutlet_2.Add(context.Hr12ccWeldingCellInletOutletBasicMidclamshellL7s
+                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii.Contains("L2"))
+                  .Count());
+
+              
+                dateTimeFrom = dateTimeFrom.AddHours(1);
+                dateTimeTo = dateTimeTo.AddHours(1);
+            }
+
+            Cela_BasicInlet_1.Add(Cela_BasicInlet_1.Sum());
+            Cela_Midlamshell_1.Add(Cela_Midlamshell_1.Sum());
+            SizerInlet.Add(SizerInlet.Sum());
+            Cela_BasicInlet_Midlamshell_1.Add(Cela_BasicInlet_Midlamshell_1.Sum());
+            Cela_BasicOutlet_1.Add(Cela_BasicOutlet_1.Sum());
+            SizerOutlet.Add(SizerOutlet.Sum());
+            Cela_BasicInletMidclamshell_BasicOutlet_1.Add(Cela_BasicInletMidclamshell_BasicOutlet_1.Sum());
+            Cela_BasicInlet_2.Add(Cela_BasicInlet_2.Sum());
+            Cela_Midlamshell_2.Add(Cela_Midlamshell_2.Sum());
+            Cela_BasicInlet_Midlamshell_2.Add(Cela_BasicInlet_Midlamshell_2.Sum());
+            Cela_BasicOutlet_2.Add(Cela_BasicOutlet_2.Sum());
+            Cela_BasicInletMidclamshell_BasicOutlet_2.Add(Cela_BasicInletMidclamshell_BasicOutlet_2.Sum());
+
+            _LineData.Add(DescriptionHR12CC[0], Cela_BasicInlet_1);
+            _LineData.Add(DescriptionHR12CC[1], Cela_BasicInlet_2);
+            _LineData.Add(DescriptionHR12CC[2], Cela_Midlamshell_1);
+            _LineData.Add(DescriptionHR12CC[3], Cela_Midlamshell_2);
+            _LineData.Add(DescriptionHR12CC[4], SizerInlet);
+            _LineData.Add(DescriptionHR12CC[5], Cela_BasicInlet_Midlamshell_1);
+            _LineData.Add(DescriptionHR12CC[6], Cela_BasicInlet_Midlamshell_2);
+            _LineData.Add(DescriptionHR12CC[7], Cela_BasicOutlet_1);
+            _LineData.Add(DescriptionHR12CC[8], Cela_BasicOutlet_2);
+            _LineData.Add(DescriptionHR12CC[9], SizerOutlet);
+            _LineData.Add(DescriptionHR12CC[10], Cela_BasicInletMidclamshell_BasicOutlet_1);
+            _LineData.Add(DescriptionHR12CC[11], Cela_BasicInletMidclamshell_BasicOutlet_2);
+        }
+
+        private void GetProductionCountPerHourWS3B_postProces(DateTime dateTime)
+        {
+            var dateTimeFrom = dateTime;
+            var dateTimeTo = dateTimeFrom.AddHours(1);
+
             PLT = new List<int>();
             Enkapsulacja = new List<int>();
             Wkretak = new List<int>();
@@ -145,39 +259,7 @@ namespace WebMonitoring.Models
 
                 var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
                 var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
-
-                SizerInlet.Add(context.Hr12ccSizerGbdInletL7s
-                 .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
-                 .Count());
-
-                SizerOutlet.Add(context.Hr12ccSizerGbdOutletL7s
-                 .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
-                 .Count());
-
-                Cela_BasicInlet.Add(context.Hr12ccWeldingCellInletBasicClamshellOp3L7s
-                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
-                   .Count());
-
-                Cela_Midlamshell.Add(context.Hr12ccWeldingCellMidclamshellOp7L7s
-                     .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
-                     .Count());
-
-                Cela_BasicInlet_Midlamshell.Add(context.Hr12ccWeldingCellIntletBasicMidclamshellOp8L7s
-                    .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
-                    .Count());
-
-                Cela_BasicOutlet.Add(context.Hr12ccWeldingCellOutletBasicClamshellOp6L7s
-                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
-                  .Count());
-
-                Cela_BasicOutlet.Add(context.Hr12ccWeldingCellOutletBasicClamshellOp6L7s
-                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
-                  .Count());
-
-                Cela_BasicInletMidclamshell_BasicOutlet.Add(context.Hr12ccWeldingCellInletOutletBasicMidclamshellL7s
-                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
-                  .Count());
-
+              
                 PLT.Add(context.Hr12ccPreleakTesterL7s
                    .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikTestu == ResultOk)
                    .Count());
@@ -222,13 +304,6 @@ namespace WebMonitoring.Models
                 dateTimeTo = dateTimeTo.AddHours(1);
             }
 
-            Cela_BasicInlet.Add(Cela_BasicInlet.Sum());
-            Cela_Midlamshell.Add(Cela_Midlamshell.Sum());
-            SizerInlet.Add(SizerInlet.Sum());
-            Cela_BasicInlet_Midlamshell.Add(Cela_BasicInlet_Midlamshell.Sum());
-            Cela_BasicOutlet.Add(Cela_BasicOutlet.Sum());
-            SizerOutlet.Add(SizerOutlet.Sum());
-            Cela_BasicInletMidclamshell_BasicOutlet.Add(Cela_BasicInletMidclamshell_BasicOutlet.Sum());
             PLT.Add(PLT.Sum());
             Enkapsulacja.Add(Enkapsulacja.Sum());
             Wkretak.Add(Wkretak.Sum());
@@ -240,22 +315,16 @@ namespace WebMonitoring.Models
             Odkurzacz.Add(Odkurzacz.Sum());
             CL.Add(CL.Sum());
 
-            _LineData.Add(DescriptionHR12CC[0], Cela_BasicInlet);
-            _LineData.Add(DescriptionHR12CC[1], Cela_Midlamshell);
-            _LineData.Add(DescriptionHR12CC[2], SizerInlet);
-            _LineData.Add(DescriptionHR12CC[3], Cela_BasicInlet_Midlamshell);
-            _LineData.Add(DescriptionHR12CC[4], Cela_BasicOutlet);
-            _LineData.Add(DescriptionHR12CC[5], SizerOutlet);
-            _LineData.Add(DescriptionHR12CC[6], Cela_BasicInletMidclamshell_BasicOutlet);
-            _LineData.Add(DescriptionHR12CC[7], PLT);
-            _LineData.Add(DescriptionHR12CC[8], Enkapsulacja);
-            _LineData.Add(DescriptionHR12CC[9], Wkretak);
-            _LineData.Add(DescriptionHR12CC[10], Homologacja);
-            _LineData.Add(DescriptionHR12CC[11], Deflector);
-            _LineData.Add(DescriptionHR12CC[12], DeflectorGauge);
-            _LineData.Add(DescriptionHR12CC[13], SprawdzianGeometrii);
-            _LineData.Add(DescriptionHR12CC[14], Odkurzacz);
-            _LineData.Add(DescriptionHR12CC[15], CL);
+            _LineData.Add(DescriptionHR12CC[12], PLT);
+            _LineData.Add(DescriptionHR12CC[13], Enkapsulacja);
+            _LineData.Add(DescriptionHR12CC[14], Wkretak);
+            _LineData.Add(DescriptionHR12CC[15], Homologacja);
+            _LineData.Add(DescriptionHR12CC[16], FLT);
+            _LineData.Add(DescriptionHR12CC[17], Deflector);
+            _LineData.Add(DescriptionHR12CC[18], DeflectorGauge);
+            _LineData.Add(DescriptionHR12CC[19], SprawdzianGeometrii);
+            _LineData.Add(DescriptionHR12CC[20], Odkurzacz);
+            _LineData.Add(DescriptionHR12CC[21], CL);
         }
 
         public int GetCountFromDayWS3B(DateTime dateTime)
@@ -335,11 +404,16 @@ namespace WebMonitoring.Models
 
             SizerInlet.Clear();
             SizerOutlet.Clear();
-            Cela_BasicInlet.Clear();
-            Cela_BasicInletMidclamshell_BasicOutlet.Clear();
-            Cela_BasicInlet_Midlamshell.Clear();
-            Cela_BasicOutlet.Clear();
-            Cela_Midlamshell.Clear();
+            Cela_BasicInlet_1.Clear();
+            Cela_BasicInletMidclamshell_BasicOutlet_1.Clear();
+            Cela_BasicInlet_Midlamshell_1.Clear();
+            Cela_BasicOutlet_1.Clear();
+            Cela_Midlamshell_1.Clear();
+            Cela_BasicInlet_2.Clear();
+            Cela_BasicInletMidclamshell_BasicOutlet_2.Clear();
+            Cela_BasicInlet_Midlamshell_2.Clear();
+            Cela_BasicOutlet_2.Clear();
+            Cela_Midlamshell_2.Clear();
             PLT.Clear();
             Enkapsulacja.Clear();
             Wkretak.Clear();

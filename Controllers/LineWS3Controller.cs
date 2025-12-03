@@ -15,7 +15,8 @@ namespace WebMonitoring.Controllers
              "Linia WS3B LP1",
              "Linia WS3B LP2",
              "Linia WS3B LP3",
-             "Linia WS3B"
+             "Linia WS3 Post Proces",
+             "Linia WS3 Welding"
 
         };
 
@@ -111,6 +112,26 @@ namespace WebMonitoring.Controllers
             {
                 _lineParameters = line;
                 ViewBag.TitleNavBar = Desctription[4];
+                return View(_lineParameters);
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpGet]
+        public IActionResult LineWS3Hr12CC_Welding()
+        {
+            _lineParameters.Url.ReturnAction = nameof(LineWS3Hr12CC_Welding);
+            ViewBag.TitleNavBar = Desctription[5];
+            return View(_lineParameters);
+        }
+
+        [HttpPost]
+        public IActionResult LineWS3Hr12CC_Welding(LineParametersWS line)
+        {
+            if (ModelState.IsValid)
+            {
+                _lineParameters = line;
+                ViewBag.TitleNavBar = Desctription[5];
                 return View(_lineParameters);
             }
             return BadRequest(ModelState);

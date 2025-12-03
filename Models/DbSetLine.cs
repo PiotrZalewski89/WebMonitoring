@@ -72,11 +72,11 @@ namespace WebMonitoring.Models
             Target = dbSet.Target;
         }
 
-        virtual public void GetProductionCountPerHourWS3Hr12CC(DateTime dateTime, string line)
+        virtual public void GetProductionCountPerHourWS3Hr12CC(DateTime dateTime, string line, bool postProces = true)
         {
             DbSetLineWS3Hr12CC dbSet = new DbSetLineWS3Hr12CC(new StorageStationDbContext(), new ProductionDbContext());
 
-            dbSet.GetProductionCountPerHour(dateTime, line);
+            dbSet.GetProductionCountPerHour(dateTime, line, postProces);
 
             _LineData = dbSet.LineData;
 

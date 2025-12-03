@@ -49,6 +49,10 @@ namespace WebMonitoring.Components
             {
                 _DbSetLine.GetProductionCountPerHourWS3Hr12CC(dateTime, LineDescription.LineWS3Hr12CC);
             }
+            else if (selectLine == LineDescription.LineWS3Hr12CC_Welding)
+            {
+                _DbSetLine.GetProductionCountPerHourWS3Hr12CC(dateTime, LineDescription.LineWS3Hr12CC, false);
+            }
             else if (selectLine == LineDescription.LineWS8_GPF)
             {
                 _DbSetLine.GetProductionCountPerHourWS4(dateTime, LineDescription.LineWS8_GPF, tryb12h);

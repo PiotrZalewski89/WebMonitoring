@@ -269,15 +269,34 @@ namespace WebMonitoring.Models
             2//cl
         };
 
-        private int[] NumberOfStationsWS3Hr12CC = new int[]
+        //private int[] NumberOfStationsWS3Hr12CC = new int[]
+        //{
+        //    2,// cela basic inlet
+        //    2,// cela basic inlet
+        //    2,// cela midclamshell
+        //    2,// cela midclamshell
+        //    1,//sizer inlet
+        //    2,// cela basic inlet midlamshell
+        //    2,// cela basic inlet midlamshell
+        //    2,// cela basic outlet
+        //    2,// cela basic outlet
+        //    1,//sizer outlet
+        //    2,//cela basic inlet outlet midclamshell
+        //    2,//cela basic inlet outlet midclamshell
+        //    1,//plt
+        //    1,//enc
+        //    1,//wkretak
+        //    1,//homo
+        //    1,//flt
+        //    1,//deflector
+        //    1,//deflector gauge
+        //    1,//gauge
+        //    1,//vacum
+        //    1//cl
+        //};
+
+        private int[] NumberOfStationsWS3Hr12CC_PostProces = new int[]
         {
-            1,//sizer inlet
-            1,// cela basic inlet
-            1,// cela midclamshell
-            1,// cela basic inlet midlamshell
-            1,// cela basic outlet
-            1,//sizer outlet
-            1,//cela basic inlet outlet midclamshell
             1,//plt
             1,//enc
             1,//wkretak
@@ -288,6 +307,24 @@ namespace WebMonitoring.Models
             1,//gauge
             1,//vacum
             1//cl
+        };
+
+
+
+        private int[] NumberOfStationsWS3Hr12CC_Welding = new int[]
+        {
+            2,// cela basic inlet
+            2,// cela basic inlet
+            2,// cela midclamshell
+            2,// cela midclamshell
+            1,//sizer inlet
+            2,// cela basic inlet midlamshell
+            2,// cela basic inlet midlamshell
+            2,// cela basic outlet
+            2,// cela basic outlet
+            1,//sizer outlet
+            2,//cela basic inlet outlet midclamshell
+            2,//cela basic inlet outlet midclamshell
         };
 
         private int[] NumberOfStationsWS8Br10GPF = new int[]
@@ -480,7 +517,9 @@ namespace WebMonitoring.Models
             else if (selectedLine == LineDescription.LineWS3A)
                 return NumberOfStationsWS3A;
             else if (selectedLine == LineDescription.LineWS3Hr12CC)
-                return NumberOfStationsWS3Hr12CC;
+                return NumberOfStationsWS3Hr12CC_PostProces;
+            else if (selectedLine == LineDescription.LineWS3Hr12CC_Welding)
+                return NumberOfStationsWS3Hr12CC_Welding;
             else if (selectedLine == LineDescription.LineWS2)
                 return NumberOfStationsWS2;
             else if (selectedLine == LineDescription.LineWS8_GPF)
@@ -519,7 +558,8 @@ namespace WebMonitoring.Models
                 || selectedLine == LineDescription.LineWS3BLP1
                 || selectedLine == LineDescription.LineWS3BLP2
                 || selectedLine == LineDescription.LineWS3BLP3
-                || selectedLine == LineDescription.LineWS3Hr12CC)
+                || selectedLine == LineDescription.LineWS3Hr12CC
+                || selectedLine == LineDescription.LineWS3Hr12CC_Welding)
                 return WorkTimeLineWS3;
             else if (selectedLine == LineDescription.LineWS8_GPF)
             {

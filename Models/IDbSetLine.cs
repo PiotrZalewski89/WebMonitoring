@@ -13,7 +13,7 @@ namespace WebMonitoring.Models
         public void GetProductionCountPerHourWS1(DateTime dateTime, string line);
         public void GetProductionCountPerHourWS2(DateTime dateTime);
         public void GetProductionCountPerHourWS3(DateTime dateTime, string line);
-        public void GetProductionCountPerHourWS3Hr12CC(DateTime dateTime, string line);
+        public void GetProductionCountPerHourWS3Hr12CC(DateTime dateTime, string line, bool postProcess = true);
         public void GetProductionCountPerHourWS4(DateTime dateTime, string line, bool tryb12h);
         public void GetProductionCountPerHourWS4M260(DateTime dateTime, string line, bool tryb12h);
         public void GetProductionCountPerHourWS5(DateTime dateTime, string line);
