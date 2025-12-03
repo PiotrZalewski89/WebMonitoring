@@ -189,7 +189,7 @@ namespace WebMonitoring.Search
     {
         public string Nr_Shell_Outlet { get; set; }
         public string Nr_Shell_Inlet { get; set; }
-        public string Nr_Clamshell { get; set; }
+        public string Nr_Midclamshell { get; set; }
         public string Nr_Grawerka { get; set; }
         public string Uwagi { get; set; }
         public string Nr_linii { get; set; }

@@ -14,6 +14,7 @@ namespace WebMonitoring.Search
     {
         public string CodeBasicInlet { get; set; }
         public string CodeBasicOutlet { get; set; }
+        public string CodeMidclamshell { get; set; }
         public string CodeCatalyst { get; set; }
     }
 

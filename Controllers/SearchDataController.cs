@@ -897,7 +897,9 @@ namespace WebMonitoring.Controllers
         {
             ViewBag.TitleNavBar = Desctription[15];
 
-            bool checkboxChecked = ws.Stf || ws.SizerInlet || ws.SizerOutlet || ws.CelaSpawalniczaWlot || ws.CelaSpawalniczaWylot || ws.Deflector || ws.Enkapsulacja || ws.FG || ws.FLT || ws.Homologacja || ws.Odkurzacz || ws.PetlaKJ || ws.PLT || ws.Wkretak;
+            bool checkboxChecked = ws.Stf || ws.SizerInlet || ws.SizerOutlet || ws.CelaSpawalniczaBasicWlot || ws.CelaSpawalniczaMidclamshell || ws.CelaSpawalniczaBasicWlotMidclamshell
+                || ws.CelaSpawalniczaBasicWylot || ws.CelaSpawalniczaBasicWlotWylotMidclamshell || ws.Deflector || ws.DeflectorGauge || ws.Enkapsulacja || ws.FG || ws.FLT || ws.Homologacja 
+                || ws.Odkurzacz || ws.PetlaKJ || ws.PLT || ws.Wkretak;
 
             if (!string.IsNullOrEmpty(ws.TextArea))
                 ws.FindData = new List<string>(

@@ -18,6 +18,7 @@ namespace WebMonitoring.Table.StorageStation
         public DateTime? DtOperacji { get; set; }
         public long? FrameTime { get; set; }
         public long? GrawerkaTime { get; set; }
+        public string NrLinii { get; set; }
         public int IdHist { get; set; }
     }
 }

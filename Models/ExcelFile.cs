@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
+using WebMonitoring.DataBase;
 
 namespace WebMonitoring.Models
 {
@@ -462,5 +465,134 @@ namespace WebMonitoring.Models
             var tempDay = new DateTime(dateDay.Year, dateDay.Month - 1, cal.GetDaysInMonth(dateDay.Year, dateDay.Month - 1));
             return tempDay.Day;
         }
+
+        public void WriteToCSV<T>(string path, string day, string folederName, IList<T> result)
+        {
+            string pathFolder = path + "\\" + folederName;
+
+            if (!Directory.Exists(pathFolder))
+            {
+                Directory.CreateDirectory(pathFolder);
+            }
+
+            string file = day.Replace('.', '_') + ".csv";
+
+            if (!File.Exists(pathFolder) && result is { } && result.Count > 0)
+            {
+                DataTable table = new DataTable();
+                table = result.ToDataTable();
+                string pathFile = pathFolder + "\\" + file;
+                table.ToCSV(pathFile);
+            }
+        }
+
+        public async Task ExportDataFromSqlAsync(string directoryFile, DateTime dateTime)
+        {
+            try
+            {
+                StorageStationDbContext dbContext = new StorageStationDbContext();
+                ExcelFile export = new ExcelFile();
+
+                var dateTimeFrom = dateTime;
+                var dateTimeTo = dateTime.AddDays(1);
+                var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTimeUtc_AllDay();
+                var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTimeUtc_AllDay();
+
+                var date = dateTime.ToShortDateString();
+
+                export.WriteToCSV(directoryFile, date, "Welding Cell Inlet",
+                     await dbContext.VHr12ccCell3L7Alls.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                     .OrderByDescending(d => d.FrameTime)
+                     .ToArrayAsync());
+
+                export.WriteToCSV(directoryFile, date, "Welding Cell Outlet",
+                     await dbContext.VHr12ccCell4L7Alls.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                     .OrderByDescending(d => d.FrameTime)
+                     .ToArrayAsync());
+
+
+                export.WriteToCSV(directoryFile, date, "Welding Cell Inlet Basic",
+                     await dbContext.VHr12ccWeldingCellInletBasicClamshellOp3L7Alls.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                     .OrderByDescending(d => d.FrameTime)
+                     .ToArrayAsync());
+
+                export.WriteToCSV(directoryFile, date, "Welding Cell Inlet Basic Midclamshell",
+                      await dbContext.VHr12ccWeldingCellIntletBasicMidclamshellOp8L7Alls.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                      .OrderByDescending(d => d.FrameTime)
+                      .ToArrayAsync());
+
+                export.WriteToCSV(directoryFile, date, "Welding Cell Midclamshell",
+                       await dbContext.VHr12ccWeldingCellMidclamshellOp7L7Alls.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                       .OrderByDescending(d => d.FrameTime)
+                       .ToArrayAsync());
+
+                export.WriteToCSV(directoryFile, date, "Welding Cell Outlet Basic",
+                       await dbContext.VHr12ccWeldingCellOutletBasicClamshellOp6L7Alls.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                       .OrderByDescending(d => d.FrameTime)
+                       .ToArrayAsync());
+
+                export.WriteToCSV(directoryFile, date, "Welding Cell Outlet Inlet Basic Midclamshell",
+                       await dbContext.VHr12ccWeldingCellInletOutletBasicMidclamshellL7Alls.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                       .OrderByDescending(d => d.FrameTime)
+                       .ToArrayAsync());
+
+                export.WriteToCSV(directoryFile, date, "Sizer Inlet",
+                   await dbContext.VHr12ccSizerGbdInletL7Alls.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                   .OrderByDescending(d => d.FrameTime)
+                   .ToArrayAsync());
+
+                export.WriteToCSV(directoryFile, date, "Sizer Outlet",
+                  await dbContext.VHr12ccSizerGbdOutletL7Alls.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                  .OrderByDescending(d => d.FrameTime)
+                  .ToArrayAsync());
+
+                export.WriteToCSV(directoryFile, date, "PreLeak Tester",
+                    await dbContext.VHr12ccPreleakTesterL7Alls.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                    .OrderByDescending(d => d.FrameTime)
+                    .ToArrayAsync());
+
+                export.WriteToCSV(directoryFile, date, "Press",
+                  await dbContext.VHr12ccOutletPressL7Alls.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                  .OrderByDescending(d => d.FrameTime)
+                  .ToArrayAsync());
+
+                export.WriteToCSV(directoryFile, date, "Torque",
+                  await dbContext.VHr12ccTorqueScrewdriverL7Alls.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                  .OrderByDescending(d => d.FrameTime)
+                  .ToArrayAsync());
+
+                export.WriteToCSV(directoryFile, date, "Homologation",
+                  await dbContext.VHr12ccHomologationL7Alls.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                  .OrderByDescending(d => d.FrameTime)
+                  .ToArrayAsync());
+
+                export.WriteToCSV(directoryFile, date, "Final Leak Tester",
+                  await dbContext.VHr12ccFinalleakTesterL7Alls.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                  .OrderByDescending(d => d.FrameTime)
+                  .ToArrayAsync());
+
+                export.WriteToCSV(directoryFile, date, "Geometry Gauge",
+                    await dbContext.VHr12ccCheckFixtureL7Alls.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                    .OrderByDescending(d => d.FrameTime)
+                    .ToArrayAsync());
+
+                export.WriteToCSV(directoryFile, date, "Vacuum Cleaning",
+                    await dbContext.VHr12ccVacuumCleanerL7Alls.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                    .OrderByDescending(d => d.FrameTime)
+                    .ToArrayAsync());
+
+                export.WriteToCSV(directoryFile, date, "Quality Control",
+                    await dbContext.VHr12ccControlLoopL7Alls.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                    .OrderByDescending(d => d.FrameTime)
+                    .ToArrayAsync());
+
+                export.WriteToCSV(directoryFile, date, "REWORK",
+                  await dbContext.ReworkHr12ccL7s.Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
+                  .OrderByDescending(d => d.FrameTime)
+                  .ToArrayAsync());
+            }
+            catch(Exception ex) { }
+        }
+
     }
 }

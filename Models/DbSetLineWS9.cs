@@ -19,11 +19,10 @@ namespace WebMonitoring.Models
             "Cela spawalnicza nr2",
             "Cela spawalnicza nr3",
             "Cela spawalnicza nr4",
-            "Tester szczelności",
-            "Sprawdzian geometrii",
-            "Odkurzacz",
-            "Grawerka",
-            "Kontrola Jakości"
+            "AutoLine 1",
+            "AutoLine 2",
+            "Kontrola Jakości 1",
+            "Kontrola Jakości 2"
        };
 
         private Dictionary<string, List<int>> _LineData { get; set; }
@@ -59,14 +58,11 @@ namespace WebMonitoring.Models
         public List<int> WeldingCell_2 { get; set; }
         public List<int> WeldingCell_3 { get; set; }
         public List<int> WeldingCell_4 { get; set; }
+        public List<int> AL1 { get; set; }
+        public List<int> AL2 { get; set; }
+        public List<int> ControlLoopL1 { get; set; }
+        public List<int> ControlLoopL2 { get; set; }
 
-        public List<int> Leaktester { get; set; }
-
-        public List<int> FinalGauge { get; set; }
-
-        public List<int> Vacuum { get; set; }
-        public List<int> LaserMarking { get; set; }
-        public List<int> ControlLoop { get; set; }
 
 
         public DbSetLineWS9(StorageStationDbContext ctx)
@@ -81,15 +77,14 @@ namespace WebMonitoring.Models
 
             _LineData = new Dictionary<string, List<int>>();
 
-            WeldingCell_1 = new List<int>();
-            WeldingCell_2 = new List<int>();
-            WeldingCell_3 = new List<int>();
-            WeldingCell_4 = new List<int>();
-            Leaktester = new List<int>();
-            FinalGauge = new List<int>();
-            Vacuum = new List<int>();
-            LaserMarking = new List<int>();
-            ControlLoop = new List<int>();
+            WeldingCell_1 = new();
+            WeldingCell_2 = new();
+            WeldingCell_3 = new();
+            WeldingCell_4 = new();
+            AL1 = new();
+            AL2 = new();
+            ControlLoopL1 = new();
+            ControlLoopL2 = new();
 
 
             for (int i = 0; i < 8; i++)
@@ -116,24 +111,20 @@ namespace WebMonitoring.Models
                 .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii == "L4_STN1")
                 .Count());
 
-                Leaktester.Add(DbContext.Hr12ufLeaktesterL6s
-                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
-                   .Count());
-
-                FinalGauge.Add(DbContext.Hr12ufFinalGaugeL6s
-                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
-                   .Count());
-
-                Vacuum.Add(DbContext.Hr12ufVacuumL6s
-                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
+                AL1.Add(DbContext.Hr12ufMarkingL6s
+                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii == "L1")
                   .Count());
 
-                LaserMarking.Add(DbContext.Hr12ufMarkingL6s
-                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
+                ControlLoopL1.Add(DbContext.Hr12ufControlLoopL6s
+                   .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk && x.NrPzzw != Remove && x.NrLinii == "L1")
+                   .Count());
+
+                AL2.Add(DbContext.Hr12ufMarkingL6s
+                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii == "L2")
                   .Count());
 
-                ControlLoop.Add(DbContext.Hr12ufControlLoopL6s
-                   .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk && x.NrPzzw != Remove)
+                ControlLoopL2.Add(DbContext.Hr12ufControlLoopL6s
+                   .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk && x.NrPzzw != Remove && x.NrLinii == "L2")
                    .Count());
 
                 dateTimeFrom = dateTimeFrom.AddHours(1);
@@ -144,22 +135,20 @@ namespace WebMonitoring.Models
             WeldingCell_2.Add(WeldingCell_2.Sum());
             WeldingCell_3.Add(WeldingCell_3.Sum());
             WeldingCell_4.Add(WeldingCell_4.Sum());
-            Leaktester.Add(Leaktester.Sum());
-            FinalGauge.Add(FinalGauge.Sum());
-            Vacuum.Add(Vacuum.Sum());
-            LaserMarking.Add(LaserMarking.Sum());
-            ControlLoop.Add(ControlLoop.Sum());
-  
+            AL1.Add(AL1.Sum());
+            AL2.Add(AL2.Sum());
+            ControlLoopL1.Add(ControlLoopL1.Sum());
+            ControlLoopL2.Add(ControlLoopL2.Sum());
+
 
             _LineData.Add(DescriptionWS9[0], WeldingCell_1);
             _LineData.Add(DescriptionWS9[1], WeldingCell_2);
             _LineData.Add(DescriptionWS9[2], WeldingCell_3);
             _LineData.Add(DescriptionWS9[3], WeldingCell_4);
-            _LineData.Add(DescriptionWS9[4], Leaktester);
-            _LineData.Add(DescriptionWS9[5], FinalGauge);
-            _LineData.Add(DescriptionWS9[6], Vacuum);
-            _LineData.Add(DescriptionWS9[7], LaserMarking);
-            _LineData.Add(DescriptionWS9[8], ControlLoop);
+            _LineData.Add(DescriptionWS9[4], AL1);
+            _LineData.Add(DescriptionWS9[5], AL2);
+            _LineData.Add(DescriptionWS9[6], ControlLoopL1);
+            _LineData.Add(DescriptionWS9[7], ControlLoopL2);
         }
 
         public int GetCountFromDayWS9(DateTime dateTime)

@@ -13,6 +13,7 @@ namespace WebMonitoring.Table.StorageStation
         public string TrybPracy { get; set; }
         public DateTime? DtOperacji { get; set; }
         public long? FrameTime { get; set; }
+        public string NrLinii { get; set; }
         public int IdHist { get; set; }
     }
 }

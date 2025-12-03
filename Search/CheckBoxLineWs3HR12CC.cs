@@ -13,31 +13,39 @@ namespace WebMonitoring.Search
         private CodesHr12cc Codes { get; set; }
 
         public bool All { get; set; }
+        public bool CelaSpawalniczaBasicWlot { get; set; }
+        public bool CelaSpawalniczaMidclamshell { get; set; }
         public bool SizerInlet { get; set; }
+        public bool CelaSpawalniczaBasicWlotMidclamshell { get; set; }
+        public bool CelaSpawalniczaBasicWylot { get; set; }
         public bool SizerOutlet { get; set; }
-        public bool CelaSpawalniczaWlot { get; set; }
-        public bool CelaSpawalniczaWylot { get; set; }
+        public bool CelaSpawalniczaBasicWlotWylotMidclamshell { get; set; }
         public bool PLT { get; set; }
         public bool Enkapsulacja { get; set; }
         public bool Wkretak { get; set; }
         public bool Homologacja { get; set; }
         public bool FLT { get; set; }
         public bool Deflector { get; set; }
+        public bool DeflectorGauge { get; set; }
         public bool FG { get; set; }
         public bool Odkurzacz { get; set; }
         public bool PetlaKJ { get; set; }
         public bool Stf { get; set; }
         public new string HtmlTableInlet { get; set; }
         public new string HtmlTableOutlet { get; set; }
-        public List<BasicColumnHr12cc> DaneSizerInlet { get; set; }
-        public List<BasicColumnHr12cc> DaneSizerOutlet { get; set; }
         public List<BasicColumnHr12cc> DaneCelaSprawalniczaWlot { get; set; }
+        public List<BasicColumnHr12cc> DaneCelaSprawalniczaMidclamshell { get; set; }
+        public List<BasicColumnHr12cc> DaneSizerInlet { get; set; }
+        public List<BasicColumnHr12cc> DaneCelaSprawalniczaWlotMidclamshell { get; set; }
         public List<BasicColumnHr12cc> DaneCelaSprawalniczaWylot { get; set; }
+        public List<BasicColumnHr12cc> DaneSizerOutlet { get; set; }
+        public List<BasicColumnHr12cc> DaneCelaSprawalniczaWlotWylotMidclamshell { get; set; }
         public List<ColumnLT_Hr12cc> DanePLT { get; set; }
         public List<BasicColumnHr12cc> DaneEnkapsulacja { get; set; }
         public List<ColumnTorqueHr12cc> DaneWkretak { get; set; }
         public List<BasicColumnHr12cc> DaneHomologacja { get; set; }
         public List<ColumnTorqueHr12cc> DaneDeflector { get; set; }
+        public List<BasicColumnHr12cc> DaneDeflectorGauge { get; set; }
         public List<ColumnFLT_Hr12cc> DaneFLT { get; set; }
         public List<BasicColumnHr12cc> DaneFG { get; set; }
         public List<BasicColumnHr12cc> DaneOdkurzacz { get; set; }
@@ -85,7 +93,7 @@ namespace WebMonitoring.Search
 
             if (result?.Length > 0)
             {
-                var resultBasicInlet = context.VHr12ccCell4L7Alls
+                var resultBasicInlet = context.Hr12ccWeldingCellInletOutletBasicMidclamshellL7s
                     .Where(x => x.NrShellaOutlet == result[0].CodeBasicOutlet)
                     .Take(1)
                     .Select(x => x.NrShellaInlet);
@@ -123,7 +131,7 @@ namespace WebMonitoring.Search
                           .Select(x => new BasicColumnHr12cc
                           {
                               Nr_Shell_Inlet = x.NrShella,
-                              Nr_Clamshell = x.NrClamshell,
+                              Nr_Midclamshell = x.NrClamshell,
                               Wynik_operacji = x.WynikOperacji,
                               Nr_linii = x.NrLinii,
                               DateTime = x.DtOperacji
@@ -131,6 +139,8 @@ namespace WebMonitoring.Search
 
             return result;
         }
+
+
 
         private IList<BasicColumnHr12cc> GetDataFromSizerOutlet(string code)
         {
@@ -139,7 +149,7 @@ namespace WebMonitoring.Search
                           .Select(x => new BasicColumnHr12cc
                           {
                               Nr_Shell_Outlet = x.NrShella,
-                              Nr_Clamshell = x.NrClamshell,
+                              Nr_Midclamshell = x.NrClamshell,
                               Wynik_operacji = x.WynikOperacji,
                               Nr_linii = x.NrLinii,
                               DateTime = x.DtOperacji
@@ -148,14 +158,13 @@ namespace WebMonitoring.Search
             return result;
         }
 
-        private IList<BasicColumnHr12cc> GetDataFromWeldingCell3(string code)
+        private IList<BasicColumnHr12cc> GetDataFromWeldingCellBasicInlet(string code)
         {
-            var result = context.Hr12ccCell3L7s
+            var result = context.Hr12ccWeldingCellInletBasicClamshellOp3L7s
                           .Where(x => x.NrShella == code)
                           .Select(x => new BasicColumnHr12cc
                           {
                               Nr_Shell_Inlet = x.NrShella,
-                              Nr_Clamshell = x.NrClamshell,
                               Wynik_operacji = x.WynikOperacji,
                               Nr_linii = x.NrLinii,
                               DateTime = x.DtOperacji
@@ -164,15 +173,61 @@ namespace WebMonitoring.Search
             return result;
         }
 
-        private IList<BasicColumnHr12cc> GetDataFromWeldingCell4(string code)
+        private IList<BasicColumnHr12cc> GetDataFromWeldingCellMidclamshell(string code)
         {
-            var result = context.Hr12ccCell4L7s
+            var result = context.Hr12ccWeldingCellMidclamshellOp7L7s
+                          .Where(x => x.NrMidclamshell == code)
+                          .Select(x => new BasicColumnHr12cc
+                          {
+                              Nr_Midclamshell = x.NrMidclamshell,
+                              Wynik_operacji = x.WynikOperacji,
+                              Nr_linii = x.NrLinii,
+                              DateTime = x.DtOperacji
+                          }).ToArray();
+
+            return result;
+        }
+
+        private IList<BasicColumnHr12cc> GetDataFromWeldingCellBasicInletMidclamshell(string code)
+        {
+            var result = context.Hr12ccWeldingCellIntletBasicMidclamshellOp8L7s
+                          .Where(x => x.NrShella == code)
+                          .Select(x => new BasicColumnHr12cc
+                          {
+                              Nr_Shell_Inlet = x.NrShella,
+                              Nr_Midclamshell = x.NrMidclamshell,
+                              Wynik_operacji = x.WynikOperacji,
+                              Nr_linii = x.NrLinii,
+                              DateTime = x.DtOperacji
+                          }).ToArray();
+
+            return result;
+        }
+
+        private IList<BasicColumnHr12cc> GetDataFromWeldingCellBasicOutlet(string code)
+        {
+            var result = context.Hr12ccWeldingCellOutletBasicClamshellOp6L7s
+                          .Where(x => x.NrShella == code)
+                          .Select(x => new BasicColumnHr12cc
+                          {
+                              Nr_Shell_Outlet = x.NrShella,
+                              Wynik_operacji = x.WynikOperacji,
+                              Nr_linii = x.NrLinii,
+                              DateTime = x.DtOperacji
+                          }).ToArray();
+
+            return result;
+        }
+
+        private IList<BasicColumnHr12cc> GetDataFromWeldingCellBasicInletOutletMidclamshell(string code)
+        {
+            var result = context.VHr12ccWeldingCellInletOutletBasicMidclamshellL7Alls
                           .Where(x => x.NrShellaOutlet == code || x.NrShellaInlet == code)
                           .Select(x => new BasicColumnHr12cc
                           {
                               Nr_Shell_Outlet = x.NrShellaOutlet,
                               Nr_Shell_Inlet = x.NrShellaInlet,
-                              Nr_Clamshell = x.NrClamshell,
+                              Nr_Midclamshell = x.NrMidclamshell,
                               Wynik_operacji = x.WynikOperacji,
                               Nr_linii = x.NrLinii,
                               DateTime = x.DtOperacji
@@ -313,6 +368,21 @@ namespace WebMonitoring.Search
             return result;
         }
 
+        private IList<BasicColumnHr12cc> GetDataFromDeflectorGauge(string code)
+        {
+            var result = context.Hr12ccDeflectorGaugeL7s
+                    .Where(x => x.NrGrawerka == code)
+                    .Select(x => new BasicColumnHr12cc
+                    {
+                        Nr_Grawerka = x.NrGrawerka,
+                        Wynik_operacji = x.WynikOperacji,
+                        Nr_linii = x.NrLinii,
+                        DateTime = x.DtOperacji
+                    }).ToArray();
+
+            return result;
+        }
+
         private IList<BasicColumnHr12cc> GetDataFromFinalGauge(string code)
         {
             var result = context.Hr12ccCheckFixtureL7s
@@ -371,7 +441,7 @@ namespace WebMonitoring.Search
                           .Select(x => new BasicColumnHr12cc
                           {
                               Nr_Shell_Inlet = x.NrShella,
-                              Nr_Clamshell = x.NrClamshell,
+                              Nr_Midclamshell = x.NrClamshell,
                               Wynik_operacji = x.WynikOperacji,
                               Nr_linii = x.NrLinii,
                               DateTime = x.DtOperacji
@@ -400,17 +470,16 @@ namespace WebMonitoring.Search
             return result;
         }
 
-        private IList<BasicColumnHr12cc> GetDataFromWeldingCell3ByDate(DateTime from, DateTime to)
+        private IList<BasicColumnHr12cc> GetDataFromWeldingCellBasicInletByDate(DateTime from, DateTime to)
         {
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.Hr12ccCell3L7s
+            var result = context.Hr12ccWeldingCellInletBasicClamshellOp3L7s
                           .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                           .Select(x => new BasicColumnHr12cc
                           {
                               Nr_Shell_Inlet = x.NrShella,
-                              Nr_Clamshell = x.NrClamshell,
                               Wynik_operacji = x.WynikOperacji,
                               Nr_linii = x.NrLinii,
                               DateTime = x.DtOperacji
@@ -420,18 +489,76 @@ namespace WebMonitoring.Search
             return result;
         }
 
-        private IList<BasicColumnHr12cc> GetDataFromWeldingCell4ByDate(DateTime from, DateTime to)
+        private IList<BasicColumnHr12cc> GetDataFromWeldingCellMidclamshellByDate(DateTime from, DateTime to)
         {
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.Hr12ccCell4L7s
+            var result = context.Hr12ccWeldingCellMidclamshellOp7L7s
+                          .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
+                          .Select(x => new BasicColumnHr12cc
+                          {
+                              Nr_Midclamshell = x.NrMidclamshell,
+                              Wynik_operacji = x.WynikOperacji,
+                              Nr_linii = x.NrLinii,
+                              DateTime = x.DtOperacji
+                          })
+                          .ToArray();
+
+            return result;
+        }
+
+        private IList<BasicColumnHr12cc> GetDataFromWeldingCellBasicInletMidclamshellByDate(DateTime from, DateTime to)
+        {
+            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
+            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
+
+            var result = context.Hr12ccWeldingCellIntletBasicMidclamshellOp8L7s
+                          .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
+                          .Select(x => new BasicColumnHr12cc
+                          {
+                              Nr_Shell_Inlet =x.NrShella,
+                              Nr_Midclamshell = x.NrMidclamshell,
+                              Wynik_operacji = x.WynikOperacji,
+                              Nr_linii = x.NrLinii,
+                              DateTime = x.DtOperacji
+                          })
+                          .ToArray();
+
+            return result;
+        }
+
+        private IList<BasicColumnHr12cc> GetDataFromWeldingCellBasicOutletByDate(DateTime from, DateTime to)
+        {
+            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
+            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
+
+            var result = context.Hr12ccWeldingCellOutletBasicClamshellOp6L7s
+                          .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
+                          .Select(x => new BasicColumnHr12cc
+                          {
+                              Nr_Shell_Outlet = x.NrShella,
+                              Wynik_operacji = x.WynikOperacji,
+                              Nr_linii = x.NrLinii,
+                              DateTime = x.DtOperacji
+                          })
+                          .ToArray();
+
+            return result;
+        }
+
+        private IList<BasicColumnHr12cc> GetDataFromWeldingCellBasicInletOutletMidclamshellByDate(DateTime from, DateTime to)
+        {
+            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
+            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
+
+            var result = context.VHr12ccWeldingCellInletOutletBasicMidclamshellL7Alls
                           .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                           .Select(x => new BasicColumnHr12cc
                           {
                               Nr_Shell_Inlet = x.NrShellaInlet,
                               Nr_Shell_Outlet = x.NrShellaOutlet,
-                              Nr_Clamshell = x.NrClamshell,
+                              Nr_Midclamshell =x.NrMidclamshell,
                               Wynik_operacji = x.WynikOperacji,
                               Nr_linii = x.NrLinii,
                               DateTime = x.DtOperacji
@@ -577,6 +704,25 @@ namespace WebMonitoring.Search
             return result;
         }
 
+        private IList<BasicColumnHr12cc> GetDataFromDeflectorGaugeByDate(DateTime from, DateTime to)
+        {
+            var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
+            var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
+
+            var result = context.Hr12ccDeflectorGaugeL7s
+                    .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
+                    .Select(x => new BasicColumnHr12cc
+                    {
+                        Nr_Grawerka = x.NrGrawerka,
+                        Wynik_operacji = x.WynikOperacji,
+                        Nr_linii = x.NrLinii,
+                        DateTime = x.DtOperacji
+                    })
+                      .ToArray();
+
+            return result;
+        }
+
         private IList<BasicColumnHr12cc> GetDataFromFinalGaugeByDate(DateTime from, DateTime to)
         {
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
@@ -643,6 +789,10 @@ namespace WebMonitoring.Search
             DaneSizerOutlet = new();
             DaneCelaSprawalniczaWlot = new();
             DaneCelaSprawalniczaWylot = new();
+            DaneCelaSprawalniczaMidclamshell = new();
+            DaneCelaSprawalniczaWlotMidclamshell = new();
+            DaneCelaSprawalniczaWlotWylotMidclamshell = new();
+            DaneDeflectorGauge = new();
             DanePLT = new();
             DaneEnkapsulacja = new();
             DaneWkretak = new();
@@ -676,6 +826,16 @@ namespace WebMonitoring.Search
                 DateTime from = (DateTime)DateTime;
                 DateTime to = (DateTime)DateTime.Value.AddDays(1);
 
+                if (CelaSpawalniczaBasicWlot)
+                {
+                    var result = GetDataFromWeldingCellBasicInletByDate(from, to);
+
+                    foreach (var r in result)
+                    {
+                        DaneCelaSprawalniczaWlot.Add(r);
+                    }
+                }
+
                 if (SizerInlet)
                 {
                     var result = GetDataFromSiezerInletByDate(from, to);
@@ -696,10 +856,9 @@ namespace WebMonitoring.Search
                     }
                 }
 
-
-                if (CelaSpawalniczaWlot)
+                if (CelaSpawalniczaBasicWlot)
                 {
-                    var result = GetDataFromWeldingCell3ByDate(from, to);
+                    var result = GetDataFromWeldingCellBasicInletByDate(from, to);
 
                     foreach (var r in result)
                     {
@@ -707,13 +866,43 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (CelaSpawalniczaWylot)
+                if (CelaSpawalniczaBasicWlotMidclamshell)
                 {
-                    var result = GetDataFromWeldingCell4ByDate(from, to);
+                    var result = GetDataFromWeldingCellMidclamshellByDate(from, to);
+
+                    foreach (var r in result)
+                    {
+                        DaneCelaSprawalniczaMidclamshell.Add(r);
+                    }
+                }
+
+                if (CelaSpawalniczaBasicWlotWylotMidclamshell)
+                {
+                    var result = GetDataFromWeldingCellBasicInletMidclamshellByDate(from, to);
+
+                    foreach (var r in result)
+                    {
+                        DaneCelaSprawalniczaWlotMidclamshell.Add(r);
+                    }
+                }
+
+                if (CelaSpawalniczaBasicWylot)
+                {
+                    var result = GetDataFromWeldingCellBasicOutletByDate(from, to);
 
                     foreach (var r in result)
                     {
                         DaneCelaSprawalniczaWylot.Add(r);
+                    }
+                }
+
+                if (CelaSpawalniczaBasicWlotWylotMidclamshell)
+                {
+                    var result = GetDataFromWeldingCellBasicInletOutletMidclamshellByDate(from, to);
+
+                    foreach (var r in result)
+                    {
+                        DaneCelaSprawalniczaWlotWylotMidclamshell.Add(r);
                     }
                 }
 
@@ -774,6 +963,16 @@ namespace WebMonitoring.Search
                     foreach (var r in result)
                     {
                         DaneDeflector.Add(r);
+                    }
+                }
+
+                if (DeflectorGauge)
+                {
+                    var result = GetDataFromDeflectorGaugeByDate(from, to);
+
+                    foreach (var r in result)
+                    {
+                        DaneDeflectorGauge.Add(r);
                     }
                 }
 
@@ -854,9 +1053,31 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (CelaSpawalniczaWlot && Codes.CodeBasicInlet != Brak)
+                if (CelaSpawalniczaBasicWlotMidclamshell && Codes.CodeBasicInlet != Brak)
                 {
-                    var result = GetDataFromWeldingCell3(Codes.CodeBasicInlet);
+                    var result = GetDataFromWeldingCellBasicInletMidclamshell(Codes.CodeBasicInlet);
+
+                    foreach (var r in result)
+                    {
+                        DaneCelaSprawalniczaWlotMidclamshell.Add(r);
+
+                        Codes.CodeMidclamshell = r.Nr_Midclamshell;
+
+                        if (CelaSpawalniczaMidclamshell && Codes.CodeMidclamshell != Brak)
+                        {
+                            var resultMid = GetDataFromWeldingCellMidclamshell(Codes.CodeMidclamshell);
+
+                            foreach (var rM in resultMid)
+                            {
+                                DaneCelaSprawalniczaMidclamshell.Add(rM);
+                            }
+                        }
+                    }
+                }
+
+                if (CelaSpawalniczaBasicWlot && Codes.CodeBasicInlet != Brak)
+                {
+                    var result = GetDataFromWeldingCellBasicInlet(Codes.CodeBasicInlet);
 
                     foreach (var r in result)
                     {
@@ -864,13 +1085,23 @@ namespace WebMonitoring.Search
                     }
                 }
 
-                if (CelaSpawalniczaWylot && Codes.CodeBasicOutlet != Brak)
+                if (CelaSpawalniczaBasicWylot && Codes.CodeBasicOutlet != Brak)
                 {
-                    var result = GetDataFromWeldingCell4(Codes.CodeBasicOutlet);
+                    var result = GetDataFromWeldingCellBasicOutlet(Codes.CodeBasicOutlet);
 
                     foreach (var r in result)
                     {
                         DaneCelaSprawalniczaWylot.Add(r);
+                    }
+                }
+
+                if (CelaSpawalniczaBasicWlotWylotMidclamshell && Codes.CodeBasicOutlet != Brak)
+                {
+                    var result = GetDataFromWeldingCellBasicInletOutletMidclamshell(Codes.CodeBasicOutlet);
+
+                    foreach (var r in result)
+                    {
+                        DaneCelaSprawalniczaWlotWylotMidclamshell.Add(r);
                     }
                 }
 
@@ -934,6 +1165,16 @@ namespace WebMonitoring.Search
                     }
                 }
 
+                if (DeflectorGauge && Codes.CodeCatalyst != Brak)
+                {
+                    var result = GetDataFromDeflectorGauge(Codes.CodeCatalyst);
+
+                    foreach (var r in result)
+                    {
+                        DaneDeflectorGauge.Add(r);
+                    }
+                }
+
                 if (FG && Codes.CodeCatalyst != Brak)
                 {
                     var result = GetDataFromFinalGauge(Codes.CodeCatalyst);
@@ -991,10 +1232,28 @@ namespace WebMonitoring.Search
                 FileName.Add("Cela_spawalnicza_wlot");
             }
 
+            if (DaneCelaSprawalniczaMidclamshell?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DaneCelaSprawalniczaMidclamshell.ToArray()));
+                FileName.Add("Cela_spawalnicza_midclamshell");
+            }
+
+            if (DaneCelaSprawalniczaWlotMidclamshell?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DaneCelaSprawalniczaWlotMidclamshell.ToArray()));
+                FileName.Add("Cela_spawalnicza_wlot_midclamshell");
+            }
+
             if (DaneCelaSprawalniczaWylot?.Count > 0)
             {
                 Table.Add(dataTable.WriteTextToFile(DaneCelaSprawalniczaWylot.ToArray()));
                 FileName.Add("Cela_spawalnicza_wylot");
+            }
+
+            if (DaneCelaSprawalniczaWlotWylotMidclamshell?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DaneCelaSprawalniczaWlotWylotMidclamshell.ToArray()));
+                FileName.Add("Cela_spawalnicza_wlot_wylot_midclamshell");
             }
 
             if (DanePLT?.Count > 0)
@@ -1031,6 +1290,12 @@ namespace WebMonitoring.Search
             {
                 Table.Add(dataTable.WriteTextToFile(DaneDeflector.ToArray()));
                 FileName.Add("Deflector");
+            }
+
+            if (DaneDeflectorGauge?.Count > 0)
+            {
+                Table.Add(dataTable.WriteTextToFile(DaneDeflectorGauge.ToArray()));
+                FileName.Add("Deflector_gauge");
             }
 
             if (DaneFG?.Count > 0)

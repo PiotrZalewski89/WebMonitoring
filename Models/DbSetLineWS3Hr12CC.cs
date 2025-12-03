@@ -16,30 +16,22 @@ namespace WebMonitoring.Models
         private string ResultOk => "OK";
         private string Remove => "Remove";
 
-        private string[] DescriptionWS3A = new string[8]
+        private string[] DescriptionHR12CC = new string[]
         {
-            "Cela 0 LP1",
-            "Cela 1 LP1",
-            "Cela 1 LP2",
-            "Cela 2 LP1",
-            "Cela 2 LP2",
-            "Cela 1 LP1 GPF",
-            "Cela 2 LP1 GPF",
-            "Cela 1 LP2 RURKI"
-        };
-
-        private string[] DescriptionWS3BLP1 = new string[]
-        {
+            "Cela spawalnicza - Basic wlot",
+            "Cela spawalnicza - Midclamshell",
             "Sizer wlot",
+            "Cela spawalnicza - Basic wlot + midlamshell",
+            "Cela spawalnicza - Basic wylot",
             "Sizer wylot",
-            "Cela 3 - wlot",
-            "Cela 4 - wylot",
+            "Cela spawalnicza - Basic wlot - midclamshell + wylot",
             "Preleak tester",
             "Enkapsulacja",
             "Wkrętak",
             "Homologacja",
             "Final leak tester",
             "Deflector",
+            "Deflecotr gauge",
             "Sprawdzian geometrii",
             "Odkurzacz",
             "Kontrola Jakościowa"
@@ -81,24 +73,20 @@ namespace WebMonitoring.Models
         //WS3B 
         public List<int> SizerInlet { get; set; }
         public List<int> SizerOutlet { get; set; }
-        public List<int> Cela3_Inlet { get; set; }
-        public List<int> Cela4_Outlet { get; set; }
-
+        public List<int> Cela_BasicInlet { get; set; }
+        public List<int> Cela_Midlamshell { get; set; }
+        public List<int> Cela_BasicInlet_Midlamshell { get; set; }
+        public List<int> Cela_BasicOutlet { get; set; }
+        public List<int> Cela_BasicInletMidclamshell_BasicOutlet { get; set; }
         public List<int> PLT { get; set; }
-
         public List<int> Enkapsulacja { get; set; }
-
         public List<int> Wkretak { get; set; }
-
         public List<int> Homologacja { get; set; }
-
         public List<int> FLT { get; set; }
         public List<int> Deflector { get; set; }
-
+        public List<int> DeflectorGauge { get; set; }
         public List<int> SprawdzianGeometrii { get; set; }
-
         public List<int> Odkurzacz { get; set; }
-
         public List<int> CL { get; set; }
 
        
@@ -134,14 +122,18 @@ namespace WebMonitoring.Models
 
             SizerInlet = new List<int>();
             SizerOutlet = new List<int>();
-            Cela3_Inlet = new List<int>();
-            Cela4_Outlet = new List<int>();
+            Cela_BasicInlet = new List<int>();
+            Cela_Midlamshell = new List<int>();
+            Cela_BasicInlet_Midlamshell = new List<int>();
+            Cela_BasicOutlet = new List<int>();
+            Cela_BasicInletMidclamshell_BasicOutlet = new List<int>();
             PLT = new List<int>();
             Enkapsulacja = new List<int>();
             Wkretak = new List<int>();
             Homologacja = new List<int>();
             FLT = new List<int>();
             Deflector = new List<int>();
+            DeflectorGauge = new List<int>();
             SprawdzianGeometrii = new List<int>();
             Odkurzacz = new List<int>();
             CL = new List<int>();
@@ -162,13 +154,29 @@ namespace WebMonitoring.Models
                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
                  .Count());
 
-                Cela3_Inlet.Add(context.Hr12ccCell3L7s
+                Cela_BasicInlet.Add(context.Hr12ccWeldingCellInletBasicClamshellOp3L7s
                    .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
                    .Count());
 
-                Cela4_Outlet.Add(context.Hr12ccCell4L7s
-                 .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
-                 .Count());
+                Cela_Midlamshell.Add(context.Hr12ccWeldingCellMidclamshellOp7L7s
+                     .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
+                     .Count());
+
+                Cela_BasicInlet_Midlamshell.Add(context.Hr12ccWeldingCellIntletBasicMidclamshellOp8L7s
+                    .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
+                    .Count());
+
+                Cela_BasicOutlet.Add(context.Hr12ccWeldingCellOutletBasicClamshellOp6L7s
+                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
+                  .Count());
+
+                Cela_BasicOutlet.Add(context.Hr12ccWeldingCellOutletBasicClamshellOp6L7s
+                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
+                  .Count());
+
+                Cela_BasicInletMidclamshell_BasicOutlet.Add(context.Hr12ccWeldingCellInletOutletBasicMidclamshellL7s
+                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
+                  .Count());
 
                 PLT.Add(context.Hr12ccPreleakTesterL7s
                    .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikTestu == ResultOk)
@@ -188,6 +196,10 @@ namespace WebMonitoring.Models
 
                 FLT.Add(context.Hr12ccFinalleakTesterL7s
                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikTestu == ResultOk)
+                 .Count());
+
+                DeflectorGauge.Add(context.Hr12ccDeflectorGaugeL7s
+                 .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk)
                  .Count());
 
                 Deflector.Add(context.Hr12ccDeflectorL7s
@@ -210,33 +222,40 @@ namespace WebMonitoring.Models
                 dateTimeTo = dateTimeTo.AddHours(1);
             }
 
+            Cela_BasicInlet.Add(Cela_BasicInlet.Sum());
+            Cela_Midlamshell.Add(Cela_Midlamshell.Sum());
             SizerInlet.Add(SizerInlet.Sum());
+            Cela_BasicInlet_Midlamshell.Add(Cela_BasicInlet_Midlamshell.Sum());
+            Cela_BasicOutlet.Add(Cela_BasicOutlet.Sum());
             SizerOutlet.Add(SizerOutlet.Sum());
-            Cela3_Inlet.Add(Cela3_Inlet.Sum());
-            Cela4_Outlet.Add(Cela4_Outlet.Sum());
+            Cela_BasicInletMidclamshell_BasicOutlet.Add(Cela_BasicInletMidclamshell_BasicOutlet.Sum());
             PLT.Add(PLT.Sum());
             Enkapsulacja.Add(Enkapsulacja.Sum());
             Wkretak.Add(Wkretak.Sum());
             Homologacja.Add(Homologacja.Sum());
             FLT.Add(FLT.Sum());
             Deflector.Add(Deflector.Sum());
+            DeflectorGauge.Add(DeflectorGauge.Sum());
             SprawdzianGeometrii.Add(SprawdzianGeometrii.Sum());
             Odkurzacz.Add(Odkurzacz.Sum());
             CL.Add(CL.Sum());
 
-            _LineData.Add(DescriptionWS3BLP1[0], SizerInlet);
-            _LineData.Add(DescriptionWS3BLP1[1], SizerOutlet);
-            _LineData.Add(DescriptionWS3BLP1[2], Cela3_Inlet);
-            _LineData.Add(DescriptionWS3BLP1[3], Cela4_Outlet);
-            _LineData.Add(DescriptionWS3BLP1[4], PLT);
-            _LineData.Add(DescriptionWS3BLP1[5], Enkapsulacja);
-            _LineData.Add(DescriptionWS3BLP1[6], Wkretak);
-            _LineData.Add(DescriptionWS3BLP1[7], Homologacja);
-            _LineData.Add(DescriptionWS3BLP1[8], FLT);
-            _LineData.Add(DescriptionWS3BLP1[9], Deflector);
-            _LineData.Add(DescriptionWS3BLP1[10], SprawdzianGeometrii);
-            _LineData.Add(DescriptionWS3BLP1[11], Odkurzacz);
-            _LineData.Add(DescriptionWS3BLP1[12], CL);
+            _LineData.Add(DescriptionHR12CC[0], Cela_BasicInlet);
+            _LineData.Add(DescriptionHR12CC[1], Cela_Midlamshell);
+            _LineData.Add(DescriptionHR12CC[2], SizerInlet);
+            _LineData.Add(DescriptionHR12CC[3], Cela_BasicInlet_Midlamshell);
+            _LineData.Add(DescriptionHR12CC[4], Cela_BasicOutlet);
+            _LineData.Add(DescriptionHR12CC[5], SizerOutlet);
+            _LineData.Add(DescriptionHR12CC[6], Cela_BasicInletMidclamshell_BasicOutlet);
+            _LineData.Add(DescriptionHR12CC[7], PLT);
+            _LineData.Add(DescriptionHR12CC[8], Enkapsulacja);
+            _LineData.Add(DescriptionHR12CC[9], Wkretak);
+            _LineData.Add(DescriptionHR12CC[10], Homologacja);
+            _LineData.Add(DescriptionHR12CC[11], Deflector);
+            _LineData.Add(DescriptionHR12CC[12], DeflectorGauge);
+            _LineData.Add(DescriptionHR12CC[13], SprawdzianGeometrii);
+            _LineData.Add(DescriptionHR12CC[14], Odkurzacz);
+            _LineData.Add(DescriptionHR12CC[15], CL);
         }
 
         public int GetCountFromDayWS3B(DateTime dateTime)
@@ -316,14 +335,18 @@ namespace WebMonitoring.Models
 
             SizerInlet.Clear();
             SizerOutlet.Clear();
-            Cela3_Inlet.Clear();
-            Cela4_Outlet.Clear();
+            Cela_BasicInlet.Clear();
+            Cela_BasicInletMidclamshell_BasicOutlet.Clear();
+            Cela_BasicInlet_Midlamshell.Clear();
+            Cela_BasicOutlet.Clear();
+            Cela_Midlamshell.Clear();
             PLT.Clear();
             Enkapsulacja.Clear();
             Wkretak.Clear();
             Homologacja.Clear();
             FLT.Clear();
             Deflector.Clear();
+            DeflectorGauge.Clear();
             SprawdzianGeometrii.Clear();
             Odkurzacz.Clear();
             CL.Clear();

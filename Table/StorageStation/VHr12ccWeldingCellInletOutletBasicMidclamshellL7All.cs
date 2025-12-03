@@ -5,16 +5,19 @@ using System.Collections.Generic;
 
 namespace WebMonitoring.Table.StorageStation
 {
-    public partial class Hr12ccSizerGbdInletL7
+    public partial class VHr12ccWeldingCellInletOutletBasicMidclamshellL7All
     {
-        public string NrShella { get; set; }
-        public string NrClamshell { get; set; }
+        public string NrShellaOutlet { get; set; }
+        public string NrShellaInlet { get; set; }
+        public string NrMidclamshell { get; set; }
         public string TrybPracy { get; set; }
         public string WynikOperacji { get; set; }
         public long? FrameTime { get; set; }
         public int? FrameSeq { get; set; }
         public string NrLinii { get; set; }
         public DateTime? DtOperacji { get; set; }
-        public float? Diameter { get; set; }
+        public int IdHist { get; set; }
+        public DateTime? OpTime { get; set; }
+        public string Oper { get; set; }
     }
 }

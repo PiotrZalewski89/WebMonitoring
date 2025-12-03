@@ -272,15 +272,19 @@ namespace WebMonitoring.Models
         private int[] NumberOfStationsWS3Hr12CC = new int[]
         {
             1,//sizer inlet
+            1,// cela basic inlet
+            1,// cela midclamshell
+            1,// cela basic inlet midlamshell
+            1,// cela basic outlet
             1,//sizer outlet
-            1,//cell3
-            1,//clea4
+            1,//cela basic inlet outlet midclamshell
             1,//plt
             1,//enc
             1,//wkretak
             1,//homo
             1,//flt
             1,//deflector
+            1,//deflector gauge
             1,//gauge
             1,//vacum
             1//cl
@@ -380,22 +384,21 @@ namespace WebMonitoring.Models
               4,//Welding Cell 
                 4,//Welding Cell 
                   4,//Welding Cell 
-            1,//leak tester 
-            1,//final gauge
-            1,//vacuum
-            1,//laser marking
-            1,//control loop            
+            2,//AL1
+            2,//AL2
+            2, //CL1
+            2,//CL2
         };
 
         private int[] NumberOfStationsWS10 = new int[]
-{
+        {
             1,//Welding Cell 
             1,//LM 
             1,//Wiremash
             1,//Clip
             1,//Gauge
             1,//control loop            
-};
+        };
 
         public void SetValues(string selectedLine, IDictionary<string, List<int>> Results, int target)
         {

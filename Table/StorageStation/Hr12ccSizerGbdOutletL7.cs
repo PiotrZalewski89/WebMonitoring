@@ -15,5 +15,6 @@ namespace WebMonitoring.Table.StorageStation
         public int? FrameSeq { get; set; }
         public string NrLinii { get; set; }
         public DateTime? DtOperacji { get; set; }
+        public float? Diameter { get; set; }
     }
 }
