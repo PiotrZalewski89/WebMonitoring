@@ -197,11 +197,11 @@ namespace WebMonitoring.Models
                   .Count());
 
                 Cela_BasicInletMidclamshell_BasicOutlet_1.Add(context.Hr12ccWeldingCellInletOutletBasicMidclamshellL7s
-                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii.Contains("L1"))
+                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii.Contains("L2C3"))
                   .Count());
 
                 Cela_BasicInletMidclamshell_BasicOutlet_2.Add(context.Hr12ccWeldingCellInletOutletBasicMidclamshellL7s
-                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii.Contains("L2"))
+                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii.Contains("L2C4"))
                   .Count());
 
               
