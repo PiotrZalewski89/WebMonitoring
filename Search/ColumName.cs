@@ -197,6 +197,11 @@ namespace WebMonitoring.Search
         public long? Frame_time3 { get; set; }
     }
 
+    public class ColumnSizer : BasicColumnHr12cc
+    {
+        public float? Diameter { get; set; }
+    }
+
     public class ColumnLT_Hr12cc : BasicColumnHr12cc
     {
         public string Cisnienie { get; set; }

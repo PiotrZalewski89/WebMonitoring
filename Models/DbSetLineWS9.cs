@@ -21,6 +21,7 @@ namespace WebMonitoring.Models
             "Cela spawalnicza nr4",
             "AutoLine 1",
             "AutoLine 2",
+            "AutoLine 3",
             "Kontrola Jakości 1",
             "Kontrola Jakości 2"
        };
@@ -60,6 +61,7 @@ namespace WebMonitoring.Models
         public List<int> WeldingCell_4 { get; set; }
         public List<int> AL1 { get; set; }
         public List<int> AL2 { get; set; }
+        public List<int> AL3 { get; set; }
         public List<int> ControlLoopL1 { get; set; }
         public List<int> ControlLoopL2 { get; set; }
 
@@ -83,6 +85,7 @@ namespace WebMonitoring.Models
             WeldingCell_4 = new();
             AL1 = new();
             AL2 = new();
+            AL3 = new();
             ControlLoopL1 = new();
             ControlLoopL2 = new();
 
@@ -123,6 +126,10 @@ namespace WebMonitoring.Models
                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii == "L2")
                   .Count());
 
+                AL3.Add(DbContext.Hr12ufMarkingL6s
+                  .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikOperacji == ResultOk && x.NrLinii == "L3")
+                  .Count());
+
                 ControlLoopL2.Add(DbContext.Hr12ufControlLoopL6s
                    .Where(x => x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo && x.WynikOperacji == ResultOk && x.NrPzzw != Remove && x.NrLinii == "L2")
                    .Count());
@@ -137,6 +144,7 @@ namespace WebMonitoring.Models
             WeldingCell_4.Add(WeldingCell_4.Sum());
             AL1.Add(AL1.Sum());
             AL2.Add(AL2.Sum());
+            AL3.Add(AL3.Sum());
             ControlLoopL1.Add(ControlLoopL1.Sum());
             ControlLoopL2.Add(ControlLoopL2.Sum());
 
@@ -147,8 +155,9 @@ namespace WebMonitoring.Models
             _LineData.Add(DescriptionWS9[3], WeldingCell_4);
             _LineData.Add(DescriptionWS9[4], AL1);
             _LineData.Add(DescriptionWS9[5], AL2);
-            _LineData.Add(DescriptionWS9[6], ControlLoopL1);
-            _LineData.Add(DescriptionWS9[7], ControlLoopL2);
+            _LineData.Add(DescriptionWS9[6], AL3);
+            _LineData.Add(DescriptionWS9[7], ControlLoopL1);
+            _LineData.Add(DescriptionWS9[8], ControlLoopL2);
         }
 
         public int GetCountFromDayWS9(DateTime dateTime)

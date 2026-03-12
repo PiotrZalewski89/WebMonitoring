@@ -35,10 +35,10 @@ namespace WebMonitoring.Search
         public new string HtmlTableOutlet { get; set; }
         public List<BasicColumnHr12cc> DaneCelaSprawalniczaWlot { get; set; }
         public List<BasicColumnHr12cc> DaneCelaSprawalniczaMidclamshell { get; set; }
-        public List<BasicColumnHr12cc> DaneSizerInlet { get; set; }
+        public List<ColumnSizer> DaneSizerInlet { get; set; }
         public List<BasicColumnHr12cc> DaneCelaSprawalniczaWlotMidclamshell { get; set; }
         public List<BasicColumnHr12cc> DaneCelaSprawalniczaWylot { get; set; }
-        public List<BasicColumnHr12cc> DaneSizerOutlet { get; set; }
+        public List<ColumnSizer> DaneSizerOutlet { get; set; }
         public List<BasicColumnHr12cc> DaneCelaSprawalniczaWlotWylotMidclamshell { get; set; }
         public List<ColumnLT_Hr12cc> DanePLT { get; set; }
         public List<BasicColumnHr12cc> DaneEnkapsulacja { get; set; }
@@ -124,11 +124,11 @@ namespace WebMonitoring.Search
             return codeFromPzzw;
         }
 
-        private IList<BasicColumnHr12cc> GetDataFromSizerInlet(string code)
+        private IList<ColumnSizer> GetDataFromSizerInlet(string code)
         {
-            var result = context.Hr12ccSizerGbdInletL7s
+            var result = context.VHr12ccSizerGbdInletL7Alls
                           .Where(x => x.NrShella == code)
-                          .Select(x => new BasicColumnHr12cc
+                          .Select(x => new ColumnSizer
                           {
                               Nr_Shell_Inlet = x.NrShella,
                               Nr_Midclamshell = x.NrClamshell,
@@ -140,13 +140,11 @@ namespace WebMonitoring.Search
             return result;
         }
 
-
-
-        private IList<BasicColumnHr12cc> GetDataFromSizerOutlet(string code)
+        private IList<ColumnSizer> GetDataFromSizerOutlet(string code)
         {
-            var result = context.Hr12ccSizerGbdOutletL7s
+            var result = context.VHr12ccSizerGbdOutletL7Alls
                           .Where(x => x.NrShella == code)
-                          .Select(x => new BasicColumnHr12cc
+                          .Select(x => new ColumnSizer
                           {
                               Nr_Shell_Outlet = x.NrShella,
                               Nr_Midclamshell = x.NrClamshell,
@@ -160,7 +158,7 @@ namespace WebMonitoring.Search
 
         private IList<BasicColumnHr12cc> GetDataFromWeldingCellBasicInlet(string code)
         {
-            var result = context.Hr12ccWeldingCellInletBasicClamshellOp3L7s
+            var result = context.VHr12ccWeldingCellInletBasicClamshellOp3L7Alls
                           .Where(x => x.NrShella == code)
                           .Select(x => new BasicColumnHr12cc
                           {
@@ -175,7 +173,7 @@ namespace WebMonitoring.Search
 
         private IList<BasicColumnHr12cc> GetDataFromWeldingCellMidclamshell(string code)
         {
-            var result = context.Hr12ccWeldingCellMidclamshellOp7L7s
+            var result = context.VHr12ccWeldingCellMidclamshellOp7L7Alls
                           .Where(x => x.NrMidclamshell == code)
                           .Select(x => new BasicColumnHr12cc
                           {
@@ -190,7 +188,7 @@ namespace WebMonitoring.Search
 
         private IList<BasicColumnHr12cc> GetDataFromWeldingCellBasicInletMidclamshell(string code)
         {
-            var result = context.Hr12ccWeldingCellIntletBasicMidclamshellOp8L7s
+            var result = context.VHr12ccWeldingCellIntletBasicMidclamshellOp8L7Alls
                           .Where(x => x.NrShella == code)
                           .Select(x => new BasicColumnHr12cc
                           {
@@ -206,7 +204,7 @@ namespace WebMonitoring.Search
 
         private IList<BasicColumnHr12cc> GetDataFromWeldingCellBasicOutlet(string code)
         {
-            var result = context.Hr12ccWeldingCellOutletBasicClamshellOp6L7s
+            var result = context.VHr12ccWeldingCellOutletBasicClamshellOp6L7Alls
                           .Where(x => x.NrShella == code)
                           .Select(x => new BasicColumnHr12cc
                           {
@@ -238,7 +236,7 @@ namespace WebMonitoring.Search
 
         private IList<ColumnLT_Hr12cc> GetDataFromPLT(string code)
         {
-            var result = context.Hr12ccPreleakTesterL7s
+            var result = context.VHr12ccPreleakTesterL7Alls
                          .Where(x => x.NrGrawerka == code)
                           .Select(x => new ColumnLT_Hr12cc
                           {
@@ -278,7 +276,7 @@ namespace WebMonitoring.Search
 
         private IList<BasicColumnHr12cc> GetDataFromPress(string code)
         {
-            var result = context.Hr12ccOutletPressL7s
+            var result = context.VHr12ccOutletPressL7Alls
                     .Where(x => x.NrGrawerka == code)
                      .Select(x => new BasicColumnHr12cc
                      {
@@ -294,7 +292,7 @@ namespace WebMonitoring.Search
 
         private IList<ColumnTorqueHr12cc> GetDataFromTorque(string code)
         {
-            var result = context.Hr12ccTorqueScrewdriverL7s
+            var result = context.VHr12ccTorqueScrewdriverL7Alls
                     .Where(x => x.NrGrawerka == code)
                       .Select(x => new ColumnTorqueHr12cc
                       {
@@ -313,7 +311,7 @@ namespace WebMonitoring.Search
 
         private IList<BasicColumnHr12cc> GetDataFromHomologation(string code)
         {
-            var result = context.Hr12ccHomologationL7s
+            var result = context.VHr12ccHomologationL7Alls
                       .Where(x => x.NrGrawerka == code)
                       .Select(x => new BasicColumnHr12cc
                       {
@@ -328,7 +326,7 @@ namespace WebMonitoring.Search
 
         private IList<ColumnFLT_Hr12cc> GetDataFromFLT(string code)
         {
-            var result = context.Hr12ccFinalleakTesterL7s
+            var result = context.VHr12ccFinalleakTesterL7Alls
                     .Where(x => x.NrGrawerka == code)
                     .Select(x => new ColumnFLT_Hr12cc
                     {
@@ -349,7 +347,7 @@ namespace WebMonitoring.Search
 
         private IList<ColumnTorqueHr12cc> GetDataFromDeflector(string code)
         {
-            var result = context.Hr12ccDeflectorL7s
+            var result = context.VHr12ccDeflectorL7Alls
                       .Where(x => x.NrGrawerka == code)
                       .Select(x => new ColumnTorqueHr12cc
                       {
@@ -370,7 +368,7 @@ namespace WebMonitoring.Search
 
         private IList<BasicColumnHr12cc> GetDataFromDeflectorGauge(string code)
         {
-            var result = context.Hr12ccDeflectorGaugeL7s
+            var result = context.VHr12ccDeflectorGaugeL7Alls
                     .Where(x => x.NrGrawerka == code)
                     .Select(x => new BasicColumnHr12cc
                     {
@@ -385,7 +383,7 @@ namespace WebMonitoring.Search
 
         private IList<BasicColumnHr12cc> GetDataFromFinalGauge(string code)
         {
-            var result = context.Hr12ccCheckFixtureL7s
+            var result = context.VHr12ccCheckFixtureL7Alls
                     .Where(x => x.NrGrawerka == code)
                     .Select(x => new BasicColumnHr12cc
                     {
@@ -400,7 +398,7 @@ namespace WebMonitoring.Search
 
         private IList<BasicColumnHr12cc> GetDataFromVaccumCleaner(string code)
         {
-            var result = context.Hr12ccVacuumCleanerL7s
+            var result = context.VHr12ccVacuumCleanerL7Alls
                     .Where(x => x.NrGrawerka == code)
                     .Select(x => new BasicColumnHr12cc
                     {
@@ -415,7 +413,7 @@ namespace WebMonitoring.Search
 
         private IList<ColumnCL_Hr12cc> GetDataFromControlLoop(string code)
         {
-           var result = context.Hr12ccControlLoopL7s
+           var result = context.VHr12ccControlLoopL7Alls
                     .Where(x => x.NrKatalizatora == code)
                     .Select(x => new ColumnCL_Hr12cc
                     {
@@ -431,18 +429,19 @@ namespace WebMonitoring.Search
             return result;
         }
 
-        private IList<BasicColumnHr12cc> GetDataFromSiezerInletByDate(DateTime from, DateTime to)
+        private IList<ColumnSizer> GetDataFromSiezerInletByDate(DateTime from, DateTime to)
         {
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.Hr12ccSizerGbdInletL7s
+            var result = context.VHr12ccSizerGbdInletL7Alls
                           .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                          .Select(x => new BasicColumnHr12cc
+                          .Select(x => new ColumnSizer
                           {
                               Nr_Shell_Inlet = x.NrShella,
                               Nr_Midclamshell = x.NrClamshell,
                               Wynik_operacji = x.WynikOperacji,
+                              Diameter = x.Diameter,
                               Nr_linii = x.NrLinii,
                               DateTime = x.DtOperacji
                           })
@@ -451,17 +450,19 @@ namespace WebMonitoring.Search
             return result;
         }
 
-        private IList<BasicColumnHr12cc> GetDataFromSiezerOutletByDate(DateTime from, DateTime to)
+        private IList<ColumnSizer> GetDataFromSiezerOutletByDate(DateTime from, DateTime to)
         {
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.Hr12ccSizerGbdOutletL7s
+            var result = context.VHr12ccSizerGbdOutletL7Alls
                           .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
-                          .Select(x => new BasicColumnHr12cc
+                          .Select(x => new ColumnSizer
                           {
                               Nr_Shell_Outlet = x.NrShella,
+                              Nr_Midclamshell = x.NrClamshell,
                               Wynik_operacji = x.WynikOperacji,
+                              Diameter = x.Diameter,
                               Nr_linii = x.NrLinii,
                               DateTime = x.DtOperacji
                           })
@@ -475,7 +476,7 @@ namespace WebMonitoring.Search
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.Hr12ccWeldingCellInletBasicClamshellOp3L7s
+            var result = context.VHr12ccWeldingCellInletBasicClamshellOp3L7Alls
                           .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                           .Select(x => new BasicColumnHr12cc
                           {
@@ -494,7 +495,7 @@ namespace WebMonitoring.Search
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.Hr12ccWeldingCellMidclamshellOp7L7s
+            var result = context.VHr12ccWeldingCellMidclamshellOp7L7Alls
                           .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                           .Select(x => new BasicColumnHr12cc
                           {
@@ -513,7 +514,7 @@ namespace WebMonitoring.Search
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.Hr12ccWeldingCellIntletBasicMidclamshellOp8L7s
+            var result = context.VHr12ccWeldingCellIntletBasicMidclamshellOp8L7Alls
                           .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                           .Select(x => new BasicColumnHr12cc
                           {
@@ -533,7 +534,7 @@ namespace WebMonitoring.Search
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.Hr12ccWeldingCellOutletBasicClamshellOp6L7s
+            var result = context.VHr12ccWeldingCellOutletBasicClamshellOp6L7Alls
                           .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                           .Select(x => new BasicColumnHr12cc
                           {
@@ -573,7 +574,7 @@ namespace WebMonitoring.Search
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.Hr12ccPreleakTesterL7s
+            var result = context.VHr12ccPreleakTesterL7Alls
                         .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                           .Select(x => new ColumnLT_Hr12cc
                           {
@@ -597,7 +598,7 @@ namespace WebMonitoring.Search
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.Hr12ccOutletPressL7s
+            var result = context.VHr12ccOutletPressL7Alls
                      .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                      .Select(x => new BasicColumnHr12cc
                      {
@@ -617,7 +618,7 @@ namespace WebMonitoring.Search
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.Hr12ccTorqueScrewdriverL7s
+            var result = context.VHr12ccTorqueScrewdriverL7Alls
                      .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                       .Select(x => new ColumnTorqueHr12cc
                       {
@@ -640,7 +641,7 @@ namespace WebMonitoring.Search
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.Hr12ccHomologationL7s
+            var result = context.VHr12ccHomologationL7Alls
                       .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                       .Select(x => new BasicColumnHr12cc
                       {
@@ -659,7 +660,7 @@ namespace WebMonitoring.Search
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.Hr12ccFinalleakTesterL7s
+            var result = context.VHr12ccFinalleakTesterL7Alls
                      .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                     .Select(x => new ColumnFLT_Hr12cc
                     {
@@ -684,7 +685,7 @@ namespace WebMonitoring.Search
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.Hr12ccDeflectorL7s
+            var result = context.VHr12ccDeflectorL7Alls
                      .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                       .Select(x => new ColumnTorqueHr12cc
                       {
@@ -709,7 +710,7 @@ namespace WebMonitoring.Search
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.Hr12ccDeflectorGaugeL7s
+            var result = context.VHr12ccDeflectorGaugeL7Alls
                     .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                     .Select(x => new BasicColumnHr12cc
                     {
@@ -728,7 +729,7 @@ namespace WebMonitoring.Search
             var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
             var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
 
-            var result = context.Hr12ccCheckFixtureL7s
+            var result = context.VHr12ccCheckFixtureL7Alls
                     .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                     .Select(x => new BasicColumnHr12cc
                     {
@@ -747,7 +748,7 @@ namespace WebMonitoring.Search
             var frameTimeFrom = from.ConvertDateTimeToFrameTime();
             var frameTimeTo = to.ConvertDateTimeToFrameTime();
 
-            var result = context.Hr12ccVacuumCleanerL7s
+            var result = context.VHr12ccVacuumCleanerL7Alls
                      .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                     .Select(x => new BasicColumnHr12cc
                     {
@@ -766,7 +767,7 @@ namespace WebMonitoring.Search
             var frameTimeFrom = from.ConvertDateTimeToFrameTime();
             var frameTimeTo = to.ConvertDateTimeToFrameTime();
 
-            var result = context.Hr12ccControlLoopL7s
+            var result = context.VHr12ccControlLoopL7Alls
                      .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo))
                     .Select(x => new ColumnCL_Hr12cc
                     {
@@ -1039,7 +1040,7 @@ namespace WebMonitoring.Search
 
                     foreach (var r in result)
                     {
-                        DaneSizerInlet.Add(r);
+                        DaneSizerInlet.Add(r as ColumnSizer);
                     }
                 }
 
@@ -1049,7 +1050,7 @@ namespace WebMonitoring.Search
 
                     foreach (var r in result)
                     {
-                        DaneSizerOutlet.Add(r);
+                        DaneSizerOutlet.Add(r as ColumnSizer);
                     }
                 }
 

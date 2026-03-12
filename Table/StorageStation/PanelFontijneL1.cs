@@ -120,5 +120,7 @@ namespace WebMonitoring.Table.StorageStation
         public decimal? CisOutletInsertSpeed { get; set; }
         public decimal? CisInletInsertSpeed { get; set; }
         public string ManufacturingLotTraceCodeOutlet { get; set; }
+        public long? FrameTime5 { get; set; }
+        public int? FrameSeq5 { get; set; }
     }
 }

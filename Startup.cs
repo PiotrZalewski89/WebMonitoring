@@ -48,6 +48,9 @@ namespace WebMonitoring
         {
             if (env.IsDevelopment())
             {
+                Search.CheckBoxLineWS10 check = new();
+                //check.SelectAsync("25051-976.119.369.E-1-00028");
+
                 app.UseDeveloperExceptionPage();
             }
             else

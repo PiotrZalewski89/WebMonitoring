@@ -212,7 +212,8 @@ namespace WebMonitoring.Search
                               Nr_Shell = x.NrBasic,
                               Wynik_operacji = x.WynikOperacji,
                               Frame_time = x.FrameTime,
-                              DateTime = (DateTime)x.DtOperacji
+                              DateTime = (DateTime)x.DtOperacji,
+                              Nr_linii = x.NrLinii
                           })
                           .ToArray();
 
@@ -275,7 +276,8 @@ namespace WebMonitoring.Search
                         Nr_Shell = x.NrBasic,
                         Wynik_operacji = x.WynikOperacji,
                         Frame_time = x.FrameTime,
-                        DateTime = (DateTime)x.DtOperacji
+                        DateTime = (DateTime)x.DtOperacji,
+                        Nr_linii = x.NrLinii
                     })
                       .ToArray();
 
@@ -296,7 +298,8 @@ namespace WebMonitoring.Search
                         Nr_Grawerka = x.NrGrawerka,
                         Wynik_operacji = x.WynikOperacji,
                         Frame_time = x.FrameTime,
-                        DateTime = (DateTime)x.DtOperacji
+                        DateTime = (DateTime)x.DtOperacji,
+                        Nr_linii = x.NrLinii
                     })
                       .ToArray();
 
@@ -319,7 +322,8 @@ namespace WebMonitoring.Search
                         Uwagi = x.Quality,
                         OperatorID = x.NrOperatora,
                         Frame_time = x.FrameTime,
-                        DateTime = (DateTime)x.DtOperacji
+                        DateTime = (DateTime)x.DtOperacji,
+                        Nr_linii = x.NrLinii
                     })
                     .ToArray();
 
@@ -332,6 +336,7 @@ namespace WebMonitoring.Search
             DaneLT = new List<ColumnLT>();
             DaneFG = new List<BasicColumn>();
             DaneVacuum = new List<BasicColumn>();
+            DaneLM = new List<BasicColumn>();
             DaneCL = new List<ColumnCL>();
 
             if (SelectCode)

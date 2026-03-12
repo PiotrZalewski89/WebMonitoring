@@ -21,7 +21,7 @@ namespace WebMonitoring.Controllers
              "Wyszukiwanie - Linia WS8 BR10 BJA",//5
              "Wyszukiwanie - Linia WS5 CNH 537",//6
              "Wyszukiwanie - Linia WS6 CNH 529",//7
-             "Wyszukiwanie - Linia STF 3,4,5,6",//8
+             "Wyszukiwanie - Linia STF 3,4,5,6,7",//8
              "Wyszukiwanie - Linia STF 1",//9
              "Wyszukiwanie - Linia STF 2",//10
              "Wyszukiwanie - Linia WS7",//11
@@ -516,6 +516,11 @@ namespace WebMonitoring.Controllers
                             stf.GetDataFromSqlStf6((DateTime)stf.DateTime);
                             return View(stf);
                         }
+                        else if (stf.Stf7)
+                        {
+                            stf.GetDataFromSqlStf7((DateTime)stf.DateTime);
+                            return View(stf);
+                        }
                     }
                 }
             }
@@ -559,6 +564,11 @@ namespace WebMonitoring.Controllers
                         {
                             stf.GetDataFromSqlStf6((DateTime)stf.DateTime, true);
                             return File(ConvertStringToByte(stf.Table), "text/csv", "LineSTF6.csv");
+                        }
+                        else if (stf.Stf7)
+                        {
+                            stf.GetDataFromSqlStf7((DateTime)stf.DateTime, true);
+                            return File(ConvertStringToByte(stf.Table), "text/csv", "LineSTF7.csv");
                         }
                     }
                 }
@@ -929,7 +939,7 @@ namespace WebMonitoring.Controllers
                     ws.GetDataCode(true);
 
                     if (ws.Table?.Count > 0)
-                        return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs3.zip");
+                        return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs3_HR12CC.zip");
                 }
                 else if (ws.SelectDate && checkboxChecked && ws.DateTime != null)
                 {
@@ -938,7 +948,7 @@ namespace WebMonitoring.Controllers
                         ws.GetDataCode(true);
 
                         if (ws.Table?.Count > 0)
-                            return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs3.zip");
+                            return File(ExtensionMethod.GenerationFile(ws.Table, ws.FileName), "application/zip", "LineWs3_HR12CC.zip");
                     }
                 }
             }

@@ -20,6 +20,7 @@ namespace WebMonitoring.Search
         public bool Stf4 { get; set; }
         public bool Stf5 { get; set; }
         public bool Stf6 { get; set; }
+        public bool Stf7 { get; set; }
 
         public Stf_3_6()
         {
@@ -287,6 +288,37 @@ namespace WebMonitoring.Search
             catch { }
         }
 
+        public void GetDataFromSqlStf7(DateTime dateTime, bool download = false)
+        {
+            try
+            {
+                DateTime from = dateTime;
+                DateTime to = dateTime.AddDays(1);
+
+                DataTable dataTable = new DataTable();
+
+                var frameTimeFrom = from.ConvertDateTimeToFrameTimeUtc();
+                var frameTimeTo = to.ConvertDateTimeToFrameTimeUtc();
+
+                var result = context.PanelFontijneL1s
+                          .Where(x => (x.FrameTime5 >= frameTimeFrom && x.FrameTime5 < frameTimeTo));
+
+                var resultArray = result.ToArray();
+                if (resultArray.Length > 0)
+                {
+                    if (download)
+                    {
+                        Table = dataTable.WriteTextToFile(result);
+                    }
+                    else
+                    {
+                        HtmlTable = dataTable.WriteToTable(resultArray);
+                    }
+                }
+            }
+            catch { }
+        }
+
         public void GetDataFromSqlAll(DateTime dateTime, bool download = false)
         {
             try
@@ -303,7 +335,8 @@ namespace WebMonitoring.Search
                           .Where(x => (x.FrameTime >= frameTimeFrom && x.FrameTime < frameTimeTo)
                           || (x.FrameTime2 >= frameTimeFrom && x.FrameTime2 < frameTimeTo)
                           || (x.FrameTime3 >= frameTimeFrom && x.FrameTime3 < frameTimeTo)
-                          || (x.FrameTime4 >= frameTimeFrom && x.FrameTime4 < frameTimeTo));
+                          || (x.FrameTime4 >= frameTimeFrom && x.FrameTime4 < frameTimeTo)
+                          || (x.FrameTime5 >= frameTimeFrom && x.FrameTime5 < frameTimeTo));
 
                 var resultArray = result.ToArray();
                 if (resultArray.Length > 0)

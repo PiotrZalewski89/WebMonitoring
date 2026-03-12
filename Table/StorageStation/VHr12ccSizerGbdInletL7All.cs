@@ -11,6 +11,7 @@ namespace WebMonitoring.Table.StorageStation
         public string NrClamshell { get; set; }
         public string TrybPracy { get; set; }
         public string WynikOperacji { get; set; }
+        public float? Diameter { get; set; }
         public long? FrameTime { get; set; }
         public int? FrameSeq { get; set; }
         public string NrLinii { get; set; }

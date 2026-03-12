@@ -201,7 +201,7 @@ namespace WebMonitoring.DataBase
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=172.27.50.232,1433\\\\\\\\STORAGESTATION;Initial Catalog=StorageStation;Persist Security Info=True;User ID=pkIPLAS;Password=pkIPLAS;MultipleActiveResultSets=True;Application Name=EntityFramework");
+                optionsBuilder.UseSqlServer("Data Source=172.27.50.245,1433\\\\\\\\STORAGESTATION2025;Initial Catalog=StorageStation;Persist Security Info=True;User ID=appSql;Password=appSql;MultipleActiveResultSets=True ;TrustServerCertificate=True;Application Name=EntityFramework");
             }
         }
 
@@ -4112,6 +4112,8 @@ namespace WebMonitoring.DataBase
 
                 entity.HasIndex(e => e.FrameTime4, "IDX_PANEL_FONTIJNE_L1_FRAME_TIME_4");
 
+                entity.HasIndex(e => e.FrameTime5, "IDX_PANEL_FONTIJNE_L1_FRAME_TIME_5");
+
                 entity.HasIndex(e => e.ManufacturingLotTraceCodeOutlet, "IDX_PANEL_FONTIJNE_L1_SHELL_2_NO");
 
                 entity.HasIndex(e => e.ManufacturingLotTraceCode, "IDX_PANEL_FONTIJNE_L1_SHELL_NO");
@@ -4546,6 +4548,8 @@ namespace WebMonitoring.DataBase
 
                 entity.Property(e => e.FrameSeq4).HasColumnName("FRAME_SEQ_4");
 
+                entity.Property(e => e.FrameSeq5).HasColumnName("FRAME_SEQ_5");
+
                 entity.Property(e => e.FrameTime).HasColumnName("FRAME_TIME");
 
                 entity.Property(e => e.FrameTime2).HasColumnName("FRAME_TIME_2");
@@ -4553,6 +4557,8 @@ namespace WebMonitoring.DataBase
                 entity.Property(e => e.FrameTime3).HasColumnName("FRAME_TIME_3");
 
                 entity.Property(e => e.FrameTime4).HasColumnName("FRAME_TIME_4");
+
+                entity.Property(e => e.FrameTime5).HasColumnName("FRAME_TIME_5");
 
                 entity.Property(e => e.GmpartNumber)
                     .HasMaxLength(32)
@@ -7504,6 +7510,8 @@ namespace WebMonitoring.DataBase
 
                 entity.ToView("V_HR12CC_SIZER_GBD_INLET_L7_ALL");
 
+                entity.Property(e => e.Diameter).HasColumnName("DIAMETER");
+
                 entity.Property(e => e.DtOperacji)
                     .HasColumnType("datetime")
                     .HasColumnName("DT_OPERACJI");
@@ -7558,6 +7566,8 @@ namespace WebMonitoring.DataBase
 
                 entity.ToView("V_HR12CC_SIZER_GBD_OUTLET_L7_ALL");
 
+                entity.Property(e => e.Diameter).HasColumnName("DIAMETER");
+
                 entity.Property(e => e.DtOperacji)
                     .HasColumnType("datetime")
                     .HasColumnName("DT_OPERACJI");
@@ -7569,7 +7579,6 @@ namespace WebMonitoring.DataBase
                 entity.Property(e => e.IdHist).HasColumnName("_ID_HIST");
 
                 entity.Property(e => e.NrClamshell)
-                    .IsRequired()
                     .HasMaxLength(256)
                     .IsUnicode(false)
                     .HasColumnName("NR_CLAMSHELL");

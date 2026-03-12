@@ -88,7 +88,9 @@ namespace WebMonitoring.Models
         public List<int> Cela_BasicInlet_Midlamshell_2 { get; set; }
         public List<int> Cela_BasicOutlet_2 { get; set; }
         public List<int> Cela_BasicInletMidclamshell_BasicOutlet_2 { get; set; }
-        public List<int> PLT { get; set; }
+        public List<int> PLT_L1 { get; set; }
+        public List<int> PLT_L2 { get; set; }
+        public List<int> PLT_L3 { get; set; }
         public List<int> Enkapsulacja { get; set; }
         public List<int> Wkretak { get; set; }
         public List<int> Homologacja { get; set; }
@@ -241,7 +243,9 @@ namespace WebMonitoring.Models
             var dateTimeFrom = dateTime;
             var dateTimeTo = dateTimeFrom.AddHours(1);
 
-            PLT = new List<int>();
+            PLT_L1 = new List<int>();
+            PLT_L2 = new List<int>();
+            PLT_L3 = new List<int>();
             Enkapsulacja = new List<int>();
             Wkretak = new List<int>();
             Homologacja = new List<int>();
@@ -260,8 +264,16 @@ namespace WebMonitoring.Models
                 var frameTimeFrom = dateTimeFrom.ConvertDateTimeToFrameTime();
                 var frameTimeTo = dateTimeTo.ConvertDateTimeToFrameTime();
               
-                PLT.Add(context.Hr12ccPreleakTesterL7s
-                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikTestu == ResultOk)
+                PLT_L1.Add(context.Hr12ccPreleakTesterL7s
+                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikTestu == ResultOk && x.NrLinii == "L1")
+                   .Count());
+
+                PLT_L2.Add(context.Hr12ccPreleakTesterL7s
+                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikTestu == ResultOk && x.NrLinii == "L2")
+                   .Count());
+
+                PLT_L3.Add(context.Hr12ccPreleakTesterL7s
+                   .Where(x => x.FrameTime >= frameTimeUtcFrom && x.FrameTime < frameTimeUtcTo && x.WynikTestu == ResultOk && x.NrLinii == "L3")
                    .Count());
 
                 Enkapsulacja.Add(context.Hr12ccOutletPressL7s
@@ -304,7 +316,9 @@ namespace WebMonitoring.Models
                 dateTimeTo = dateTimeTo.AddHours(1);
             }
 
-            PLT.Add(PLT.Sum());
+            PLT_L1.Add(PLT_L1.Sum());
+            PLT_L2.Add(PLT_L2.Sum());
+            PLT_L3.Add(PLT_L3.Sum());
             Enkapsulacja.Add(Enkapsulacja.Sum());
             Wkretak.Add(Wkretak.Sum());
             Homologacja.Add(Homologacja.Sum());
@@ -315,7 +329,9 @@ namespace WebMonitoring.Models
             Odkurzacz.Add(Odkurzacz.Sum());
             CL.Add(CL.Sum());
 
-            _LineData.Add(DescriptionHR12CC[12], PLT);
+            _LineData.Add($"{DescriptionHR12CC[12]}_L1", PLT_L1);
+            _LineData.Add($"{DescriptionHR12CC[12]}_L2", PLT_L2);
+            _LineData.Add($"{DescriptionHR12CC[12]}_L3", PLT_L3);
             _LineData.Add(DescriptionHR12CC[13], Enkapsulacja);
             _LineData.Add(DescriptionHR12CC[14], Wkretak);
             _LineData.Add(DescriptionHR12CC[15], Homologacja);
@@ -414,7 +430,7 @@ namespace WebMonitoring.Models
             Cela_BasicInlet_Midlamshell_2.Clear();
             Cela_BasicOutlet_2.Clear();
             Cela_Midlamshell_2.Clear();
-            PLT.Clear();
+            PLT_L1.Clear();
             Enkapsulacja.Clear();
             Wkretak.Clear();
             Homologacja.Clear();

@@ -297,7 +297,9 @@ namespace WebMonitoring.Models
 
         private int[] NumberOfStationsWS3Hr12CC_PostProces = new int[]
         {
-            1,//plt
+            3,//plt l1
+            3,//plt l2
+            3,//plt l3
             1,//enc
             1,//wkretak
             1,//homo
@@ -421,8 +423,9 @@ namespace WebMonitoring.Models
               4,//Welding Cell 
                 4,//Welding Cell 
                   4,//Welding Cell 
-            2,//AL1
-            2,//AL2
+            3,//AL1
+            3,//AL2
+            3,//AL2
             2, //CL1
             2,//CL2
         };

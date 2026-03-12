@@ -65,7 +65,7 @@
                         <input type="checkbox" asp-for="@Model.SizerOutlet">
                         <label asp-for="@Model.SizerOutlet"> Sizer GBD wylot</label><br>
                         <input type="checkbox" asp-for="@Model.CelaSpawalniczaBasicWlot">
-                        <label asp-for="@Model.Stf"> Cela spawalnicza basic wlot</label>
+                        <label asp-for="@Model.CelaSpawalniczaBasicWlot"> Cela spawalnicza basic wlot</label>
                     </td>
 
                     <td class="checkboxes">
@@ -179,6 +179,7 @@
                         <tr class="text-white">
                             <th style="font-size:14px">Nr shell wlot</th>
                             <th style="font-size:14px">Nr clamshell</th>
+                            <th style="font-size:14px">Średnica</th>
                             <th style="font-size:14px">Wynik operacji</th>
                             <th style="font-size:14px">Nr linii</th>
                             <th style="font-size:14px">Data operacji</th>
@@ -191,6 +192,7 @@
                             <tr style="font-size:12px">
                                 <td>@m.Nr_Shell_Inlet</td>
                                 <td>@m.Nr_Midclamshell</td>
+                                <td>@m.Diameter</td>
                                 <td>@m.Wynik_operacji</td>
                                 <td>@m.Nr_linii</td>
                                 <td>@m.DateTime</td>
@@ -212,6 +214,7 @@
                         <tr class="text-white">
                             <th style="font-size:14px">Nr shell wylot</th>
                             <th style="font-size:14px">Nr clamshell</th>
+                            <th style="font-size:14px">Średnica</th>
                             <th style="font-size:14px">Wynik operacji</th>
                             <th style="font-size:14px">Nr linii</th>
                             <th style="font-size:14px">Data operacji</th>
@@ -224,6 +227,7 @@
                             <tr style="font-size:12px">
                                 <td>@m.Nr_Shell_Outlet</td>
                                 <td>@m.Nr_Midclamshell</td>
+                                <td>@m.Diameter</td>
                                 <td>@m.Wynik_operacji</td>
                                 <td>@m.Nr_linii</td>
                                 <td>@m.DateTime</td>
@@ -728,15 +732,15 @@
 
                         @foreach (var m in Model.DanePetlaKJ)
                         {
-                            <tr style="font-size:12px">
-                                <td>@m.Nr_Grawerka</td>
-                                <td>@m.PZZW</td>
-                                <td>@m.Wynik_operacji</td>
-                                <td>@m.Nr_linii</td>
-                                <td>@m.DateTime</td>
-                                <td>@m.OperatorID</td>
-                                <td>@m.DateTime</td>
-                            </tr>
+                        <tr style="font-size:12px">
+                            <td>@m.Nr_Grawerka</td>
+                            <td>@m.PZZW</td>
+                            <td>@m.Wynik_operacji</td>
+                            <td>@m.Uwagi</td>
+                            <td>@m.Nr_linii</td>
+                            <td>@m.OperatorID</td>
+                            <td>@m.DateTime</td>
+                        </tr>
                         }
 
                     </tbody>
